@@ -299,7 +299,7 @@ class mdNewsletterBackendActions extends sfActions
     
     public function executeRetrieveUsersBox(sfWebRequest $request)
     {
-      $users = mdNewsletterHandler::retriveAll();
+      $users = mdNewsletterHandler::retrieveAllForBox();
       $body = $this->getPartial('usersList', array("users" => $users));
       return $this->renderText(mdBasicFunction::basic_json_response(true, array('body' => $body)));
     }
