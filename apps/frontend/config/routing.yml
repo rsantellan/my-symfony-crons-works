@@ -1,0 +1,62 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+filosofia:
+  url:   /filosofia.html
+  param: { module: default, action: filosofia }
+
+historia:
+  url:   /historia.html
+  param: { module: default, action: historia }
+
+actividades:
+  url:   /actividades.html
+  param: { module: default, action: actividades }
+
+galeria:
+  url:   /galeria/
+  param: { module: galeria, action: index }
+
+galeria_detalle:
+  url:   /galeria/:id/:slug.html
+  param: { module: galeria, action: show }
+  class:   sfDoctrineRoute
+  options: { model: mdGaleria, type: object }
+  requirements:
+    sf_method: [get]
+
+
+
+inscripciones:
+  url:   /inscripciones/
+  param: { module: default, action: inscripciones }
+
+contacto:
+  url: /contacto.html
+  param: { module: mdContact, action: index }
+
+activation:
+  url:	/activacion/:code
+  param: { module: bkAuth, action: activation }
+
+login:
+  url:	/login
+  param: { module: bkAuth, action: index }
+  
+logout:
+  url:	/logout
+  param: { module: bkAuth, action: logout }  
+  
+# default rules
+homepage:
+  url:   /
+  param: { module: default, action: index }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

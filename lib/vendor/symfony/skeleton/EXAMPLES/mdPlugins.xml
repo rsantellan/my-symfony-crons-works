@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugins xmlns="http://www.w3.org/2005/Atom">
+    <plugin>
+        <name>mastodontePlugin</name>
+        <path>http://mastodonte.dev:81/svn/plugins/mastodontePlugin/tags/1.0.9/</path>
+    </plugin>
+    <plugin>
+        <name>mdContactPlugin</name>
+        <path>http://mastodonte.dev:81/svn/plugins/mdContactPlugin/tags/1.0.0/</path>
+    </plugin>    
+</plugins>

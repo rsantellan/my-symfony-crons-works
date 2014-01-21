@@ -1,0 +1,27 @@
+mdUserManagement:
+  url: /users.html
+  param: { module: mdUserManagement, action: index}
+
+mdUserManagementSearch:
+  url: /userSearch.html
+  param: { module: mdUserManagement, action: searchmdUserManagement}
+  
+activate_user:
+  url: /activation.html
+  param: { module: mdUserConfirmation, action: activateUser }
+
+confirm_user_password:
+  url: /confirmation.html
+  param: { module: mdUserConfirmation, action: index }
+
+changeEmail:
+  url:   /changeEmail.html
+  param: { module: mdUserManagementFrontend, action: proccesMyChangeEmailAjax }
+
+changePassword:
+  url:   /changePassword.html
+  param: { module: mdUserManagementFrontend, action: proccesChangePasswordAjax }
+  
+forgotPassword:
+  url:   /forgot.html
+  param: { module: mdUserManagementFrontend, action: proccesChangePasswordAjax }  

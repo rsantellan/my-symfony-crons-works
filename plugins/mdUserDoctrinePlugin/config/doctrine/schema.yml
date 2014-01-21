@@ -1,0 +1,215 @@
+mdUser:
+  actAs: { Timestampable: ~ }
+  tableName: md_user
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    email:
+      type: string(128)
+      notnull: true
+      unique: true
+    super_admin:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    culture:
+      type: string(2)
+      notnull: false
+    deleted_at: timestamp(25)
+
+mdContent:
+  tableName: md_content
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    md_user_id:
+      type: integer(4)
+      notnull: true
+    object_class:
+       type: string(128)
+       notnull: true
+    object_id:
+       type: integer(4)
+       notnull: true
+  relations:
+    mdUser:
+      local: md_user_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+mdContentRelation:
+  columns:
+    md_content_id_first:
+      type: integer(4)
+      primary: true
+    md_content_id_second:
+      type: integer(4)
+      primary: true
+    object_class_name:
+      type: string(128)
+      notnull: true
+    profile_name:
+      type: string(128)
+      notnull: false
+  relations:
+    mdContentRelation1:
+      class: mdContent
+      local: md_content_id_first
+      foreign: id
+      type: one
+    mdContentRelation2:
+      class: mdContent
+      local: md_content_id_second
+      foreign: id
+      type: one
+
+#Parte del mdPassport
+mdPassport:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    md_user_id:
+      type: integer(4)
+      notnull: true
+    username:
+       type: string(128)
+       notnull: true
+    password:
+       type: string(128)
+       notnull: true
+    account_active:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    account_blocked:
+      type: integer(1)
+      default: '0'
+      notnull: true      
+    last_login:
+      type: timestamp
+      notnull: false
+  relations:
+    mdUser:
+      local: md_user_id
+      foreign: id
+      type: one
+
+mdPassportRememberKey:
+  options:
+    symfony:
+      form:   false
+      filter: false
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    md_passport_id:
+      type: integer(4)
+    remember_key: string(32)
+    ip_address:
+      type: string(50)
+      primary: true
+  relations:
+    mdPassport:
+      local: md_passport_id
+      foreignAlias: RememberKeys
+      onDelete: CASCADE
+
+
+mdUserProfile:
+  actAs:
+    MdContentBehavior: ~
+<?php if( sfConfig::get( 'sf_plugins_user_attributes', false ) ):  ?>
+    MdAttributeBehavior: ~
+<?php endif; ?>
+<?php if( sfConfig::get( 'sf_plugins_user_media', false ) ):  ?>
+    mdMediaBehavior: ~
+<?php endif; ?>
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name: string(128)
+    last_name: string(128)
+    city: string(128)
+    country_code:
+      type: string(2)
+      default: UY
+      
+mdUserSearch:
+  options:
+    symfony:
+      form:   false
+      filter: false
+  actAs: [Timestampable]
+  columns:
+    md_user_id:
+      type: integer(4)
+      notnull: true
+    email:
+      type: string(128)
+    username:
+       type: string(128)
+    name: 
+       type: string(128)
+    last_name:
+       type: string(128)
+    country_code:
+      type: string(2)
+    avatar_src:
+      type: string(256)
+    active:
+      type: boolean
+      default: 0      
+    blocked:
+      type: boolean
+      default: 0
+    admin:
+      type: boolean
+      default: 0
+    show_email:
+      type: boolean
+      default: 0            
+  relations:
+    mdUser:
+      local: md_user_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+  indexes:
+    username_index:
+      fields: [username]    
+    email_index:
+      fields: [email]
+    last_name_index:
+      fields: [last_name]
+    name_index:
+      fields: [name]      
+
+mdBlockedUsers:
+  actAs:
+    Timestampable: ~
+  columns:
+    md_user_id:
+      type: integer(4)
+      primary: true
+    reason:
+       type: string(128)
+  relations:
+    mdUser:
+      local: md_user_id
+      foreign: id
+      type: one

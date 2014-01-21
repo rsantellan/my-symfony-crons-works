@@ -1,0 +1,15 @@
+.lightbox_container { position: absolute; z-index: 9999; padding: 24px; }
+.lightbox_container .closeButton { position: absolute; top: 10px; right: 10px; background: url(../images/closeButton.png); width: 38px; height: 38px; cursor: pointer; overflow: visible; z-index: 10000; }
+.lightbox_container .minimizeButton { position: absolute; top: 10px; right: 38px; background: url(../pics/chat/window/button-min-focus.png); width: 29px; height: 32px; cursor: pointer; overflow: visible; z-index: 10000; }
+.lightbox_container .maximizeButton { position: absolute; top: 10px; right: 38px; background: url(../pics/chat/window/button-max-focus.png); width: 29px; height: 32px; cursor: pointer; overflow: visible; z-index: 10000; }
+.lightbox_container .closeOtherButton { position: absolute; top: 10px; right: 10px; background: url(../pics/chat/window/button-close-focus.png); width: 28px; height: 32px; cursor: pointer; overflow: visible; z-index: 10000; }
+.lightbox_container iframe { background-color: white }
+.lightbox .clean { list-style: none; margin-left: 1em; }
+
+/*color*/
+.lightbox {
+    width: 550px;
+    padding: 5px;
+    /*-moz-border-radius: 1em; border-radius: 1em; -webkit-border-radius: 1em;*/
+    background-color:silver; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E6272727,endColorstr=#E6272727) !important;
+}

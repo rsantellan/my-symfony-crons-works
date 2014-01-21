@@ -1,0 +1,54 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/04-Settings
+
+prod:
+  .settings:
+    no_script_name:         true
+    logging_enabled:        false
+
+dev:
+  .settings:
+    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
+    web_debug:              true
+    cache:                  false
+    no_script_name:         false
+    etag:                   false
+
+test:
+  .settings:
+    error_reporting:        <?php echo ((E_ALL | E_STRICT) ^ E_NOTICE)."\n" ?>
+    cache:                  false
+    web_debug:              false
+    no_script_name:         false
+    etag:                   false
+
+all:
+  .settings:
+    # Form security secret (CSRF protection)
+    csrf_secret:            72d6f8b80ee7176f2c156ee0381bce9b17558326
+
+    # Output escaping settings
+    escaping_strategy:      true
+    escaping_method:        ESC_SPECIALCHARS
+
+    # Enable the database manager
+    use_database:           true
+
+    standard_helpers: [Partial, Cache, I18N]
+
+    #Culture
+    i18n:                   on
+    default_culture:        es
+
+    # Enable de login by Mastodonte Auth
+    login_module:           bkAuth
+    login_action:           index
+#    secure_module:          bkAuth
+#    secure_action:          secure
+
+    #Modules enabled
+    enabled_modules:        [default, mdWebImage,mdContact]
+    #enabled_modules:        [default, mdAuth, mdUserManagementFrontend, mdMediaContentAdmin, uploader, mdWebImage, mdInvite, oneWidgetForms, openInviter, mdUserConfirmation, mdUserFriendshipFrontend, mdNotesFrontend, mdSocialGroup, mdMediaContentFrontend, mdContact, comment, mdAds, iLikeIt]
+
+    #Tiempo de vida de la sesión en segundos 6 horas
+    #timeout:     21600

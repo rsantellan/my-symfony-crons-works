@@ -1,0 +1,194 @@
+all:
+  .tiny:
+    #jfilebrowser_path: "/tiny"
+
+  .plugins:
+########Usuarios########
+# Activar los atributos para los usuarios
+    plugins_user_attributes: false
+# Activar la media para el usuario
+    plugins_user_media: false
+# Activar la carga de grupos y permisos para el usuario.
+    plugins_user_groups_permissions: false
+# Desactivar el envio de mails por testeo
+    plugins_user_not_send_mail: false
+# Muestra la tabla de amigos en el backend 
+    plugins_user_friendship_box: false
+
+########### mdAuthDoctrine #############
+#configura el layout del signin. False no usa, o string con el nombre del layout, true usa el por defecto
+#    plugins_auth_signin_useLayout: true
+
+
+#########Noticias########
+# Activar que una noticia sea destacada
+    plugins_news_feature: false
+# Activar la media para las noticias
+    plugins_news_media: false
+# Activar las categorias para las noticias
+    plugins_news_category: false
+# Activar los comentarios para las noticias
+    plugins_news_commentary: false
+# Activar los ratings para las noticias
+    plugins_news_ratings: false
+
+#########Categorias########
+# Para habilitar la media de las categorias
+    plugins_category_media: false
+# Para habilitar los atributos de las categorias
+    plugins_category_attributes: false
+# Para habilitar el widget de color picker en las categorias
+    plugins_category_attribute_color_picker: false
+# Prioridades para las categorias
+    plugins_category_priority: false
+# Muestra solo las categorías de primer nivel
+    plugins_category_mono_level: false
+
+#########Dynamic Content########
+# Activar la media para los dynamic content
+    plugins_dynamic_media: false
+# Activar las categorias para los dynamic content
+    plugins_dynamic_category: false
+# Activar las opciones de fecha para los dynamic content
+    plugins_dynamic_show_publish_at: false
+# Activar manejo de tipos de dynamicContent por separado
+    plugins_dynamic_manage: false
+# Activar el manejo de prioridades
+    plugins_dynamic_priority: false
+# Activar si los dynamic van a tener el campo visible
+    plugins_dynamic_show_is_visible: false
+# Activar la utilizacion de los colores en los closed box del backend
+    plugins_dynamic_change_box_colors: false
+# Activar interaccion con Google Map - Depende de mdGoogleMapDoctrinePlugin
+    plugins_dynamic_googleMap_manage: false
+# Activar que perfil de dynamic van a tener interaccion con google map, se necesita plugins_dynamic_googleMap_manage activado
+# la estrucura es plugins_dynamic_googleMap_ + nombre del profile (type name)
+    #plugins_dynamic_googleMap_nameProfile : true
+# Activar la utilizacion de los colores en los closed box del backend
+    plugins_dynamic_change_box_colors: false
+# Activar si los dynamic van a tener comentarios    
+    plugins_dynamic_commentable: false
+# Activar si los dynamic van a tener comentarios en el backend, se necesita el anterior activado
+    plugins_dynamic_backend_comments: false
+# Activar que perfil de dynamic van a tener comentarios en el backend, se necesita el anterior activado
+# la estrucura es plugins_dynamic_backend_comments_profile_ + id del profile
+    #plugins_dynamic_backend_comments_profile_3 : false
+#########Content########
+# Activar manejo de relaciones entre contenidos
+    plugins_relation_content_manage: false
+
+###########Shopping##########
+    plugins_shopping_attribute: false
+    plugins_shopping_feature: false
+    plugins_shopping_media: false
+    plugins_shopping_category: false
+    plugins_mdBackendSalesFile_xml_edit: false
+    plugins_shopping_sortable: false
+# Activa si mostrar o no el campo tax. 
+    plugins_shopping_show_tax: false    
+# Activa los mdShoppingProviders en la venta del frontend
+    plugins_shopping_providers: true
+# Selecciona el default country provider
+#    plugins_shopping_providers_default: 'US'
+    
+# Activa la separacion de los menues del backend por las categorias que contienen los productos.
+    plugins_products_manage: false
+# Selecciona que moneda va a usar por defecto.
+    plugins_products_default_currency: 1
+
+# Si los productos usan el widget de seleccion multiple con posibilidad de
+# agregar esto tiene que estar activado
+
+    plugins_shopping_select_and_add_multiple_widget: false
+    
+#########Uploader de imagenes#######
+# Por defecto se podran subir solo imagenes y el javascript que dibuja las cosas vendra
+# sin que se le pueda poner comentarios.
+# Los parametros para modificar este comportamiento son. plugins_upload_content_type_ + clase del objeto
+#
+# ejemplo para el mdNews para que acepte archivos .pdf se pondria.
+# plugins_upload_content_type_mdNews: '*.jpg;*.jpeg;*.gif;*.png;*.doc;*.pdf'
+
+#########Archivos de configuracion de xml###############
+    plugins_mdAuthFile_xml_edit: false
+    plugins_mdBackendGroupsFile_xml_edit: false
+
+######### Features ###################
+# Activar la creacion de features
+    plugins_feature_create: false
+
+######### Ratings ####################
+# Activar el poder votar dos veces
+    plugins_mdRating_multi_vote: false
+
+######### Atributos ##################
+# Setea el widget de años con el mayor rango posible
+    plugins_datepicker_big_year: false
+
+######### MdFileHandler ###############
+# Setea si obtiene las imagenes por fecha ascendente o descendente
+    image_order_ascending: false
+    
+######### Images Resolution #################
+    image_cuality_change: false
+    image_cuality_porcent: 75
+
+######### ImageMagick Commands Debug ###############
+    plugin_mdMedia_imagick_debug: false
+
+###########Geo IP ###########
+    plugins_user_geoip: false
+
+########## MdImageFileGallerie ###########
+# Formatos soportados
+    plugins_upload_content_type_image_gallery: '*.jpg;*.jpeg;*.gif;*.png;*.pdf'
+
+########## MdUserMessages ################
+#Forma en que se muestra los usuarios. (Por mail, por usuario o por nombre y apellido)
+#Esto estan por orden de prioridad o sea el primero que este en false va a ser el que se muestre.
+    plugins_user_message_show_mail: false
+    plugins_user_message_show_username: false
+    plugins_user_message_show_user: false
+    plugins_user_message_media: false
+
+########## MdUserStatus #################
+    plugins_user_status_active: false
+
+########## mdWall #################
+
+    plugins_wall_commentable: false
+    plugins_wall_media: false
+
+########## mdMedia ##################
+
+    plugins_media_rating: false
+    # Permite habilitar manejo de videos embebidos por tipo de contenido
+    # ejemplo: plugins_$OBJECTCLASS_video_embebed_available
+    plugins_mdDynamicContent_video_embebed_available: true
+    # Permite especificar los tipos de videos embebidos soportados: vimeo, youtube, issuu
+    plugins_media_videos_embebed_types: [vimeo, youtube, issuu]
+    
+########## mdSocialGroup ##############
+
+    plugins_social_group_media: false
+
+    plugins_social_group_commentable: false
+
+######### sfWidgetFormTextareaTinyMCE ###############
+# Hace que siempre se ejecute el tiny mce.
+    plugins_always_auto_launch_tiny_mce: false
+# En caso de que se cambie la variable anterior esto hace que se limpie inmediatamente
+# las variables.
+    plugins_clean_auto_launch_tiny_mce: false
+
+########## mdTranslator ###############
+
+    plugins_translator_add_new_word: false    
+
+########## mdContact  #################
+    # habilita el captcha en el mdContact - El servicio de captcha debe estar habilitado: plugins_captcha_available: true
+    plugins_contact_captcha_available: false
+
+########## mastodontePlugin  #################
+    # habilita el servicio de CAPTCHA
+    plugins_captcha_available: false

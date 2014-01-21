@@ -1,0 +1,66 @@
+<?php if (sfConfig::get('sf_plugins_user_groups_permissions', false)): ?>
+
+mdGroup:
+  mdTranslatorsFrontendEsGroup:
+    name: 'traductores del sitio español'
+    description: 'For use of the translators of the spanish frontend'
+  mdTranslatorsBackendEsGroup:
+    name: 'traductores del admin español'
+    description: 'For use of the translators of the spanish backend'
+  mdTranslatorsFrontendEnGroup:
+    name: 'translators frontend english'
+    description: 'For use of the translators of the english frontend'
+  mdTranslatorsBackendEnGroup:
+    name: 'translators backend english'
+    description: 'For use of the translators of the spanish backend'
+  mdTranslatorsFrontendPtGroup:
+    name: 'Tradutores site público em Português'
+    description: 'Tradutores site público em Português'
+  mdTranslatorsBackendPtGroup:
+    name: 'Site administradores tradutores em Português'
+    description: 'Site administradores tradutores em Português'
+
+    
+mdPermission:
+  backend:
+    name: 'backend'
+    description: 'For use in the backend'
+  frontend:
+    name: 'frontend'
+    description: 'For use in the frontend'
+  es:
+    name: 'es'
+    description: 'Para usar en español'
+  en:
+    name: 'en'
+    description: 'For use in english'
+  pt:
+    name: 'pt'
+    description: 'Para uso em Português'
+
+mdGroupPermission:
+  traductorEsFrontendApp:
+    mdGroup: mdTranslatorsFrontendEsGroup
+    mdPermission: frontend
+  traductorEsFrontend:
+    mdGroup: mdTranslatorsFrontendEsGroup
+    mdPermission: es
+  traductorEnFrontendApp:
+    mdGroup: mdTranslatorsFrontendEnGroup
+    mdPermission: frontend
+  traductorEnFrontend:
+    mdGroup: mdTranslatorsFrontendEnGroup
+    mdPermission: en
+  traductorEsBackendApp:
+    mdGroup: mdTranslatorsBackendEsGroup
+    mdPermission: frontend
+  traductorEsBackend:
+    mdGroup: mdTranslatorsBackendEsGroup
+    mdPermission: es
+  traductorEnBackendApp:
+    mdGroup: mdTranslatorsBackendEnGroup
+    mdPermission: backend
+  traductorEnBackend:
+    mdGroup: mdTranslatorsBackendEnGroup
+    mdPermission: en
+<?php endif; ?>

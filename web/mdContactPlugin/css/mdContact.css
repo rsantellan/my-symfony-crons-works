@@ -1,0 +1,56 @@
+/*CONTACTO*/
+#mdContact{
+    float:left;
+}
+#mdContact form{
+	margin-top:20px;
+	width:538px;
+        padding: 0 !important
+	}
+#mdContact label{
+	width:80px;
+	text-align:left;
+	font-size:13px;
+	float:left;
+	margin-right:10px;
+	}
+#mdContact input{
+	width:420px;
+	border:1px solid #CCCCCC;
+	float:left;
+	margin-bottom:15px;
+	}
+#mdContact textarea{
+	width:419px;
+	font-family:Trebuchet MS;
+	font-size:13px;
+	color:#666666;
+	border:1px solid #CCCCCC;
+	margin-bottom:15px;
+	float:left;
+	}
+#mdContact input#input_submit{
+	border:none !important;
+	background:#cccccc;
+	float:right !important;
+	width:108px !important;
+	height:34px !important;
+	margin-right:19px;
+	margin-bottom:0 !important;
+	}
+#mdContact form span,
+#mdContact .text_form span{
+	float:left;
+	margin-left:10px;
+	font-size:30px;
+	font-weight:bold;
+	color:white;
+	line-height:28px;
+	}
+#mdContact .text_form{
+	font-size:11px;
+	color:#CCCCCC;
+	font-weight:bold;
+	float:right;
+	margin:0 65px 40px 0;
+	}
