@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="en" datatype="plaintext" original="messages" date="2010-07-28T15:25:22Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>mdTranslator_text_translator</source>
+        <target>Translator</target>
+        <note>en</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>mdTranslator_text_pluginTranslator</source>
+        <target>Plugin Translator</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>mdTranslator_addWord</source>
+        <target>add word</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>mdTranslator_close</source>
+        <target>close</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>mdTranslator_text_Textos</source>
+        <target>Texts</target>
+        <note>en</note>
+      </trans-unit>
+			<trans-unit id="6">
+			  <source>mdTranslator_mostrar referencia</source>
+			  <target>show reference</target>
+			</trans-unit>
+    </body>
+  </file>
+</xliff>

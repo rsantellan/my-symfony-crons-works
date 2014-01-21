@@ -1,0 +1,8 @@
+configuration:
+  url: /configuration.html
+  param: { module: configurations, action: index }
+
+symfonycc:
+  url: /symfonyClearCache.html
+  param: { module: default, action: symfonyClearCache }
+  

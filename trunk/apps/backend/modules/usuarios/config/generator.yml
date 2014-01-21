@@ -1,0 +1,40 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           usuario
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          usuario
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        actividades_list: { label: Actividades }
+        referencia_bancaria: {label: Ref. Bancaria}
+      list:
+        fields:
+          fecha_nacimiento: { date_format: dd/MM/yyyy }
+        display:  [=referencia_bancaria, =apellido, nombre, fecha_nacimiento, clase]
+        sort:   [apellido, asc]
+        max_per_page: 30
+        table_method: addDefaultsFilter
+      filter:
+        display:  [referencia_bancaria, apellido, nombre, clase, horario, futuro_colegio, anio_ingreso, actividades_list]
+      form:
+        actions:
+          _print:
+            label: imprimir
+            params:
+              class: iframe
+              id: print-button
+              onclick: javascript:window.print(); return false;  
+          _delete: ~
+          _list:   ~
+          _save:   ~
+      edit:    ~
+      new:     ~

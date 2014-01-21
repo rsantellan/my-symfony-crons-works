@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="es" datatype="plaintext" original="messages" date="2010-07-28T16:17:04Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>mdUserDoctrine_text_users</source>
+        <target>Usuarios</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>mdUserDoctrine_text_add</source>
+        <target>Agregar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>mdUserDoctrine_text_close</source>
+        <target>Cerrar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>mdUserDoctrine_text_search</source>
+        <target>Buscar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>mdUserDoctrine_text_createdAt</source>
+        <target>Creado</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>mdUserDoctrine_text_backendFilter</source>
+        <target>Filtros</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>mdUserDoctrine_text_edit</source>
+        <target>Editar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>mdUserDoctrine_text_cancel</source>
+        <target>Cancelar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>mdUserDoctrine_text_save</source>
+        <target>Guardar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>mdUserDoctrine_text_username</source>
+        <target>Usuario</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>mdUserDoctrine_text_IsSuperAdmin</source>
+        <target>Es super usuario</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>mdUserDoctrine_text_ResetPassword</source>
+        <target>Reiniciar contraseña</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>mdUserDoctrine_text_name</source>
+        <target>Nombre</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>mdUserDoctrine_text_lastname</source>
+        <target>Apellido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>mdUserDoctrine_text_city</source>
+        <target>Ciudad</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>mdUserDoctrine_text_country</source>
+        <target>Pais</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>mdUserDoctrine_text_delete</source>
+        <target>Eliminar usuario</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>mdUserDoctrine_text_confirmRemove</source>
+        <target>¿Desea eliminar el usuario?</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>mdUserDoctrine_text_addProfile</source>
+        <target>AGREGAR PERFIL</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>mdUserDoctrine_text_selectProfile</source>
+        <target>Seleccionar un perfil</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="21">
+        <source>mdUserDoctrine_text_type</source>
+        <target>Tipo</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="22">
+        <source>mdUserDoctrine_text_detail</source>
+        <target>Detalle</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>mdUserDoctrine_text_content</source>
+        <target>Contenidos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="24">
+        <source>mdUserDoctrine_text_loading</source>
+        <target>Cargando</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="25">
+        <source>mdUserDoctrine_text_contentSelect</source>
+        <target>Elija el contenido que quiera crear</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="26">
+        <source>mdUserDoctrine_text_contentProject</source>
+        <target>Estos son los contenidos que tiene este proyecto:</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="27">
+        <source>mdUserDoctrine_text_ResetMailTitle</source>
+        <target>Usted a solicitado un cambio de contraseña</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="28">
+        <source>mdUserDoctrine_text_ResetMailDescription</source>
+        <target>El administrador le a reseteado la contraseña</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="29">
+        <source>mdUserDoctrine_text_ResetMailFollowLink</source>
+        <target>Siga el siguiente vinculo para poder ingresar su nueva contraseña</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="30">
+        <source>mdUserDoctrine_text_ResetHere</source>
+        <target>Aqui</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="31">
+        <source>mdUserDoctrine_text_ResetMailSubject</source>
+        <target>Cambio de contraseña</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="32">
+        <source>mdUserDoctrine_text_ActivationMailSubject</source>
+        <target>Activacion de la cuenta.</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="33">
+        <source>mdUserDoctrine_text_activateMailTitle</source>
+        <target>Activacion de la cuenta.</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>  
+      <trans-unit id="34">
+        <source>mdUserDoctrine_text_activateMailDescription</source>
+        <target>Descripcion de la activacion de la cuenta.</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>      
+      <trans-unit id="35">
+        <source>mdUserDoctrine_text_activateMailFollowLink</source>
+        <target>Seguir el link</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="36">
+        <source>layout_mdUserManagement</source>
+        <target>Manejo de usuarios</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>      
+      <trans-unit id="37">
+        <source>mdUserDoctrine_text_email</source>
+        <target>Email</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>    
+      <trans-unit id="38">
+        <source>mdUserDoctrine_text_isActive</source>
+        <target>ACTIVO</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>     
+      <trans-unit id="39">
+        <source>mdUserDoctrine_text_notIsActive</source>
+        <target>INACTIVO</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="40">
+        <source>mdUserDoctrine_text_password</source>
+        <target>Contraseña</target>
+        <note>es</note>
+        <target/>
+      </trans-unit> 
+      <trans-unit id="41">
+        <source>mdUserDoctrine_text_repeatPassword</source>
+        <target>Repetir Contraseña</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="41">
+        <source>mdUserDoctrine_text_noNewProfile</source>
+        <target>No hay perfil para agregar</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="42">
+        <source>mdUserDoctrine_text_cancelProfile</source>
+        <target>Cancelar el perfil</target>
+        <note>es</note>
+        <target/>
+      </trans-unit>
+      <trans-unit id="43">
+        <source>mdUserDoctrine_text_addMdPassport</source>
+        <target>Agregar datos del usuario</target>
+        <note>es</note>
+        <target/>
+      </trans-unit> 
+      <trans-unit id="44">
+        <source>mdUserDoctrine_error User Not Active</source>
+        <target>No ha activado su cuenta. Siga las instrucciones de su mail para hacerlo.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="45">
+        <source>mdUserDoctrine_error Invalid User</source>
+        <target>Datos incorrectos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="50">
+        <source>mdUserDoctrine_error Invalid Password</source>
+        <target>Datos incorrectos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="51">
+        <source>mdUserDoctrine_error Invalid Passport</source>
+        <target>No hay usuario registrado con la información ingresada</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="52">
+        <source>mdUserDoctrine_error Not Requiered Groups</source>
+        <target>No esta autorizado para acceder a esta sección.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="53">
+        <source>blocked_no importa</source>
+        <target>Ambos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="54">
+        <source>blocked_si</source>
+        <target>Si</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="55">
+        <source>blocked_no</source>
+        <target>No</target>
+        <note>es</note>
+      </trans-unit>          
+      <trans-unit id="56">
+        <source>mdUserDoctrine_text_isBlocked</source>
+        <target>Bloqueado</target>
+        <note>es</note>
+      </trans-unit>
+                      
+    </body>
+  </file>
+</xliff>

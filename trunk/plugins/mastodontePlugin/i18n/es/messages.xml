@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="es" datatype="plaintext" original="messages" date="2010-12-07T04:03:55Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>mastodontePlugin_text_contactConfiguration</source>
+        <target>Configuracion de contacto</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>layout_configuration</source>
+        <target>Configuraciones</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>mdConfiguration_text_save</source>
+        <target>Guardar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>mastodontePlugin_text_configurationGroupName</source>
+        <target>Nombre: </target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>mastodontePlugin_text_configurationGroupRequiered</source>
+        <target>Requerido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>mastodontePlugin_text_configurationGroupNotRequiered</source>
+        <target>No Requerido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>mastodontePlugin_text_backendSecurityConfiguration</source>
+        <target>Grupos requeridos para entrar a la administracion</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>mastodontePlugin_text_backendSalesConfiguration</source>
+        <target>Configuraciones de las ventas</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>mastodontePlugin_Tiene textos sin publicar</source>
+        <target>Tiene textos sin publicar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>mastodontePlugin_Publicando...</source>
+        <target>Publicando</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>mastodontePlugin_Los textos se han publicado</source>
+        <target>Los textos se han publicado</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>mastodontePlugin_publicar</source>
+        <target>PUBLICAR</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>tinymce_sacar formato</source>
+        <target>Sacar formato</target>
+        <note>es</note>
+      </trans-unit>      
+      <trans-unit id="13">
+        <source>tinymce_agregar formato</source>
+        <target>Agregar formato</target>
+        <note>es</note>
+      </trans-unit>   
+      <trans-unit id="14">
+        <source>Configuracion_Mail Titulo</source>
+        <target>Asunto</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>Configuracion_Mail Recipient</source>
+        <target>Destinatario</target>
+        <note>es</note>
+			</trans-unit>
+      <trans-unit id="16">
+        <source>Configuracion_Mail Automatico</source>
+        <target>Asunto de correos automáticos</target>
+        <note>es</note>
+			</trans-unit>
+      <trans-unit id="17">
+        <source>Configuracion_Mail Desde cliente</source>
+        <target>Enviar usando la información del visitante?</target>
+        <note>es</note>
+			</trans-unit>
+      <trans-unit id="18">
+        <source>Configuracion_Mail From Email</source>
+        <target>Envíos desde email</target>
+        <note>es</note>
+			</trans-unit>
+      <trans-unit id="19">
+        <source>Configuracion_Mail From Name</source>
+        <target>Envíos desde nombre</target>
+        <note>es</note>
+			</trans-unit>
+      <trans-unit id="20">
+        <source>Captcha_Ingrese el código de la imagen</source>
+        <target>Ingrese el código de la imagen</target>
+        <note>es</note>
+      </trans-unit> 
+      <trans-unit id="21">
+        <source>Captcha_Reload image</source>
+        <target>Recargar imagen</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="22">
+        <source>Captcha_Si no lo entiende haga click sobre ella</source>
+        <target>Si no lo entiende haga click sobre ella</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>layout_Agregar</source>
+        <target>Agregar</target>
+        <note>es</note>
+      </trans-unit>  
+      <trans-unit id="24">
+        <source>backendLayout_Usuarios</source>
+        <target>Usuarios</target>
+        <note>es</note>
+      </trans-unit> 
+      <trans-unit id="25">
+        <source>backendLayout_Textos</source>
+        <target>Textos</target>
+        <note>es</note>
+      </trans-unit>      
+    </body>
+  </file>
+</xliff>
