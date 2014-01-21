@@ -16,8 +16,8 @@ all:
     class: sfDoctrineDatabase
     param:
       dsn:      mysql:host=localhost;dbname=wwwbunny_masto
-      username: wwwbunny_masto
-      password: 0ts4m_ynnubwww
+      username: root
+      password: root
       attributes:
         use_native_enum: true
        

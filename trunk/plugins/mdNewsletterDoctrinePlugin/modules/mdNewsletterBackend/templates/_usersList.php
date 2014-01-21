@@ -10,8 +10,12 @@
               </h2>
               <div id="group_form_holder" class="users_holder">
                 <?php foreach($users as $user): ?>
-                
-                <input type="checkbox" name="user" value="<?php echo $user->getId(); ?>" onclick="mdNeewsLetterBackend.getInstance().addUsersForSending();" /> <?php echo $user->getMdUser()->getEmail();?><br/>
+                <?php 
+                    /*var_dump($user["id"]);
+                    var_dump($user["email"]);
+                    var_dump($user["nombre"]);*/
+                ?>
+                  <input type="checkbox" name="user" value="<?php echo $user["id"]; ?>" onclick="mdNeewsLetterBackend.getInstance().addUsersForSending();" /> <?php echo $user["nombre"];?><br/><strong><?php echo  $user["email"];?></strong><br/>
                   <?php //print_r($users->toArray()); ?>
                   
                 <?php endforeach;?>

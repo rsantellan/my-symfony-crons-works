@@ -30,6 +30,13 @@ class mdNewsletterHandler
       return Doctrine::getTable("mdNewsLetterUser")->findAll();
     }
     
+    public static function retrieveAllForBox()
+    {
+        $sql = "SELECT mnlu.id, mnlu.md_user_id, mu.email, p.mail, p.nombre FROM md_news_letter_user mnlu left join md_user mu on mu.id = mnlu.md_user_id  left join progenitor p on mu.id = p.md_user_id WHERE mu.id in (select md_user_id from md_news_letter_user) ORDER BY p.mail ASC";
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+        return $q->fetchAssoc($sql);
+    }
+    
     public static function retrieveUsers($page = null, $limit = null)
     {
         return Doctrine::getTable("mdNewsLetterUser")->retrieveAllUsersOfNewsLetter($page, $limit);
