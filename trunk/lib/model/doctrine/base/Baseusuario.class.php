@@ -27,6 +27,8 @@
  * @property Doctrine_Collection $hermanos
  * @property Doctrine_Collection $pagos
  * @property Doctrine_Collection $exoneracion
+ * @property Doctrine_Collection $cuentausuario
+ * @property Doctrine_Collection $factura
  * 
  * @method integer             getId()                  Returns the current record's "id" value
  * @method string              getNombre()              Returns the current record's "nombre" value
@@ -50,6 +52,8 @@
  * @method Doctrine_Collection getHermanos()            Returns the current record's "hermanos" collection
  * @method Doctrine_Collection getPagos()               Returns the current record's "pagos" collection
  * @method Doctrine_Collection getExoneracion()         Returns the current record's "exoneracion" collection
+ * @method Doctrine_Collection getCuentausuario()       Returns the current record's "cuentausuario" collection
+ * @method Doctrine_Collection getFactura()             Returns the current record's "factura" collection
  * @method usuario             setId()                  Sets the current record's "id" value
  * @method usuario             setNombre()              Sets the current record's "nombre" value
  * @method usuario             setApellido()            Sets the current record's "apellido" value
@@ -72,6 +76,8 @@
  * @method usuario             setHermanos()            Sets the current record's "hermanos" collection
  * @method usuario             setPagos()               Sets the current record's "pagos" collection
  * @method usuario             setExoneracion()         Sets the current record's "exoneracion" collection
+ * @method usuario             setCuentausuario()       Sets the current record's "cuentausuario" collection
+ * @method usuario             setFactura()             Sets the current record's "factura" collection
  * 
  * @package    jardin
  * @subpackage model
@@ -189,6 +195,14 @@ abstract class Baseusuario extends sfDoctrineRecord
              'foreign' => 'usuario_id'));
 
         $this->hasMany('exoneracion', array(
+             'local' => 'id',
+             'foreign' => 'usuario_id'));
+
+        $this->hasMany('cuentausuario', array(
+             'local' => 'id',
+             'foreign' => 'usuario_id'));
+
+        $this->hasMany('factura', array(
              'local' => 'id',
              'foreign' => 'usuario_id'));
     }
