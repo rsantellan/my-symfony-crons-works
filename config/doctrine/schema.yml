@@ -382,3 +382,173 @@ mdGaleria:
     curso_amarillo:
       type: boolean
       default: false
+      
+cuenta:
+  actAs: { Timestampable: ~ }
+  tableName: cuenta
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(64)
+      notnull: true    
+
+cobro:
+  actAs: { Timestampable: ~ }
+  tableName: cobro
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    cuenta_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    monto:
+      type: float(12,2)
+      default: 0
+      notnull: true
+  relations:
+    cuenta:
+      class: cuenta
+      local: cuenta_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+cuentapadre:
+  tableName: cuentapadre
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    cuenta_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    progenitor_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+  relations:      
+    cuenta:
+      local: cuenta_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    progenitor:
+      local: progenitor_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+cuentausuario:
+  tableName: cuentausuario
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    cuenta_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    usuario_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+  relations:      
+    cuenta:
+      local: cuenta_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    usuario:
+      local: usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+factura:
+  actAs: { Timestampable: ~ }
+  tableName: factura
+  columns:
+    id:
+      type: integer(20)
+      primary: true
+      autoincrement: true
+    usuario_id:
+      type: integer(4)
+      notnull: true
+    costo_turno:
+      type: float(12,2)
+      default: 0
+      notnull: true
+    costo_actividad:
+      type: float(12,2)
+      default: 0
+      notnull: true
+    costo_matricula:
+      type: float(12,2)
+      default: 0
+      notnull: true
+    descuento_hermano:
+      type: float(12,2)
+      default: 0
+      notnull: true
+    descuento_alumno:
+      type: float(12,2)
+      default: 0
+      notnull: true
+    costo_turno:
+      type: float(12,2)
+      default: 0
+      notnull: true      
+    total:
+      type: float(12,2)
+      default: 0
+      notnull: true
+    month:
+      type: integer(4)
+      notnull: true
+    year:
+      type: integer(4)
+      notnull: true
+    recargo_atraso:
+      type: float(12,2)
+      default: 0
+      notnull: true
+    porcentaje_atraso:
+      type: float(6,2)
+      default: 0
+      notnull: true
+    pago:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    cancelado:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    cuenta_id:
+      type: integer(4)
+      notnull: true
+  relations:      
+    cuenta:
+      class: cuenta
+      local: cuenta_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    usuario:
+      class: usuario
+      local: usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
