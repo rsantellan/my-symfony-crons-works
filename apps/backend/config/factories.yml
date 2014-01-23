@@ -26,7 +26,7 @@ test:
 dev:
   mailer:
     param:
-      delivery_strategy: spool
+      delivery_strategy: none
 
 all:
   routing:

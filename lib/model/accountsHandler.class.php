@@ -86,6 +86,47 @@ class accountsHandler {
         }
     }
     
+	public static function createUsuarioAccount($userId, $lastname)
+	{
+	  $cuenta = new cuenta();
+	  $cuenta->setNombre($lastname);
+	  $cuenta->save();
+	  $cuentaUsuario = new cuentausuario();
+	  $cuentaUsuario->setUsuarioId($userId);
+	  $cuentaUsuario->setCuentaId($cuenta->getId());
+	  $cuentaUsuario->save();
+	}
+	
+	public static function createParentAccount($parent_id, $name)
+	{
+	  $cuenta = new cuenta();
+	  $cuenta->setNombre($name);
+	  $cuenta->save();
+	  $cuentapadre = new cuentapadre();
+	  $cuentapadre->setProgenitorId($parent_id);
+	  $cuentapadre->setCuentaId($cuenta->getId());
+	  $cuentapadre->save();
+	}
+	
+	public static function removeParentAccountOfChilds($parent_id, $name)
+	{
+	  //tengo que verificar que no tiene ningun cobro ni factura
+	  $cuentapadre = Doctrine::getTable('cuentapadre')->findOneByProgenitorId($parent_id);
+	  $cuenta = new cuenta();
+	  $cuenta->setNombre($name);
+	  $cuenta->save();
+	  $cuentapadre->setCuentaId($cuenta->getId());
+	  $cuentapadre->save();
+	}
+	
+	public static function acommodateLossedAccounts()
+	{
+	  //tengo que verificar que no tiene ningun cobro ni factura
+	  $sql = "delete from cuenta where id not in (select cuenta_id from cuentapadre union select cuenta_id from cuentausuario)";
+	  $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+	  $q->execute($sql);
+	}
+	
     public static function populateParentsAccounts()
     {
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
