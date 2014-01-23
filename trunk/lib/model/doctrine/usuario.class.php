@@ -57,6 +57,29 @@ class usuario extends Baseusuario {
         return $discount;
     }
 
+    public function calculateBrothersDiscount()
+    {
+        $sql = "select count(*) as cantidad from hermanos where usuario_from = ? and usuario_to not in (select id from usuario where egresado = 1);";
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+        $hermanos_cantidad = $q->fetchRow($sql, array($this->getId()));
+        $discount = 0;
+        $descuento = Doctrine::getTable('descuentos')->findOneByCantidadDeHermanos($hermanos_cantidad['cantidad']);
+        if ($descuento) {
+            $discount = $descuento->getPorcentaje();
+        }
+        return $discount;
+    }
+    
+    public function retrieveBillingDescription()
+    {
+        $string = "Turno: ".$this->getHorario()."\r\n";
+        foreach ($this->getActividades() as $actividad) {
+            $string .= "Actividad: ".$actividad->getNombre()."\r\n";
+        }
+        return $string;
+        
+    }
+    
     /**
      * Formula: total = ($cuota_mensual - $descuento) + $actividades + $billetera + (matricula si es Set u Oct)
      * @return float 
@@ -70,12 +93,24 @@ class usuario extends Baseusuario {
 
     public function _applyMatricula() {
         $mes_current = date('n');
+        /*
         if ($mes_current == 9 || $mes_current == 10) {
             $this->total+= costos::getCosto('matricula') / 2;
         }
+        */
+        $this->total += $this->calculateMatricula($mes_current);
         return $this;
     }
 
+    public function calculateMatricula($month)
+    {
+        $total = 0;
+        if ($month == 9 || $month == 10) {
+            $total = costos::getCosto('matricula') / 2;
+        }
+        return $total;
+    }
+    
     public function _applyDiscount() {
         $discount = $this->calcularDescuento();
         $this->total = ($this->total - ($this->total * $discount / 100));
@@ -83,15 +118,21 @@ class usuario extends Baseusuario {
     }
 
     public function _applyActividades() {
+        
+        $this->total+= $this->calculateActividades();
+        return $this;
+    }
+
+    public function calculateActividades()
+    {
         $actividades = $this->getActividades();
         $sum = 0;
         foreach ($actividades as $actividad) {
             $sum+= $actividad->getCosto();
         }
-        $this->total+= $sum;
-        return $this;
+        return $sum;
     }
-
+    
     public function _applyImpuesto() {
         $billetera = $this->getBilletera();
         if ($billetera) {
@@ -345,5 +386,11 @@ class usuario extends Baseusuario {
 	  parent::postInsert($event);
 	  accountsHandler::createUsuarioAccount($this->getId(), $this->getApellido());
 	}
+    
+    public function postSave($event) {
+        parent::postSave($event);
+        factura::updateUserBill($this, date('n'), date('Y'));
+    }
+
 
 }

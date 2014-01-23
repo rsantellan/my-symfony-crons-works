@@ -47,7 +47,7 @@
   
   function initialize(){
     $.ajax({
-        url:   __MD_CONTROLLER_BACKEND_SYMFONY + "/usuarios/getUsuarios",
+        url:   '<?php echo url_for('usuarios/getUsuarios')?>',
         type: 'post',
         dataType: 'json',
         success: function(json){
@@ -104,7 +104,7 @@
     var _TEMPLATE_LI = '<li><a href="' + __MD_CONTROLLER_BACKEND_SYMFONY + '/usuarios/{usuario_to}/edit' + '">{name}</a><img class="cursor-pointer" src="/images/ierror.png" alt="" onclick="removeHermano(this, {usuario_from}, {usuario_to})" /></li>';
     mdShowLoading();
     $.ajax({
-        url:   __MD_CONTROLLER_BACKEND_SYMFONY + "/usuarios/addHermano",
+        url:   '<?php echo url_for('usuarios/addHermano')?>',
         type: 'post',
         dataType: 'json',
         data: [{name: "usuario_from", value: _USUARIO_FROM}, {name: "usuario_to", value: data.attributes.value}],
@@ -124,7 +124,7 @@
   function removeHermano(obj, usuario_from, usuario_to){
     mdShowLoading();
     $.ajax({
-        url:   __MD_CONTROLLER_BACKEND_SYMFONY + "/usuarios/removeHermano",
+        url:   '<?php echo url_for('usuarios/removeHermano')?>',
         type: 'post',
         dataType: 'json',
         data: [{name: "usuario_from", value: usuario_from}, {name: "usuario_to", value: usuario_to}],

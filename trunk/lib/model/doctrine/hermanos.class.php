@@ -56,4 +56,10 @@ class hermanos extends Basehermanos
     $usuario = Doctrine::getTable('usuario')->find($usuario_from);
     $usuario->updateNewsletter();
   }
+  
+  public function postInsert($event) {
+	  parent::postInsert($event);
+	  accountsHandler::syncParentChildsBrothersAccounts($this->getUsuarioFrom());
+	  accountsHandler::syncParentChildsBrothersAccounts($this->getUsuarioTo());
+	}
 }
