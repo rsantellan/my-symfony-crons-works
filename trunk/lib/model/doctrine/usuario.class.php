@@ -340,4 +340,10 @@ class usuario extends Baseusuario {
             }
         }
     }
+	
+	public function postInsert($event) {
+	  parent::postInsert($event);
+	  accountsHandler::createUsuarioAccount($this->getId(), $this->getApellido());
+	}
+
 }

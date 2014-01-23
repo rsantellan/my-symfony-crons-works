@@ -42,4 +42,14 @@ class usuario_progenitor extends Baseusuario_progenitor
         $register_one = Doctrine::getTable('usuario_progenitor')->find(array($usuario_id, $progenitor_id));
         $register_one->delete();
     }
+	
+	public function postInsert($event) {
+	  parent::postInsert($event);
+	  accountsHandler::syncParentChildsBrothersAccounts($this->getUsuarioId(), $this->getProgenitorId());
+	}
+	
+	public function postDelete($event) {
+	  parent::postDelete($event);
+	  accountsHandler::removeParentAccountOfChilds($this->getProgenitorId(), $this->getProgenitor()->getNombre());
+	}
 }
