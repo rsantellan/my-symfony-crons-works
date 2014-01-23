@@ -5,7 +5,9 @@
 <?php slot('alertas'); ?>
 <?php slot('nav') ?>Alertas<?php end_slot(); ?>
 
-<?php $meses = array(
+<?php 
+/*
+$meses = array(
   '1' => 'Enero',
   '2' => 'Febrero',
   '3' => 'Marzo',
@@ -21,35 +23,34 @@
   );
 
   $mesactual = date('n');
+
+  $isSetiembreOrOctubre = $mescurrent == 9 || $mescurrent == 10;
+  */
+
+$colors_list = array();
+
 ?>
 
-<?php $isSetiembreOrOctubre = $mescurrent == 9 || $mescurrent == 10; ?>
+
 
 <section class="column width7 first">
   
   <div class="colgroup leading">
     <div class="column width7 first">
-      <h3>Meses anteriores</h3>
+      <h3></h3>
       <p>
-        <?php foreach($meses as $key => $value): ?>
-        
-          <a <?php echo ($mescurrent == $key ? 'class="current"' : ''); ?> href="<?php echo url_for('@alertas?mes=' . $key); ?>"><?php echo $value; ?></a>
 
-          <?php if($key == $mesactual): break; ?>
-          <?php else: echo ' - '; endif; ?>
-          
-        <?php endforeach; ?>
       </p>
     </div>
   </div>
   
-  <br />
+  
   
   <div class="colgroup leading">
-    <div class="box box-warning">A continuacion se listan los usuarios que aun no han pagado la cuota del mes de <?php echo $meses[$mescurrent]; ?></div>
+    <div class="box box-warning">A continuacion se listan los usuarios que tienen deudas pendientes</div>
     
     <div id="sf_admin_container2" class="column width6 first">
-      <h4>Alumnos con deudas:&nbsp;&nbsp;<a href="#" id="count-deudores"><?php echo $usuarios->count(); ?></a></h4>
+      <h4>Alumnos con deudas:&nbsp;&nbsp;<a href="#" id="count-deudores"><?php echo $facturas->count(); ?></a></h4>
       <ul class="sf_admin_actions" style="list-style: none;">
         <li class="sf_admin_action_print">
           <a href="javascript:void(0)" onclick="javascript:window.print(); return false;" id="print-button" class="iframe" style="padding-left: 20px;">Imprimir</a>
@@ -57,66 +58,65 @@
       </ul>
       <hr />
       
-      <?php if($usuarios->count() > 0): ?>
-      <table class="no-style full">
-        <thead>
-          <tr>
-            <td>Ref. Bancaria</td>
-            <td>Alumno</td>
-            <td class="ta-center">Costo</td>
+      <?php if($facturas->count() == 0): ?>
+        <p>No hay alumnos con deudas</p>
+      <?php else: ?>
+        <table class="no-style full">
+            <thead>
+              <tr>
+                <td>Ref. Bancaria</td>
+                <td>Alumno</td>
+                <td class="ta-center">Costo</td>
 
-            <!-- <td class="ta-center">Detalle</td> -->
-            
-            <td class="">Fuera de fecha ?</td>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach($usuarios as $usuario): ?>
-          <?php $total = $usuario->calcularTotal(); ?>
-          <tr>
-            <td><?php echo $usuario->getReferenciaBancaria(); ?></td>
-            <td><a href="<?php echo url_for('usuarios/edit/?id=' . $usuario['id']); ?>"><?php echo $usuario['apellido'] . ', ' . $usuario['nombre']; ?></a></td>
-            <td class="ta-center">$U <?php echo $total; ?></td>           
-            <!-- <td class="ta-center">
-              <?php //echo 'Cuota - '; ?>
-              
-              <?php //if($isSetiembreOrOctubre): ?>
-                <?php //echo 'Matricula - '; ?>
-              <?php //endif; ?>
-              
-              <?php //$first = true; ?>
-              <?php //foreach($usuario->getActividades() as $actividad): ?>
-              
-                <?php //if(!$first): ?>
-                  <?php //echo ' - '; ?>
-                <?php //endif; ?>
-                <?php //$first = false; ?>              
+                <!-- <td class="ta-center">Detalle</td> -->
+
+                <td class="">Fuera de fecha ?</td>
+              </tr>
+            </thead>
+            <tbody>
+                <?php foreach($facturas as $factura):
+                        $color = "";
+                        if(isset($colors_list[$factura->getCuentaId()]))
+                        {
+                            $color = $colors_list[$factura->getCuentaId()];
+                        }
+                        else
+                        {
+                            $color = $factura->getRandomColor();
+                            while(in_array($color, $colors_list))
+                            {
+                                $color = $factura->getRandomColor();
+                            }
+                            $colors_list[$factura->getCuentaId()] = $color;
+                        }
                 
-                <?php //echo $actividad; ?>
-              
-              <?php //endforeach; ?>
-            </td>-->
-            
-            <td class="ta-center">
-              <form class="alert-form" action="<?php echo url_for('@pagar'); ?>" method="POST" style="float:left">
-                <input type="hidden" name="id" value="<?php echo $usuario->getId(); ?>" />
-                <input type="hidden" name="price-to-pay" value="<?php echo $total; ?>" />
-                <input type="hidden" name="mes" value="<?php echo $mescurrent; ?>" />
-                <input type="checkbox" name="out-of-date" />
-                <input type="text" name="price" value="" />
-                <a href="#" onclick="doPay(this); return false;">pagar</a> / <a href="#" onclick="doExonerar(this, '<?php echo url_for('@exonerar?id=' . $usuario->getId() . '&mes=' . $mescurrent); ?>'); return false;">cancelar</a>
-                
-                <!--<input class="as-link" type="submit" value="pago" />-->
-              </form>
-              <label class="ok" style="display: none; vertical-align: middle;"></label>
-            </td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
+                ?>
+                <tr>
+                    <td style="color: <?php echo $color;?>"><?php echo $factura->getUsuario()->getReferenciaBancaria();?></td>
+                    <td><a href="<?php echo url_for('usuarios/edit/?id=' . $factura->getUsuario()->getId()); ?>"><?php echo $factura->getUsuario()->getApellido(). " ".$factura->getUsuario()->getNombre();?></a></td>
+                    <td class="ta-center">$U <?php echo $factura->getTotal(); ?></td>
+                    <td class="ta-center">
+                        <a href="<?php echo url_for("alertas/pagarFactura/?id=".$factura->getId());?>">
+                            Pagar
+                        </a>
+                        
+                        <form class="alert-form" action="<?php echo url_for('@pagar'); ?>" method="POST" style="float:left">
+                          <input type="hidden" name="id" value="<?php echo $factura->getUsuario()->getId(); ?>" />
+                          <input type="hidden" name="price-to-pay" value="<?php echo $factura->getTotal(); ?>" />
+                          <input type="hidden" name="mes" value="<?php echo 1; ?>" />
+                          <input type="checkbox" name="out-of-date" />
+                          <input type="text" name="price" value="" />
+                          <a href="#" onclick="doPay(this); return false;">pagar</a> / <a href="#" onclick="doExonerar(this, '<?php echo url_for('@exonerar?id=' . $factura->getUsuario()->getId() . '&mes=' . 1); ?>'); return false;">cancelar</a>
+
+                          <!--<input class="as-link" type="submit" value="pago" />-->
+                        </form>
+                        <label class="ok" style="display: none; vertical-align: middle;"></label>
+                      </td>
+                </tr>    
+                <?php endforeach; ?>
+            </tbody>
         </table>
-        <?php else: ?>
-          <p>No hay alumnos con deudas en el mes de <?php echo $meses[$mescurrent]; ?></p>
-        <?php endif; ?>
+      <?php endif; ?>
     </div>
   </div>
 

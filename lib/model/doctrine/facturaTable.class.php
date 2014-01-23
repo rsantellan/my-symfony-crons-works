@@ -16,4 +16,23 @@ class facturaTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('factura');
     }
+    
+    public function retrieveByUserMonthAndYear($userId, $month, $year)
+    {
+        $query = $this->createQuery('f')
+                ->addWhere('f.usuario_id = ?', $userId)
+                ->addWhere('f.month = ?', $month)
+                ->addWhere('f.year = ?', $year);
+        return $query->fetchOne();
+    }
+    
+    public function retrieveAllActive($withUser = true)
+    {
+        $query = $this->createQuery('f')
+                    ->addWhere('f.pago = 0')
+                    ->addWhere('f.cancelado = 0')
+                    ->innerJoin("f.usuario u")
+                    ->orderBy('f.cuenta_id asc, f.updated_at desc');
+        return $query->execute();
+    }
 }

@@ -10,6 +10,10 @@
 class alertasActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request){
+      
+    $this->facturas = Doctrine::getTable('factura')->retrieveAllActive();
+    
+    /*
     $this->mescurrent = $request->getParameter('mes', '-1');
     
     if($this->mescurrent == '-1')
@@ -20,6 +24,7 @@ class alertasActions extends sfActions
     $this->forward404Unless($this->mescurrent > 0 && $this->mescurrent <= 12);
     
     $this->usuarios = usuario::deudores($this->mescurrent, date('Y'));
+    */
   }
   
   public function executePay(sfWebRequest $request){

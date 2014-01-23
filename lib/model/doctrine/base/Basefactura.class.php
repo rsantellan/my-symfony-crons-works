@@ -20,6 +20,8 @@
  * @property integer $pago
  * @property integer $cancelado
  * @property integer $cuenta_id
+ * @property clob $description
+ * @property date $fechavencimiento
  * @property cuenta $cuenta
  * @property usuario $usuario
  * 
@@ -38,6 +40,8 @@
  * @method integer getPago()              Returns the current record's "pago" value
  * @method integer getCancelado()         Returns the current record's "cancelado" value
  * @method integer getCuentaId()          Returns the current record's "cuenta_id" value
+ * @method clob    getDescription()       Returns the current record's "description" value
+ * @method date    getFechavencimiento()  Returns the current record's "fechavencimiento" value
  * @method cuenta  getCuenta()            Returns the current record's "cuenta" value
  * @method usuario getUsuario()           Returns the current record's "usuario" value
  * @method factura setId()                Sets the current record's "id" value
@@ -55,6 +59,8 @@
  * @method factura setPago()              Sets the current record's "pago" value
  * @method factura setCancelado()         Sets the current record's "cancelado" value
  * @method factura setCuentaId()          Sets the current record's "cuenta_id" value
+ * @method factura setDescription()       Sets the current record's "description" value
+ * @method factura setFechavencimiento()  Sets the current record's "fechavencimiento" value
  * @method factura setCuenta()            Sets the current record's "cuenta" value
  * @method factura setUsuario()           Sets the current record's "usuario" value
  * 
@@ -161,6 +167,25 @@ abstract class Basefactura extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              'length' => 4,
+             ));
+        $this->hasColumn('description', 'clob', null, array(
+             'type' => 'clob',
+             ));
+        $this->hasColumn('fechavencimiento', 'date', 25, array(
+             'type' => 'date',
+             'notnull' => true,
+             'length' => 25,
+             ));
+
+
+        $this->index('monthly_yearly_user_index', array(
+             'fields' => 
+             array(
+              0 => 'month',
+              1 => 'year',
+              2 => 'usuario_id',
+             ),
+             'type' => 'unique',
              ));
     }
 

@@ -506,10 +506,6 @@ factura:
       type: float(12,2)
       default: 0
       notnull: true
-    costo_turno:
-      type: float(12,2)
-      default: 0
-      notnull: true      
     total:
       type: float(12,2)
       default: 0
@@ -539,6 +535,15 @@ factura:
     cuenta_id:
       type: integer(4)
       notnull: true
+    description:
+      type: clob
+    fechavencimiento:
+      type: date(25)
+      notnull: true      
+  indexes:
+    monthly_yearly_user_index:
+      fields: [month, year, usuario_id]
+      type: unique      
   relations:      
     cuenta:
       class: cuenta

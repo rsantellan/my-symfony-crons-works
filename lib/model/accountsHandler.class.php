@@ -21,6 +21,8 @@ class accountsHandler {
     const SQL_UPDATE_FACTURA_CUENTA_USUARIO = "update factura set cuenta_id = ? where usuario_id = ?";
     const SQL_UPDATE_CUENTA_PADRE = "update cuentapadre set cuenta_id = ? where progenitor_id = ?";
     
+    const SQL_DELETE_UNUSED_ACCOUNTS = "delete from cuenta where id not in (select cuenta_id from cuentapadre union select cuenta_id from cuentausuario union select cuenta_id from cobro union select cuenta_id from factura)";
+    
     /*
      * 
      * $sql_parents = "select id, nombre from progenitor";
@@ -112,7 +114,7 @@ class accountsHandler {
 	{
 	  //tengo que verificar que no tiene ningun cobro ni factura
 	  $cuentapadre = Doctrine::getTable('cuentapadre')->findOneByProgenitorId($parent_id);
-	  $cuenta = new cuenta();
+      $cuenta = new cuenta();
 	  $cuenta->setNombre($name);
 	  $cuenta->save();
 	  $cuentapadre->setCuentaId($cuenta->getId());
@@ -122,9 +124,8 @@ class accountsHandler {
 	public static function acommodateLossedAccounts()
 	{
 	  //tengo que verificar que no tiene ningun cobro ni factura
-	  $sql = "delete from cuenta where id not in (select cuenta_id from cuentapadre union select cuenta_id from cuentausuario)";
 	  $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-	  $q->execute($sql);
+	  $q->execute(self::SQL_DELETE_UNUSED_ACCOUNTS);
 	}
 	
     public static function populateParentsAccounts()
@@ -270,6 +271,26 @@ class accountsHandler {
             }
         }
         return true;
+    }
+    
+    public static function generateMonthBilling($month, $year)
+    {
+        $usuarios = Doctrine::getTable('usuario')->retrieveAllActiveStudents();
+        foreach($usuarios as $usuario)
+        {
+            try{
+                factura::generateUserBill($usuario, $month, $year);
+            }catch(Exception $e)
+            {
+                if($e->getCode() == 23000)
+                {
+                    factura::updateUserBill($usuario, $month, $year);
+                }
+            }
+            
+            
+            
+        }
     }
 }
 

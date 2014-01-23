@@ -36,6 +36,11 @@ class usuarioTable extends Doctrine_Table
         )->fetchAll();*/
     }
     
+    public function retrieveAllActiveStudents()
+    {
+        return $this->createQuery('q')->addWhere('q.egresado = 0')->execute();
+    }
+    
     public function getMailsPadres()
     {
       $response = Doctrine_Query::create()

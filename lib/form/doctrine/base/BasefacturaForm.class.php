@@ -30,6 +30,8 @@ abstract class BasefacturaForm extends BaseFormDoctrine
       'pago'              => new sfWidgetFormInputText(),
       'cancelado'         => new sfWidgetFormInputText(),
       'cuenta_id'         => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('cuenta'), 'add_empty' => false)),
+      'description'       => new sfWidgetFormTextarea(),
+      'fechavencimiento'  => new sfWidgetFormDate(),
       'created_at'        => new sfWidgetFormDateTime(),
       'updated_at'        => new sfWidgetFormDateTime(),
     ));
@@ -50,9 +52,15 @@ abstract class BasefacturaForm extends BaseFormDoctrine
       'pago'              => new sfValidatorInteger(array('required' => false)),
       'cancelado'         => new sfValidatorInteger(array('required' => false)),
       'cuenta_id'         => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('cuenta'))),
+      'description'       => new sfValidatorString(array('required' => false)),
+      'fechavencimiento'  => new sfValidatorDate(),
       'created_at'        => new sfValidatorDateTime(),
       'updated_at'        => new sfValidatorDateTime(),
     ));
+
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorDoctrineUnique(array('model' => 'factura', 'column' => array('month', 'year', 'usuario_id')))
+    );
 
     $this->widgetSchema->setNameFormat('factura[%s]');
 
