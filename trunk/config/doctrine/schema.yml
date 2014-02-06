@@ -149,7 +149,7 @@ actividades:
       type: string(64)
       notnull: true
     costo:
-      type: float(6,2)
+      type: float(10,2)
       notnull: true
     horario:
       type: enum
@@ -286,16 +286,16 @@ costos:
       primary: true
       autoincrement: true
     matricula:
-      type: float(6,2)
+      type: float(10,2)
       notnull: true
     matutino:
-      type: float(6,2)
+      type: float(10,2)
       notnull: true
     vespertino:
-      type: float(6,2)
+      type: float(10,2)
       notnull: true
     doble_horario:
-      type: float(6,2)
+      type: float(10,2)
       notnull: true
       
 billetera:

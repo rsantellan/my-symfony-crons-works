@@ -1,7 +1,7 @@
-CREATE TABLE actividades (id INT AUTO_INCREMENT, nombre VARCHAR(64) NOT NULL, costo FLOAT(6, 2) NOT NULL, horario ENUM('mañana', 'tarde', 'mañana y tarde'), md_news_letter_group_id INT, INDEX md_news_letter_group_id_idx (md_news_letter_group_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE actividades (id INT AUTO_INCREMENT, nombre VARCHAR(64) NOT NULL, costo FLOAT(10, 2) NOT NULL, horario ENUM('mañana', 'tarde', 'mañana y tarde'), md_news_letter_group_id INT, INDEX md_news_letter_group_id_idx (md_news_letter_group_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE billetera (id INT, credito BIGINT, deuda BIGINT, impuesto BIGINT, PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE cobro (id INT AUTO_INCREMENT, cuenta_id INT NOT NULL, fecha DATE NOT NULL, monto FLOAT(12, 2) DEFAULT 0 NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX cuenta_id_idx (cuenta_id), PRIMARY KEY(id)) ENGINE = INNODB;
-CREATE TABLE costos (id INT AUTO_INCREMENT, matricula FLOAT(6, 2) NOT NULL, matutino FLOAT(6, 2) NOT NULL, vespertino FLOAT(6, 2) NOT NULL, doble_horario FLOAT(6, 2) NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE costos (id INT AUTO_INCREMENT, matricula FLOAT(10, 2) NOT NULL, matutino FLOAT(10, 2) NOT NULL, vespertino FLOAT(10, 2) NOT NULL, doble_horario FLOAT(10, 2) NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE cuenta (id INT AUTO_INCREMENT, nombre VARCHAR(64) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE cuentapadre (cuenta_id INT, progenitor_id INT, PRIMARY KEY(cuenta_id, progenitor_id)) ENGINE = INNODB;
 CREATE TABLE cuentausuario (cuenta_id INT, usuario_id INT, PRIMARY KEY(cuenta_id, usuario_id)) ENGINE = INNODB;

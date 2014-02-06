@@ -52,10 +52,10 @@ abstract class Baseactividades extends sfDoctrineRecord
              'notnull' => true,
              'length' => 64,
              ));
-        $this->hasColumn('costo', 'float', 6, array(
+        $this->hasColumn('costo', 'float', 10, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 6,
+             'length' => 10,
              'scale' => '2',
              ));
         $this->hasColumn('horario', 'enum', null, array(

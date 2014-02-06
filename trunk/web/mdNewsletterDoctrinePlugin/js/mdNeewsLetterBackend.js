@@ -387,7 +387,9 @@ mdNeewsLetterBackend.prototype = {
 mastodontePlugin.UI.BackendBasic.getInstance().afterOpen = function(json){
   $("a.visualizar").fancybox({
     autoDimensions: false,
-    width: 850
+    width: 850,
+    scrolling: true,
+    height: 500
   });
 }
 

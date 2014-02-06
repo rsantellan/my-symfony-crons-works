@@ -144,6 +144,14 @@ EOF
       $this->getOption('height') ? sprintf('height:                            "%spx",', $this->getOption('height')) : '',
       $this->getOption('config') ? ",\n".$this->getOption('config') : ''
     );
+    //var_dump($js);
+    /*
+    var_dump($this->generateId($name));
+    var_dump($this->getOption('theme'));
+    var_dump($this->getOption('width')  ? sprintf('width:                             "%spx",', $this->getOption('width')) : '');
+    var_dump($this->getOption('height')  ? sprintf('height:                             "%spx",', $this->getOption('height')) : '');
+    var_dump($this->getOption('config') ? ",\n".$this->getOption('config') : '');
+    */
     sfContext::getInstance()->getConfiguration()->loadHelpers(array('I18N'));
     $texto = __("tinymce_agregar formato");
     $launcher = "<label id='".$id."_show_label' style='color: gray; font-size:10px!important'>".$texto."</label>";

@@ -38,28 +38,28 @@ abstract class Basecostos extends sfDoctrineRecord
              'autoincrement' => true,
              'length' => 4,
              ));
-        $this->hasColumn('matricula', 'float', 6, array(
+        $this->hasColumn('matricula', 'float', 10, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 6,
+             'length' => 10,
              'scale' => '2',
              ));
-        $this->hasColumn('matutino', 'float', 6, array(
+        $this->hasColumn('matutino', 'float', 10, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 6,
+             'length' => 10,
              'scale' => '2',
              ));
-        $this->hasColumn('vespertino', 'float', 6, array(
+        $this->hasColumn('vespertino', 'float', 10, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 6,
+             'length' => 10,
              'scale' => '2',
              ));
-        $this->hasColumn('doble_horario', 'float', 6, array(
+        $this->hasColumn('doble_horario', 'float', 10, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 6,
+             'length' => 10,
              'scale' => '2',
              ));
     }
