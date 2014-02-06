@@ -3,7 +3,7 @@
     <h2><?php echo __("newsletter_asunto"); ?></h2>
     
     <div style="padding: 2px; margin: 2px;" class="<?php if ($form['subject']->hasError()): ?>error_msg<?php endif; ?>">
-      <?php echo $form['subject']->render(array('id' => 'md_input_name', 'style' => 'width: 518px')); ?>
+      <?php echo $form['subject']->render(array('id' => 'md_input_name', 'style' => 'width: 350px')); ?>
     </div>
     <?php if ($form['subject']->hasError()): echo '<div>' . __("newsletter_asunto") . ': ' . $form['subject']->getError() . '</div>';  endif; ?>
     <div class="clear"></div>
