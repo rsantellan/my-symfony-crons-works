@@ -90,6 +90,10 @@ alertas:
 exportar:
   url:   /exportar
   param: { module: usuarios, action: exportar }
+
+exportarExcel:
+  url:   /exportarExcel
+  param: { module: usuarios, action: exportarExcel }
   
 enviar:
   url:   /enviar

@@ -325,39 +325,54 @@ class mdBasicFunction {
     print_r($countries);
   }
 
-  public static function retrieveLeters($index) {
-    $abc = array();
-    $abc[0] = "A";
-    $abc[1] = "B";
-    $abc[2] = "C";
-    $abc[3] = "D";
-    $abc[4] = "E";
-    $abc[5] = "F";
-    $abc[6] = "G";
-    $abc[7] = "H";
-    $abc[8] = "I";
-    $abc[9] = "J";
-    $abc[10] = "K";
-    $abc[11] = "L";
-    $abc[12] = "M";
-    $abc[13] = "N";
-    $abc[14] = "O";
-    $abc[15] = "P";
-    $abc[16] = "Q";
-    $abc[17] = "R";
-    $abc[18] = "S";
-    $abc[19] = "T";
-    $abc[20] = "U";
-    $abc[21] = "V";
-    $abc[22] = "W";
-    $abc[23] = "Y";
-    $abc[24] = "X";
-    $abc[25] = "Z";
-    while ($index > 25) {
-      $index = $index - 25;
+  public static function retrieveLeters($index)
+  {
+        return PHPExcel_Cell::stringFromColumnIndex($index);
+        
+        $abc = array();
+        $abc[0] = "A";
+        $abc[1] = "B";
+        $abc[2] = "C";
+        $abc[3] = "D";
+        $abc[4] = "E";
+        $abc[5] = "F";
+        $abc[6] = "G";
+        $abc[7] = "H";
+        $abc[8] = "I";
+        $abc[9] = "J";
+        $abc[10] = "K";
+        $abc[11] = "L";
+        $abc[12] = "M";
+        $abc[13] = "N";
+        $abc[14] = "O";
+        $abc[15] = "P";
+        $abc[16] = "Q";
+        $abc[17] = "R";
+        $abc[18] = "S";
+        $abc[19] = "T";
+        $abc[20] = "U";
+        $abc[21] = "V";
+        $abc[22] = "W";
+        $abc[23] = "X";
+        $abc[24] = "Y";
+        $abc[25] = "Z";
+        $divider = count($abc) - 1;
+        $division = $index / $divider;
+        $modulus = $index % $divider;
+        /*
+        echo "index: ".$index;
+        echo " divider: ".$divider;
+        echo " modulus: ".$modulus." - ";
+        */
+		if($index > $divider)
+		{
+		  $aux = self::retrieveLeters(floor($division) -1).$abc[(int)$modulus-1];
+		  return $aux;
+		}
+		
+		return $abc[$index];
+        
     }
-    return $abc[$index];
-  }
 
   /**
    * Calcula la edad dado un string.
