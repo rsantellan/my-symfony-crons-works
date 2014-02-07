@@ -104,6 +104,7 @@ class usuario extends Baseusuario {
 
     public function calculateMatricula($month)
     {
+        return 0;
         $total = 0;
         if ($month == 9 || $month == 10) {
             $total = costos::getCosto('matricula') / 2;
