@@ -186,7 +186,6 @@ class usuariosActions extends autoUsuariosActions
     $objPHPExcel->getActiveSheet()->setCellValue($letter, "celular");
     $letter = (string)(mdBasicFunction::retrieveLeters(15).$index);
     $objPHPExcel->getActiveSheet()->setCellValue($letter, "mail");
-    
     foreach($excel_data as $row)
     {
       $index ++;
@@ -225,13 +224,14 @@ class usuariosActions extends autoUsuariosActions
     }
     //var_dump($excel_data);
     //die;
+    
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="alumnos.xls"');
+    header('Content-Disposition: attachment;filename="alumnos.xlsx"');
     header('Cache-Control: max-age=0');
 
-    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
     $objWriter->save('php://output');
+    exit;
   }
   
   public function executeBunnys(sfWebRequest $request)
