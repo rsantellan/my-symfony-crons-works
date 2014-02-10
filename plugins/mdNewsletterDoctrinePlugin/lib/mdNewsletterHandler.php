@@ -78,10 +78,14 @@ class mdNewsletterHandler
     {
       foreach($listOfUsersIds as $userId)
       {
-        $mdNewsletterSend = new mdNewsletterSend();
-        $mdNewsletterSend->setMdNewsLetterUserId($userId);
-        $mdNewsletterSend->setMdNewsletterContentSendedId($mdNewsletterContentSendedId);
-        $mdNewsletterSend->save();
+        if(!empty($userId))
+        {
+          $mdNewsletterSend = new mdNewsletterSend();
+          $mdNewsletterSend->setMdNewsLetterUserId($userId);
+          $mdNewsletterSend->setMdNewsletterContentSendedId($mdNewsletterContentSendedId);
+          $mdNewsletterSend->save();
+        }
+        
       }      
     }
     

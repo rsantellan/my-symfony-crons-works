@@ -15,7 +15,7 @@ class mdFileAuthActions extends sfActions {
     //print_r($request->getUri()); die();
     $automaticUriToGo = '';
     if (! $this->getUser ()->hasFlash ( 'uriToGo' )) {
-      $this->getUser ()->setFlash ( 'uriToGo', $request->getUri () );
+      $automaticUriToGo = $this->getUser ()->setFlash ( 'uriToGo', $request->getUri () );
     } else {
       $automaticUriToGo = $this->getUser ()->getFlash ( 'uriToGo' );
     }

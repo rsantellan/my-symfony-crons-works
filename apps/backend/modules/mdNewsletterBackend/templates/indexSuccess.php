@@ -208,6 +208,21 @@ use_javascript('tiny_mce/tiny_mce.js', 'last');
     });
     $("a#sorter_href").fancybox();
   });
+  
+  function updateTextArea(){
+        try {
+            if (tinyMCE.activeEditor != null) {
+              tinyMCE.execCommand("mceRemoveControl", true, 'translation_new_1');
+              tinyMCE.execCommand("mceAddControl", true, 'translation_new_1');
+
+              tinyMCE.triggerSave();
+
+              tinyMCE.execCommand("mceRemoveControl", true, 'translation_new_1');
+            }
+        } catch (e) {
+           //alert(e);
+        }
+    }
 </script>
 
 

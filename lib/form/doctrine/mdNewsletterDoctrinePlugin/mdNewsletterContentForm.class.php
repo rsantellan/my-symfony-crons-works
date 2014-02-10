@@ -16,9 +16,9 @@ class mdNewsletterContentForm extends PluginmdNewsletterContentForm
 
     $this->widgetSchema['subject'] = new sfWidgetFormInputText();
     $dataConfig = '
-      plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist, spellchecker",
+      plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist, spellchecker",
       theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,fontselect,fontsizeselect,|",
-      theme_advanced_buttons2 : "bullist,numlist,|,link,unlink,code,|,insertdate,inserttime,preview,|,forecolor,backcolor,|fullscreen,|,undo,redo,cut,copy,paste,pastetext,pasteword,|",
+      theme_advanced_buttons2 : "bullist,numlist,|,link,unlink,code,|,insertdate,inserttime,preview,|,forecolor,backcolor,|,undo,redo,cut,copy,paste,pastetext,pasteword,|",
       theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,image, cleanup",
       theme_advanced_toolbar_location : "top",
       theme_advanced_toolbar_align : "left",
@@ -30,11 +30,19 @@ class mdNewsletterContentForm extends PluginmdNewsletterContentForm
   
   public function doSave($con = null) 
   {
-    sfContext::getInstance()->getConfiguration()->loadHelpers("Partial");
     $data = $this->getTaintedValues();
-    $data['body'] = get_partial("mdNewsletterBackend/mailing", array('body' => $data['body'], 'subject' => $data['subject']));
+    if($this->getObject()->isNew())
+    {
+      sfContext::getInstance()->getConfiguration()->loadHelpers("Partial");
+      //$data = $this->getTaintedValues();
+      //$data['body'] = get_partial("mdNewsletterBackend/mailing", array('body' => $data['body'], 'subject' => $data['subject']));
+      //$this->bind($data);
+    }
+    else
+    {
+      $data['body'] = $data['body']." ";
+    }
     $this->bind($data);
-    
     return parent::doSave($con);
   }
 }
