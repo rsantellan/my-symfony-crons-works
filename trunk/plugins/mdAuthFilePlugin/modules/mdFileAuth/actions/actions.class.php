@@ -11,7 +11,7 @@
 class mdFileAuthActions extends sfActions {
 	
 	public function executeSignin(sfWebRequest $request) {
-		//print_r($request->getUri());
+		//print_r($request->getUri());die;
 		$automaticUriToGo = '';
 		if (! $this->getUser ()->hasFlash ( 'uriToGo' )) {
 			$this->getUser ()->setFlash ( 'uriToGo', $request->getUri () );

@@ -16,7 +16,7 @@
               <div id="group_form_holder" class="users_holder">
                 <?php foreach($users as $user): ?>
                 <?php
-                if($clase != $user['u_clase'] && $horario != $user['u_horario']):
+                if($clase != $user['u_clase'] || $horario != $user['u_horario']):
                   $clase = $user['u_clase'];
                   $horario = $user['u_horario'];
                   if($open_div):
@@ -36,10 +36,12 @@
                     var_dump($user["email"]);
                     var_dump($user["nombre"]);*/
                 ?>
-                  <input type="checkbox" name="user" value="<?php echo $user["mn_user_id"]; ?>" onclick="mdNeewsLetterBackend.getInstance().addUsersForSending();" /> 
+                  <?php if(!empty($user["mn_email"])): ?>
+                    <input type="checkbox" name="user" value="<?php echo $user["mn_id"]; ?>" onclick="mdNeewsLetterBackend.getInstance().addUsersForSending();" /> 
+                  <?php endif; ?>
                   Alumno:<?php echo $user["u_nombre"]. " ".$user["u_apellido"];?><br/>
                   Padre: <?php echo $user['p_nombre'];?>
-                  <strong><?php echo  $user["mn_email"];?></strong><br/>
+                  <strong><?php echo (empty($user["mn_email"]))? "No tiene mail ingresado" : $user["mn_email"];?></strong><br/>
                   <?php //print_r($users->toArray()); ?>
                   <hr/>
                 <?php endforeach;
