@@ -88,10 +88,10 @@ class accountsHandler {
         }
     }
     
-	public static function createUsuarioAccount($userId, $lastname)
+	public static function createUsuarioAccount($userId, $referencia)
 	{
 	  $cuenta = new cuenta();
-	  $cuenta->setNombre($lastname);
+	  $cuenta->setReferenciabancaria($referencia);
 	  $cuenta->save();
 	  $cuentaUsuario = new cuentausuario();
 	  $cuentaUsuario->setUsuarioId($userId);
@@ -99,10 +99,10 @@ class accountsHandler {
 	  $cuentaUsuario->save();
 	}
 	
-	public static function createParentAccount($parent_id, $name)
+	public static function createParentAccount($parent_id, $referencia)
 	{
 	  $cuenta = new cuenta();
-	  $cuenta->setNombre($name);
+	  $cuenta->setReferenciabancaria($referencia);
 	  $cuenta->save();
 	  $cuentapadre = new cuentapadre();
 	  $cuentapadre->setProgenitorId($parent_id);
