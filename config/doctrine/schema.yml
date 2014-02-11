@@ -382,7 +382,12 @@ mdGaleria:
     curso_amarillo:
       type: boolean
       default: false
-      
+
+#####
+##
+## Nuevos cobros
+##
+######      
 cuenta:
   actAs: { Timestampable: ~ }
   tableName: cuenta
@@ -391,36 +396,20 @@ cuenta:
       type: integer(4)
       primary: true
       autoincrement: true
-    nombre:
+    referenciabancaria:
       type: string(64)
       notnull: true    
-
-cobro:
-  actAs: { Timestampable: ~ }
-  tableName: cobro
-  columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
-    cuenta_id:
-      type: integer(4)
-      notnull: true
-    fecha:
-      type: date(25)
-      notnull: true
-    monto:
-      type: float(12,2)
+    debe:
+      type: float(14,2)
       default: 0
-      notnull: true
-  relations:
-    cuenta:
-      class: cuenta
-      local: cuenta_id
-      foreign: id
-      type: one
-      onDelete: CASCADE
+    pago:
+      type: float(14,2)
+      default: 0
+    diferencia:
+      type: float(14,2)
+      default: 0
       
+    
 cuentapadre:
   tableName: cuentapadre
   options:
@@ -475,9 +464,9 @@ cuentausuario:
       type: one
       onDelete: CASCADE
       
-factura:
+facturaUsuario:
   actAs: { Timestampable: ~ }
-  tableName: factura
+  tableName: facturaUsuario
   columns:
     id:
       type: integer(20)
@@ -485,26 +474,6 @@ factura:
       autoincrement: true
     usuario_id:
       type: integer(4)
-      notnull: true
-    costo_turno:
-      type: float(12,2)
-      default: 0
-      notnull: true
-    costo_actividad:
-      type: float(12,2)
-      default: 0
-      notnull: true
-    costo_matricula:
-      type: float(12,2)
-      default: 0
-      notnull: true
-    descuento_hermano:
-      type: float(12,2)
-      default: 0
-      notnull: true
-    descuento_alumno:
-      type: float(12,2)
-      default: 0
       notnull: true
     total:
       type: float(12,2)
@@ -516,13 +485,75 @@ factura:
     year:
       type: integer(4)
       notnull: true
-    recargo_atraso:
+    enviado:
+      type: integer(1)
+      default: '0'
+      notnull: true  
+    pago:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    cancelado:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    fechavencimiento:
+      type: date(25)
+      notnull: true      
+  indexes:
+    monthly_yearly_user_index:
+      fields: [month, year, usuario_id]
+      type: unique      
+  relations:      
+    usuario:
+      class: usuario
+      local: usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+facturaUsuarioDetalle:
+  actAs: { Timestampable: ~ }
+  tableName: facturaUsuarioDetalle
+  columns:
+    id:
+      type: integer(20)
+      primary: true
+      autoincrement: true
+    factura_id:
+      type: integer(20)
+      notnull: true
+    description:
+      type: string(255)
+    amount:
+      type: float(12,2)
+      default: 0
+      notnull: true    
+  relations:      
+    facturaUsuario:
+      class: facturaUsuario
+      local: factura_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+facturaFinal:
+  actAs: { Timestampable: ~ }
+  tableName: facturaFinal
+  columns:
+    id:
+      type: integer(20)
+      primary: true
+      autoincrement: true
+    total:
       type: float(12,2)
       default: 0
       notnull: true
-    porcentaje_atraso:
-      type: float(6,2)
-      default: 0
+    month:
+      type: integer(4)
+      notnull: true
+    year:
+      type: integer(4)
       notnull: true
     pago:
       type: integer(1)
@@ -532,17 +563,19 @@ factura:
       type: integer(1)
       default: '0'
       notnull: true
+    enviado:
+      type: integer(1)
+      default: '0'
+      notnull: true
     cuenta_id:
       type: integer(4)
       notnull: true
-    description:
-      type: clob
     fechavencimiento:
       type: date(25)
       notnull: true      
   indexes:
     monthly_yearly_user_index:
-      fields: [month, year, usuario_id]
+      fields: [month, year, cuenta_id]
       type: unique      
   relations:      
     cuenta:
@@ -551,9 +584,80 @@ factura:
       foreign: id
       type: one
       onDelete: CASCADE
-    usuario:
-      class: usuario
-      local: usuario_id
+
+facturaFinalDetalle:
+  actAs: { Timestampable: ~ }
+  tableName: facturaFinalDetalle
+  columns:
+    id:
+      type: integer(20)
+      primary: true
+      autoincrement: true
+    factura_id:
+      type: integer(20)
+      notnull: true
+    description:
+      type: string(255)
+    amount:
+      type: float(12,2)
+      default: 0
+      notnull: true    
+  relations:      
+    facturaFinal:
+      class: facturaFinal
+      local: factura_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+facturausuariofinal:
+  tableName: facturausuariofinal
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    factura_usuario_id:
+      type: integer(20)
+      notnull: true
+      primary: true
+    factura_final_id:
+      type: integer(20)
+      notnull: true
+      primary: true
+  relations:      
+    facturaUsuario:
+      local: factura_usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    facturaFinal:
+      local: factura_final_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+cobro:
+  actAs: { Timestampable: ~ }
+  tableName: cobro
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    cuenta_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    monto:
+      type: float(12,2)
+      default: 0
+      notnull: true
+  relations:
+    cuenta:
+      class: cuenta
+      local: cuenta_id
       foreign: id
       type: one
       onDelete: CASCADE
