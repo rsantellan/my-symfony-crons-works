@@ -14,6 +14,12 @@ class hermanos extends Basehermanos
 {
   public static function addHermano($usuario_from, $usuario_to)
   {
+    if(!accountsHandler::checkThatBrothersHasSameReference($usuario_from, $usuario_to))
+    {
+      throw new Exception("Los hermanos tienen distinta referencia bancaria. Debe ser la misma para poder agregarlos como hermanos.", 1201);
+    }
+    
+    
     $conn = Doctrine_Manager::connection();
     
     try
@@ -35,8 +41,8 @@ class hermanos extends Basehermanos
     }catch (Exception $e){
 
       $conn->rollBack();
-
-      return false;
+      throw $e;
+      //return false;
       
     }
     

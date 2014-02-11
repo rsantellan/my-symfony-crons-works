@@ -11,7 +11,7 @@ class alertasActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request){
       
-    $this->facturas = Doctrine::getTable('factura')->retrieveAllActive();
+    $this->facturas = array();//Doctrine::getTable('factura')->retrieveAllActive();
     
     /*
     $this->mescurrent = $request->getParameter('mes', '-1');

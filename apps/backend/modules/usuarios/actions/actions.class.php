@@ -17,10 +17,19 @@ class usuariosActions extends autoUsuariosActions
   {
     $usuario_from = $request->getParameter('usuario_from');
     $usuario_to = $request->getParameter('usuario_to');
+    $message = "No puede ser el mismo alumno.";
+    $response = false;
+    if($usuario_from != $usuario_to)
+    {
+      try
+      {
+        $response = hermanos::addHermano($usuario_from, $usuario_to);
+      }catch(Exception $e){
+        $message = $e->getMessage();
+      }
+    }
     
-    $response = hermanos::addHermano($usuario_from, $usuario_to);
-    
-    return $this->renderText(mdBasicFunction::basic_json_response($response, array()));    
+    return $this->renderText(mdBasicFunction::basic_json_response($response, array('message' => $message)));
   }
   
   public function executeRemoveHermano(sfWebRequest $request)
