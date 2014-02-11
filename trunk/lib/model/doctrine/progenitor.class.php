@@ -22,7 +22,6 @@ class progenitor extends Baseprogenitor {
     
 	public function postInsert($event) {
 	  parent::postInsert($event);
-	  accountsHandler::createParentAccount($this->getId(), $this->getNombre());
 	}
 	
     public function preSave($event) {

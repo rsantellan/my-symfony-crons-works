@@ -10,7 +10,8 @@ class accountsHandler {
     const SQL_USUARIO = "SELECT id, nombre, apellido, referencia_bancaria from usuario";
     const SQL_USUARIO_CUENTA = "select cuenta_id from cuentausuario where usuario_id = ?";
     const SQL_USUARIO_HERMANO = "select usuario_from, usuario_to from hermanos where usuario_from = ? or usuario_to = ?";
-
+    const SQL_USUARIO_REFERENCIA = 'select referencia_bancaria from usuario where id = ?';
+    
     const SQL_PARENTS = "select id, nombre from progenitor";
     const SQL_PARENTS_ACCOUNTS = "select cuenta_id from cuentapadre where progenitor_id = ?";
     const SQL_PARENT_CHILD = "select usuario_id from usuario_progenitor where progenitor_id = ?";
@@ -20,8 +21,12 @@ class accountsHandler {
     const SQL_UPDATE_CUENTA_USUARIO = "update cuentausuario set cuenta_id = ? where usuario_id = ?";
     const SQL_UPDATE_FACTURA_CUENTA_USUARIO = "update factura set cuenta_id = ? where usuario_id = ?";
     const SQL_UPDATE_CUENTA_PADRE = "update cuentapadre set cuenta_id = ? where progenitor_id = ?";
+    const SQL_CUENTA_BY_REFERENCE = 'select id, referenciabancaria from cuenta where referenciabancaria = ?';
     
     const SQL_DELETE_UNUSED_ACCOUNTS = "delete from cuenta where id not in (select cuenta_id from cuentapadre union select cuenta_id from cuentausuario union select cuenta_id from cobro union select cuenta_id from factura)";
+
+    const SQL_RETRIEVE_ACCOUNT_REFERENCE_PARENT = 'select cuenta.referenciabancaria from cuenta, cuentapadre where cuenta.id = cuentapadre.cuenta_id and cuentapadre.progenitor_id = ?';
+    const SQL_RETRIEVE_ACCOUNT_REFERENCE_USER = 'select cuenta.referenciabancaria from cuenta, cuentausuario where cuenta.id = cuentausuario.cuenta_id and cuentausuario.usuario_id = ?';
     
     /*
      * 
@@ -69,7 +74,7 @@ class accountsHandler {
                 if(!$cuenta)
                 {
                     $cuenta = new cuenta();
-					$cuenta->setReferenciabancaria($usuario["referencia_bancaria"]);
+                    $cuenta->setReferenciabancaria($usuario["referencia_bancaria"]);
                     $cuenta->save();
                     $cuenta_id = $cuenta->getId();
                 }
@@ -90,35 +95,46 @@ class accountsHandler {
     
 	public static function createUsuarioAccount($userId, $referencia)
 	{
-	  $cuenta = new cuenta();
-	  $cuenta->setReferenciabancaria($referencia);
-	  $cuenta->save();
-	  $cuentaUsuario = new cuentausuario();
+    $cuenta = Doctrine::getTable('cuenta')->findOneByReferenciaBancaria($referencia);
+    if(!$cuenta)
+    {
+      $cuenta = new cuenta();
+      $cuenta->setReferenciabancaria($referencia);
+      $cuenta->save();
+    }
+    $cuentaUsuario = new cuentausuario();
 	  $cuentaUsuario->setUsuarioId($userId);
 	  $cuentaUsuario->setCuentaId($cuenta->getId());
 	  $cuentaUsuario->save();
 	}
 	
-	public static function createParentAccount($parent_id, $referencia)
+	public static function createParentAccount($parent_id, $cuentaId = null, $referencia = null)
 	{
-	  $cuenta = new cuenta();
-	  $cuenta->setReferenciabancaria($referencia);
-	  $cuenta->save();
+    if($cuentaId === null)
+    {
+      $cuenta = new cuenta();
+      $cuenta->setReferenciabancaria($referencia);
+      $cuenta->save();
+      $cuentaId = $cuenta->getId();
+    }
 	  $cuentapadre = new cuentapadre();
 	  $cuentapadre->setProgenitorId($parent_id);
-	  $cuentapadre->setCuentaId($cuenta->getId());
+	  $cuentapadre->setCuentaId($cuentaId);
 	  $cuentapadre->save();
 	}
 	
-	public static function removeParentAccountOfChilds($parent_id, $name)
+	public static function removeParentAccountOfChilds($parent_id)
 	{
 	  //tengo que verificar que no tiene ningun cobro ni factura
 	  $cuentapadre = Doctrine::getTable('cuentapadre')->findOneByProgenitorId($parent_id);
-      $cuenta = new cuenta();
-	  $cuenta->setNombre($name);
-	  $cuenta->save();
-	  $cuentapadre->setCuentaId($cuenta->getId());
-	  $cuentapadre->save();
+    if($cuentapadre)
+      $cuentapadre->delete();
+    return true;
+//    $cuenta = new cuenta();
+//	  $cuenta->setNombre($name);
+//	  $cuenta->save();
+//	  $cuentapadre->setCuentaId($cuenta->getId());
+//	  $cuentapadre->save();
 	}
 	
 	public static function acommodateLossedAccounts()
@@ -154,19 +170,21 @@ class accountsHandler {
                 if($cuenta_id === null)
                 {
                     var_dump(sprintf("El id: %s que corresponde a %s no tiene cuenta relacionada", $parent["id"], $parent["nombre"]));
+                    /*
                     $cuenta = new cuenta();
                     $cuenta->setNombre($parent["nombre"]);
                     $cuenta->save();
                     $cuenta_id = $cuenta->getId();
+                    */
                 }
                 else
                 {
-                    $cuenta_id = $cuenta["cuenta_id"];
+                    $cuentapadre = new cuentapadre();
+                    $cuentapadre->setProgenitorId($parent_id);
+                    $cuentapadre->setCuentaId($cuenta["cuenta_id"]);
+                    $cuentapadre->save();
                 }
-                $cuentapadre = new cuentapadre();
-                $cuentapadre->setProgenitorId($parent_id);
-                $cuentapadre->setCuentaId($cuenta_id);
-                $cuentapadre->save();
+                
 
             }
 
@@ -218,12 +236,12 @@ class accountsHandler {
                             if($cantidad_cobros_cuenta_hermano == 0)
                             {
                                 $q->execute(self::SQL_UPDATE_CUENTA_USUARIO, array($cuenta_id, $hermano_id));
-                                $q->execute(self::SQL_UPDATE_FACTURA_CUENTA_USUARIO, array($cuenta_id, $hermano_id));
+                                //$q->execute(self::SQL_UPDATE_FACTURA_CUENTA_USUARIO, array($cuenta_id, $hermano_id));
                             }
                             else
                             {
                                 $q->execute(self::SQL_UPDATE_CUENTA_USUARIO, array($cuenta_hermano_id, $usuarioId));
-                                $q->execute(self::SQL_UPDATE_FACTURA_CUENTA_USUARIO, array($cuenta_hermano_id, $usuarioId));
+                                //$q->execute(self::SQL_UPDATE_FACTURA_CUENTA_USUARIO, array($cuenta_hermano_id, $usuarioId));
                             }
                         }
                     }
@@ -237,6 +255,11 @@ class accountsHandler {
                 $parent_id = $parent["progenitor_id"];
                 $cuenta_padre = $q->fetchRow(self::SQL_PARENTS_ACCOUNTS, array($parent_id));
                 $cuenta_padre_id = $cuenta_padre["cuenta_id"];
+                if($cuenta_padre_id === null)
+                {
+                  self::createParentAccount($parent_id, $cuenta_id);
+                  $cuenta_padre_id = $cuenta_id;
+                }
                 if($cuenta_id != $cuenta_padre_id)
                 {
                     $consulta_cobros_padre = $q->fetchRow(self::SQL_CUENTA_TIENE_COBRO, array($cuenta_padre_id));
@@ -254,13 +277,12 @@ class accountsHandler {
                         else
                         {
                             $q->execute(self::SQL_UPDATE_CUENTA_USUARIO, array($cuenta_padre_id, $usuarioId));
-                            $q->execute(self::SQL_UPDATE_FACTURA_CUENTA_USUARIO, array($cuenta_padre_id, $usuarioId));
+                            //$q->execute(self::SQL_UPDATE_FACTURA_CUENTA_USUARIO, array($cuenta_padre_id, $usuarioId));
                         }
                     }
                 }
+                
             }
-            
-            
         }
         if($progenitorId !== null)
         {
@@ -273,8 +295,38 @@ class accountsHandler {
         return true;
     }
     
+    public static function checkThatParentAndSonHasSameAccount($parent_id, $user_id)
+    {
+      $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+      $referenceParent = $q->fetchRow(self::SQL_RETRIEVE_ACCOUNT_REFERENCE_PARENT, array($parent_id));
+      $referenceUser = $q->fetchRow(self::SQL_RETRIEVE_ACCOUNT_REFERENCE_USER, array($user_id));
+      if($referenceParent && ($referenceParent != $referenceUser))
+      {
+        return false;
+      }
+      return true;
+    }
+    
+    public static function checkThatBrothersHasSameReference($user_id, $brother_id)
+    {
+      // SQL_USUARIO_REFERENCIA
+      $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+      $referenceUser = $q->fetchRow(self::SQL_USUARIO_REFERENCIA, array($user_id));
+      $referenceBrother = $q->fetchRow(self::SQL_USUARIO_REFERENCIA, array($brother_id));
+      if($referenceBrother != $referenceUser)
+      {
+        return false;
+      }
+      return true;
+    }
+    
+    
+    
+    
+    
     public static function generateMonthBilling($month, $year)
     {
+        /*
         $usuarios = Doctrine::getTable('usuario')->retrieveAllActiveStudents();
         foreach($usuarios as $usuario)
         {
@@ -287,10 +339,8 @@ class accountsHandler {
                     factura::updateUserBill($usuario, $month, $year);
                 }
             }
-            
-            
-            
         }
+        */
     }
 }
 

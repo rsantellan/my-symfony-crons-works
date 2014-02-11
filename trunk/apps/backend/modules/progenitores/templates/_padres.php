@@ -100,6 +100,10 @@
             $('#jardin-no-padres').hide();
             $('#jardin-padres-list').append(_TEMPLATE_LI.replace('{name}', data.attributes.name).replace('{usuario_id}', _USUARIO_ID).replace('{progenitor_id}', data.attributes.value).replace('{progenitor_id}', data.attributes.value)).show();
           }
+          else
+          {
+            mdShowMessage(json.options.message);
+          }
         },
         complete: function(){},
         error: function(){}

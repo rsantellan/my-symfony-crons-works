@@ -114,6 +114,10 @@
             $('#jardin-no-hermanos').hide();
             $('#jardin-hermanos-list').append(_TEMPLATE_LI.replace('{name}', data.attributes.name).replace('{usuario_from}', _USUARIO_FROM).replace('{usuario_to}', data.attributes.value).replace('{usuario_to}', data.attributes.value)).show();
           }
+          else
+          {
+            mdShowMessage(json.options.message);
+          }
         },
         complete: function(){},
         error: function(){}

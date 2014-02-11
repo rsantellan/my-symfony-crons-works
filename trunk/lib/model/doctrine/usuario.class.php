@@ -385,12 +385,12 @@ class usuario extends Baseusuario {
 	
 	public function postInsert($event) {
 	  parent::postInsert($event);
-	  accountsHandler::createUsuarioAccount($this->getId(), $this->getApellido());
+	  accountsHandler::createUsuarioAccount($this->getId(), $this->getReferenciaBancaria());
 	}
     
     public function postSave($event) {
         parent::postSave($event);
-        factura::updateUserBill($this, date('n'), date('Y'));
+        //factura::updateUserBill($this, date('n'), date('Y'));
     }
 
 
