@@ -7,7 +7,7 @@
  */
 class accountsHandler {
 
-    const SQL_USUARIO = "SELECT id, nombre, apellido from usuario";
+    const SQL_USUARIO = "SELECT id, nombre, apellido, referencia_bancaria from usuario";
     const SQL_USUARIO_CUENTA = "select cuenta_id from cuentausuario where usuario_id = ?";
     const SQL_USUARIO_HERMANO = "select usuario_from, usuario_to from hermanos where usuario_from = ? or usuario_to = ?";
 
@@ -69,7 +69,7 @@ class accountsHandler {
                 if(!$cuenta)
                 {
                     $cuenta = new cuenta();
-                    $cuenta->setNombre($usuario["apellido"]);
+					$cuenta->setReferenciabancaria($usuario["referencia_bancaria"]);
                     $cuenta->save();
                     $cuenta_id = $cuenta->getId();
                 }
