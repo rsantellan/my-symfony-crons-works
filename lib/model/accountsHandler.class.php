@@ -11,6 +11,9 @@ class accountsHandler {
     const SQL_USUARIO_CUENTA = "select cuenta_id from cuentausuario where usuario_id = ?";
     const SQL_USUARIO_HERMANO = "select usuario_from, usuario_to from hermanos where usuario_from = ? or usuario_to = ?";
     const SQL_USUARIO_REFERENCIA = 'select referencia_bancaria from usuario where id = ?';
+    const SQL_USUARIO_REFERENCIA_CUENTA = 'select id, referenciabancaria from cuenta where referenciabancaria = ?';
+    
+    const SQL_UPDATE_USUARIO_REFERENCIA_CUENTA = "update usuario set referencia_bancaria = concat('F', id) where referencia_bancaria = ''";
     
     const SQL_PARENTS = "select id, nombre from progenitor";
     const SQL_PARENTS_ACCOUNTS = "select cuenta_id from cuentapadre where progenitor_id = ?";
@@ -39,6 +42,7 @@ class accountsHandler {
     {
         
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+        $q->execute(self::SQL_UPDATE_USUARIO_REFERENCIA_CUENTA);
         $usuarios = $q->fetchAssoc(self::SQL_USUARIO);
         foreach($usuarios as $usuario)
         {
@@ -73,10 +77,19 @@ class accountsHandler {
                 $cuenta_id = null;
                 if(!$cuenta)
                 {
-                    $cuenta = new cuenta();
-                    $cuenta->setReferenciabancaria($usuario["referencia_bancaria"]);
-                    $cuenta->save();
-                    $cuenta_id = $cuenta->getId();
+                    $cuentaReferencia = $q->fetchRow(self::SQL_USUARIO_REFERENCIA_CUENTA, array($usuario["referencia_bancaria"]));
+                    if($cuentaReferencia && $cuentaReferencia['referenciabancaria'] !== "")
+                    {
+                      $cuenta_id = $cuentaReferencia['id'];
+                    }
+                    else
+                    {
+                      $cuenta = new cuenta();
+                      $cuenta->setReferenciabancaria($usuario["referencia_bancaria"]);
+                      $cuenta->save();
+                      $cuenta_id = $cuenta->getId();
+                    }
+                    
                 }
                 else
                 {

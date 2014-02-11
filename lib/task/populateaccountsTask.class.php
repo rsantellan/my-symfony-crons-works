@@ -37,5 +37,8 @@ EOF;
     accountsHandler::populateUsersAccounts();
     //return false;
     accountsHandler::populateParentsAccounts();
+    
+    hermanos::checkBrothersByAccounts();
+    hermanos::checkAllParentsByBrothers();
   }
 }
