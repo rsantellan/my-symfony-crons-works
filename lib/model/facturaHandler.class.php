@@ -12,6 +12,130 @@
  */
 class facturaHandler {
 
+  public static function generateUserBill($usuario, $month, $year)
+  {
+    $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($usuario->getId(), $month, $year);
+    if(!$facturaUsuario)
+    {
+      $facturaUsuario = new facturaUsuario();
+      $facturaUsuario->setYear($year);
+      $facturaUsuario->setMonth($month);
+      $facturaUsuario->setUsuarioId($usuario->getId());
+      $facturaUsuario->setTotal(0);
+      $facturaUsuario->setFechavencimiento(date('Y-m-d'));
+      $facturaUsuario->save();
+      
+      $total = 0;
+      $detalleMensualidad = new facturaUsuarioDetalle();
+      $detalleMensualidad->setFacturaId($facturaUsuario->getId());
+      $detalleMensualidad->setDescription('Mensualidad');
+      $detalleMensualidad->setAmount(costos::getCosto($usuario->getHorario()));
+      $detalleMensualidad->save();
+      $total += $detalleMensualidad->getAmount();
+      foreach($usuario->getActividades() as $actividad)
+      {
+        $detalleActividad = new facturaUsuarioDetalle();
+        $detalleActividad->setFacturaId($facturaUsuario->getId());
+        $detalleActividad->setDescription($actividad->getNombre());
+        $detalleActividad->setAmount($actividad->getCosto());
+        $detalleActividad->save();
+        $total += $detalleActividad->getAmount();
+      }
+      
+      $descuentoHermano = $usuario->calculateBrothersDiscount();
+      if($descuentoHermano > 0)
+      {
+        $detalleDescuentoHermano = new facturaUsuarioDetalle();
+        $detalleDescuentoHermano->setFacturaId($facturaUsuario->getId());
+        $detalleDescuentoHermano->setDescription('Descuento hermano');
+        $detalleDescuentoHermano->setAmount(-($total * $descuentoHermano / 100));
+        $detalleDescuentoHermano->save();
+        $total += $detalleDescuentoHermano->getAmount();
+      }
+      if($usuario->getDescuento() !== null && (int) $usuario->getDescuento() > 0)
+      {
+        $detalleDescuentoUsuario = new facturaUsuarioDetalle();
+        $detalleDescuentoUsuario->setFacturaId($facturaUsuario->getId());
+        $detalleDescuentoUsuario->setDescription('Descuento usuario');
+        $detalleDescuentoUsuario->setAmount(-($total * $usuario->getDescuento() / 100));
+        $detalleDescuentoUsuario->save();
+        $total += $detalleDescuentoUsuario->getAmount();
+      }
+      $facturaUsuario->setTotal($total);
+      $facturaUsuario->save();
+    }
+    else
+    {
+      //Ya existe una factura para este mes.
+    }
+  }
+  
+  public static function generateAccountBill($month, $year, $accountId = null)
+  {
+    if($accountId !== null)
+    {
+      $account = Doctrine::getTable('cuenta')->find($accountId);
+      self::doGenerateAccountBill($month, $year, $account);
+    }
+    else
+    {
+      $accounts = Doctrine::getTable('cuenta')->retrieveAllActive();
+      foreach($accounts as $account)
+      {
+        self::doGenerateAccountBill($month, $year, $account);
+      }
+    }
+  }
+  
+  private static function doGenerateAccountBill($month, $year, $account)
+  {
+    $facturaFinal = Doctrine::getTable('facturaFinal')->retrieveByAccountMonthAndYear($account->getId(), $month, $year);
+    if(!$facturaFinal)
+    {
+      $facturaFinal = new facturaFinal();
+      $facturaFinal->setCuenta($account);
+      $facturaFinal->setMonth($month);
+      $facturaFinal->setYear($year);
+      $facturaFinal->setFechavencimiento(date('Y-m-d'));
+      $facturaFinal->setTotal(0);
+      $facturaFinal->save();
+      $total = 0;
+      foreach($account->getCuentausuario() as $cuentaUsuario)
+      {
+        $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($cuentaUsuario->getUsuarioId(), $month, $year);
+        if($facturaUsuario)
+        {
+          foreach($facturaUsuario->getFacturaUsuarioDetalle() as $facturaUsuarioDetalle)
+          {
+            $detalle = new facturaFinalDetalle();
+            $detalle->setFacturaId($facturaFinal->getId());
+            $detalle->setDescription($facturaUsuarioDetalle->getDescription());
+            $detalle->setAmount($facturaUsuarioDetalle->getAmount());
+            $detalle->save();
+            $total += $detalle->getAmount();
+          }
+          
+          $facturaFinalUsuario = new facturausuariofinal();
+          $facturaFinalUsuario->setFacturaFinalId($facturaFinal->getId());
+          $facturaFinalUsuario->setFacturaUsuarioId($facturaUsuario->getId());
+          $facturaFinalUsuario->save();
+        }
+        else
+        {
+          // No tiene factura para ese mes?? raro...
+        }
+        
+      }
+      $facturaFinal->setTotal($total);
+      $facturaFinal->save();
+      $account->setDebe($account->getDebe() + $total);
+      $account->save();
+    }
+    else
+    {
+      //Ya existe una factura para ese mes.
+    }
+  }
   
   /*
    * 

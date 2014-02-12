@@ -65,7 +65,7 @@ class usuario extends Baseusuario {
         $discount = 0;
         $descuento = Doctrine::getTable('descuentos')->findOneByCantidadDeHermanos($hermanos_cantidad['cantidad']);
         if ($descuento) {
-            $discount = $descuento->getPorcentaje();
+            $discount = (int) $descuento->getPorcentaje();
         }
         return $discount;
     }
@@ -385,13 +385,24 @@ class usuario extends Baseusuario {
 	
 	public function postInsert($event) {
 	  parent::postInsert($event);
-	  accountsHandler::createUsuarioAccount($this->getId(), $this->getReferenciaBancaria());
+	  $accountId = accountsHandler::createUsuarioAccount($this->getId(), $this->getReferenciaBancaria());
+    if($accountId !== null)
+    {
+      hermanos::checkBrothersByAccounts($accountId);
+      hermanos::checkAllParentsByBrothers();
+    }
 	}
     
-    public function postSave($event) {
+  public function postSave($event) {
         parent::postSave($event);
         //factura::updateUserBill($this, date('n'), date('Y'));
-    }
+  }
+  
+  public static function getAllUsersWithoutParents($egresado = false)
+  {
+    return Doctrine::getTable('usuario')->getWithoutParents($egresado);
+    //select * from usuario where id not in (select usuario_id from usuario_progenitor) and egresado = 0;
+  }
 
 
 }

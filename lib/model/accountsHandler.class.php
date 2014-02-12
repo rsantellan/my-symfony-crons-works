@@ -108,17 +108,24 @@ class accountsHandler {
     
 	public static function createUsuarioAccount($userId, $referencia)
 	{
+    $hasCuenta = true;
     $cuenta = Doctrine::getTable('cuenta')->findOneByReferenciaBancaria($referencia);
     if(!$cuenta)
     {
       $cuenta = new cuenta();
       $cuenta->setReferenciabancaria($referencia);
       $cuenta->save();
+      $hasCuenta = false;
     }
     $cuentaUsuario = new cuentausuario();
 	  $cuentaUsuario->setUsuarioId($userId);
 	  $cuentaUsuario->setCuentaId($cuenta->getId());
 	  $cuentaUsuario->save();
+    if($hasCuenta)
+    {
+      return $cuenta->getId();
+    }
+    return null;
 	}
 	
 	public static function createParentAccount($parent_id, $cuentaId = null, $referencia = null)
@@ -339,8 +346,13 @@ class accountsHandler {
     
     public static function generateMonthBilling($month, $year)
     {
-        /*
         $usuarios = Doctrine::getTable('usuario')->retrieveAllActiveStudents();
+        foreach($usuarios as $usuario)
+        {
+          facturaHandler::generateUserBill($usuario, $month, $year);
+        }
+        /*
+        
         foreach($usuarios as $usuario)
         {
             try{

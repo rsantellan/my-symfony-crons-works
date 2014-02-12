@@ -69,11 +69,22 @@ class hermanos extends Basehermanos
 	  accountsHandler::syncParentChildsBrothersAccounts($this->getUsuarioTo());
 	}
   
-  public static function checkBrothersByAccounts()
+  public static function checkBrothersByAccounts($accountId = null)
   {
     $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-    $sql = "select usuario_id, cuenta_id from cuentausuario where cuenta_id in (select q.cuenta_id from (select count(*) as cantidad, cuenta_id from cuentausuario group by cuenta_id having cantidad > 1 order by cantidad) q) order by cuenta_id";
-    $usuarios = $q->fetchAssoc($sql);
+    $parameteres = array();
+    $sql = "";
+    if($accountId === null)
+    {
+      $sql = "select usuario_id, cuenta_id from cuentausuario where cuenta_id in (select q.cuenta_id from (select count(*) as cantidad, cuenta_id from cuentausuario group by cuenta_id having cantidad > 1 order by cantidad) q) order by cuenta_id";
+    }
+    else
+    {
+      $sql = "select usuario_id, cuenta_id from cuentausuario where cuenta_id = ?";
+      $parameteres[] = $accountId;
+    }
+    
+    $usuarios = $q->fetchAssoc($sql, $parameteres);
     $data = array();
     foreach($usuarios as $usuario)
     {

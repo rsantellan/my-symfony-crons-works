@@ -16,4 +16,13 @@ class facturaUsuarioTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('facturaUsuario');
     }
+    
+    public function retrieveByUserMonthAndYear($userId, $month, $year)
+    {
+        $query = $this->createQuery('f')
+                ->addWhere('f.usuario_id = ?', $userId)
+                ->addWhere('f.month = ?', $month)
+                ->addWhere('f.year = ?', $year);
+        return $query->fetchOne();
+    }
 }

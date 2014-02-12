@@ -36,6 +36,12 @@ class usuarioTable extends Doctrine_Table
         )->fetchAll();*/
     }
     
+    public function getWithoutParents($egresado = false)
+    {
+      
+      return $this->createQuery('q')->where('q.egresado = ?', $egresado)->andWhere('id not in (select usuario_id from usuario_progenitor)')->execute();
+    }
+    
     public function retrieveAllActiveStudents()
     {
         return $this->createQuery('q')->addWhere('q.egresado = 0')->execute();

@@ -24,7 +24,7 @@
  * 
  * @package    jardin
  * @subpackage model
- * @author     Gaston Caldeiro
+ * @author     Rodrigo Santellan
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Baseexoneracion extends sfDoctrineRecord
