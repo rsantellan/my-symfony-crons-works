@@ -16,4 +16,15 @@ class cuentaTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('cuenta');
     }
+    
+    
+    public function retrieveAllActive()
+    {
+      $q = $this->createQuery('q')
+           ->select('q.*')   
+           ->innerJoin('q.cuentausuario cu')
+           ->innerJoin('cu.usuario u')
+           ->where('u.egresado = 0');
+      return $q->execute();
+    }
 }

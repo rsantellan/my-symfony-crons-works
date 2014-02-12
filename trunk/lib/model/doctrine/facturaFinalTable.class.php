@@ -16,4 +16,13 @@ class facturaFinalTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('facturaFinal');
     }
+    
+    public function retrieveByAccountMonthAndYear($accountId, $month, $year)
+    {
+        $query = $this->createQuery('f')
+                ->addWhere('f.cuenta_id = ?', $accountId)
+                ->addWhere('f.month = ?', $month)
+                ->addWhere('f.year = ?', $year);
+        return $query->fetchOne();
+    }
 }

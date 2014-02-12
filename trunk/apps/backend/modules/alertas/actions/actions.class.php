@@ -12,7 +12,8 @@ class alertasActions extends sfActions
   public function executeIndex(sfWebRequest $request){
       
     $this->facturas = array();//Doctrine::getTable('factura')->retrieveAllActive();
-    
+    //usuario::getAllUsersWithoutParents(true);
+    //Doctrine::getTable('cuenta')->retrieveAllActive();
     /*
     $this->mescurrent = $request->getParameter('mes', '-1');
     

@@ -636,6 +636,7 @@ facturausuariofinal:
       foreign: id
       type: one
       onDelete: CASCADE
+      
 cobro:
   actAs: { Timestampable: ~ }
   tableName: cobro
