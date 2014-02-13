@@ -20,3 +20,15 @@ label.accountListTitleRef{
 li.liegresado{
   text-decoration:line-through;
 }
+
+tr.cuentas-row-yellow{
+  background-color: yellow;
+}
+
+tr.cuentas-row-orange{
+  background-color: orange;
+}
+
+tr.cuentas-row-green{
+  background-color: green;
+}

@@ -16,5 +16,20 @@ class cuenta extends Basecuenta
     $this->setDiferencia($this->getDebe() - $this->getPago());
     parent::preSave($event);
   }
+  
+  public function getUsuariosNames()
+  {
+    $string = "";
+    foreach($this->getCuentausuario() as $cuentaUsuario)
+    {
+      $string .= $cuentaUsuario->getUsuario()->getNombre()." ".$cuentaUsuario->getUsuario()->getApellido() . ",";
+    }
+    return rtrim($string, ",");
+  }
+  
+  public function getPadresEmail()
+  {
+    return "";
+  }
 
 }
