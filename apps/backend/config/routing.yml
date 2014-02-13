@@ -92,6 +92,14 @@ egresado:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
 # default rules
+salvarcuenta:
+  url:   /cuentas/salvar.html
+  param: { module: cuentas, action: doCobroForm }
+  
+pagarcuenta:
+  url:   /cuentas/pagar/:id.html
+  param: { module: cuentas, action: cobroForm }
+  
 detallecuenta:
   url:   /cuentas/detalle/:id.html
   param: { module: cuentas, action: show }
