@@ -1,0 +1,22 @@
+/* 
+    Document   : rodrigosantellan
+    Created on : Feb 13, 2014, 11:51:47 AM
+    Author     : rodrigo
+    Description:
+        New Backend Styles
+*/
+
+div.accountslist h3{
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+}
+
+label.accountListTitleRef{
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+li.liegresado{
+  text-decoration:line-through;
+}

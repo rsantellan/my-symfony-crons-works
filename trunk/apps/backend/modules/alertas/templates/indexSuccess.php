@@ -1,5 +1,7 @@
-<?php use_helper('I18N', 'Date') ?>
-
+<?php use_helper('I18N', 'Date', 'mdAsset');?>
+<?php use_stylesheet('rodrigosantellan.css', 'last');?>
+<?php use_plugin_stylesheet('mastodontePlugin', '../js/jquery-ui-1.8.4/css/smoothness/jquery-ui-1.8.4.custom.css') ?>
+<?php use_plugin_javascript('mastodontePlugin', 'jquery-ui-1.8.4/js/jquery-ui-1.8.4.custom.min.js', 'last') ?>
 <link href="/css/imprimir.css" type="text/css" rel="stylesheet" media="print" />
 
 <?php slot('alertas'); ?>
@@ -48,7 +50,51 @@ $colors_list = array();
   
   <div class="colgroup leading">
     <div class="box box-warning">A continuacion se listan los usuarios que tienen deudas pendientes</div>
-    
+    <div id="sf_admin_container2" class="column width6 first">
+      <h3>Cuentas con deudas:&nbsp;&nbsp;<a href="#" id="count-deudores"><?php echo count($cuentas); ?></a></h3>
+      <ul class="sf_admin_actions" style="list-style: none;">
+        <li class="sf_admin_action_print">
+          <a href="javascript:void(0)" onclick="javascript:window.print(); return false;" id="print-button" class="iframe" style="padding-left: 20px;">Imprimir</a>
+        </li>
+      </ul>
+      <hr />
+      <div id="accountAccordionList" class="accountslist">
+        <?php foreach($cuentas as $cuentaUsuario): ?>
+        
+          <?php
+          $cuenta = $cuentaUsuario['cuenta'];
+          $usuarios = $cuentaUsuario['usuarios'];
+          $apellido = $cuentaUsuario['apellido'];
+          ?>
+          <?php //var_dump($cuenta->getId());?> 
+          
+            <h3><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)</label></h3>
+          
+            <div class="accordionData">
+              <div class="accountslistUsers">
+                <label>Alumnos relacionados</label>
+                <ul class="accountslistUsersList">
+                  <?php foreach($usuarios as $usuario): ?>
+                    <li class="<?php echo ($usuario->getEgresado() == 1)? 'liegresado' : ''; ?>"><?php echo $usuario->getNombre(). " - ".$usuario->getApellido();?> <?php echo ($usuario->getEgresado() == 1)? '(Egresado)' : ''; ?></li>
+                  <?php endforeach;?>
+                </ul>
+              </div>
+              <div class="accountslistActions">
+                <span>Monto adeudado: $<?php echo $cuenta->getDiferencia();?></span>
+                <a href="javascript:void(0)">Ver detalle</a>
+                <div>
+                  <a href="javascript:void(0)">Enviar mail</a>
+                  <a href="javascript:void(0)">Pagar</a>
+                  <a href="javascript:void(0)">Cancelar</a>
+                </div>
+              </div>
+            </div>
+        
+          
+        <?php endforeach; ?>
+          
+      </div>
+    </div>
     <div id="sf_admin_container2" class="column width6 first">
       <h4>Alumnos con deudas:&nbsp;&nbsp;<a href="#" id="count-deudores"><?php echo $facturas->count(); ?></a></h4>
       <ul class="sf_admin_actions" style="list-style: none;">
@@ -171,4 +217,10 @@ function doExonerar(obj, postUrl){
   });
   return false;
 }
+
+$(function() {
+  $('#accountAccordionList').accordion({
+    collapsible: true
+  });
+});
 </script>

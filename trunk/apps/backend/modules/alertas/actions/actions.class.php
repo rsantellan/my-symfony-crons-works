@@ -14,6 +14,17 @@ class alertasActions extends sfActions
     $this->facturas = array();//Doctrine::getTable('factura')->retrieveAllActive();
     //usuario::getAllUsersWithoutParents(true);
     //Doctrine::getTable('cuenta')->retrieveAllActive();
+    //Doctrine::getTable('cuenta')->retrieveAllWithDebts();
+    $this->cuentas = accountsHandler::retrieveAllDebtsAccountsWithUsers();
+    /*
+    var_dump(count($data));
+    $totales = 0;
+    foreach($data as $account)
+    {
+      $totales += count($account['usuarios']);
+    }
+    var_dump($totales);
+    */
     /*
     $this->mescurrent = $request->getParameter('mes', '-1');
     

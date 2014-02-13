@@ -27,4 +27,20 @@ class cuentaTable extends Doctrine_Table
            ->where('u.egresado = 0');
       return $q->execute();
     }
+    
+    public function retrieveAllWithDebts()
+    {
+      return $this->createQuery('q')
+              ->where('q.diferencia > 0')
+              ->execute();
+    }
+    
+    public function retrieveAllWithDebtsAndUsers()
+    {
+      return $this->createQuery('q')
+              ->innerJoin('q.cuentausuario cu')
+              ->innerJoin('cu.usuario u')
+              ->where('q.diferencia > 0')
+              ->execute();
+    }
 }
