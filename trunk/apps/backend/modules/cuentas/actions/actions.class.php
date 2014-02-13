@@ -31,4 +31,25 @@ class cuentasActions extends sfActions
     
     $this->cobros = Doctrine::getTable('cobro')->retrieveOfAccount($this->cuenta->getId());
   }
+  
+  public function executeCobroForm(sfWebRequest $request)
+  {
+    $accountId = $request->getParameter('id');
+    $cobro = new cobro();
+    $cobro->setCuentaId($accountId);
+    $this->form = new cobroForm($cobro);
+  }
+  
+  public function executeDoCobroForm(sfWebRequest $request)
+  {
+    $this->form = new cobroForm();
+    $this->form->bind($request->getParameter($this->form->getName()));
+    if ($this->form->isValid())
+    {
+      $this->form->save();
+    }
+    $response = true;
+    $message = 'nanana';
+    return $this->renderText(mdBasicFunction::basic_json_response($response, array('message' => $message)));
+  }
 }

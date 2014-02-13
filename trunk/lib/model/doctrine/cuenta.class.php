@@ -17,19 +17,9 @@ class cuenta extends Basecuenta
     parent::preSave($event);
   }
   
-  public function getUsuariosNames()
+  public function getFormatedDiferencia()
   {
-    $string = "";
-    foreach($this->getCuentausuario() as $cuentaUsuario)
-    {
-      $string .= $cuentaUsuario->getUsuario()->getNombre()." ".$cuentaUsuario->getUsuario()->getApellido() . ",";
-    }
-    return rtrim($string, ",");
-  }
-  
-  public function getPadresEmail()
-  {
-    return "";
+    return number_format($this->getDiferencia(), 0, ',', '.');
   }
 
 }

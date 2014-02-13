@@ -68,7 +68,7 @@ $colors_list = array();
           ?>
           <?php //var_dump($cuenta->getId());?> 
           
-            <h3><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)</label></h3>
+            <h3><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)($<?php echo $cuenta->getFormatedDiferencia();?>)</label></h3>
           
             <div class="accordionData">
               <div class="accountslistUsers">
@@ -80,11 +80,11 @@ $colors_list = array();
                 </ul>
               </div>
               <div class="accountslistActions">
-                <span>Monto adeudado: $<?php echo $cuenta->getDiferencia();?></span>
-                <a href="javascript:void(0)">Ver detalle</a>
+                <span>Monto adeudado: $<?php echo $cuenta->getFormatedDiferencia();?></span>
+                <a href="<?php echo url_for("@detallecuenta?id=".$cuenta->getId());?>">Ver detalle</a>
                 <div>
                   <a href="javascript:void(0)">Enviar mail</a>
-                  <a href="javascript:void(0)">Pagar</a>
+                  <a href="<?php echo url_for("@pagarcuenta?id=".$cuenta->getId());?>" class="fancybox">Pagar</a>
                   <a href="javascript:void(0)">Cancelar</a>
                 </div>
               </div>
@@ -94,75 +94,6 @@ $colors_list = array();
         <?php endforeach; ?>
           
       </div>
-    </div>
-    <div id="sf_admin_container2" class="column width6 first">
-      <h4>Alumnos con deudas:&nbsp;&nbsp;<a href="#" id="count-deudores"><?php echo $facturas->count(); ?></a></h4>
-      <ul class="sf_admin_actions" style="list-style: none;">
-        <li class="sf_admin_action_print">
-          <a href="javascript:void(0)" onclick="javascript:window.print(); return false;" id="print-button" class="iframe" style="padding-left: 20px;">Imprimir</a>
-        </li>
-      </ul>
-      <hr />
-      
-      <?php if($facturas->count() == 0): ?>
-        <p>No hay alumnos con deudas</p>
-      <?php else: ?>
-        <table class="no-style full">
-            <thead>
-              <tr>
-                <td>Ref. Bancaria</td>
-                <td>Alumno</td>
-                <td class="ta-center">Costo</td>
-
-                <!-- <td class="ta-center">Detalle</td> -->
-
-                <td class="">Fuera de fecha ?</td>
-              </tr>
-            </thead>
-            <tbody>
-                <?php foreach($facturas as $factura):
-                        $color = "";
-                        if(isset($colors_list[$factura->getCuentaId()]))
-                        {
-                            $color = $colors_list[$factura->getCuentaId()];
-                        }
-                        else
-                        {
-                            $color = $factura->getRandomColor();
-                            while(in_array($color, $colors_list))
-                            {
-                                $color = $factura->getRandomColor();
-                            }
-                            $colors_list[$factura->getCuentaId()] = $color;
-                        }
-                
-                ?>
-                <tr>
-                    <td style="color: <?php echo $color;?>"><?php echo $factura->getUsuario()->getReferenciaBancaria();?></td>
-                    <td><a href="<?php echo url_for('usuarios/edit/?id=' . $factura->getUsuario()->getId()); ?>"><?php echo $factura->getUsuario()->getApellido(). " ".$factura->getUsuario()->getNombre();?></a></td>
-                    <td class="ta-center">$U <?php echo $factura->getTotal(); ?></td>
-                    <td class="ta-center">
-                        <a href="<?php echo url_for("alertas/pagarFactura/?id=".$factura->getId());?>">
-                            Pagar
-                        </a>
-                        
-                        <form class="alert-form" action="<?php echo url_for('@pagar'); ?>" method="POST" style="float:left">
-                          <input type="hidden" name="id" value="<?php echo $factura->getUsuario()->getId(); ?>" />
-                          <input type="hidden" name="price-to-pay" value="<?php echo $factura->getTotal(); ?>" />
-                          <input type="hidden" name="mes" value="<?php echo 1; ?>" />
-                          <input type="checkbox" name="out-of-date" />
-                          <input type="text" name="price" value="" />
-                          <a href="#" onclick="doPay(this); return false;">pagar</a> / <a href="#" onclick="doExonerar(this, '<?php echo url_for('@exonerar?id=' . $factura->getUsuario()->getId() . '&mes=' . 1); ?>'); return false;">cancelar</a>
-
-                          <!--<input class="as-link" type="submit" value="pago" />-->
-                        </form>
-                        <label class="ok" style="display: none; vertical-align: middle;"></label>
-                      </td>
-                </tr>    
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-      <?php endif; ?>
     </div>
   </div>
 
@@ -220,7 +151,37 @@ function doExonerar(obj, postUrl){
 
 $(function() {
   $('#accountAccordionList').accordion({
-    collapsible: true
+    collapsible: true,
+    active: false
   });
+  $('a.fancybox').fancybox();
 });
+
+function sendNewCobro(form)
+{
+  if(confirm('Esta seguro de querer ingresar el cobro?'))
+  {
+    
+    $.fancybox.showActivity();
+    $.ajax({
+        url: $(form).attr('action'),
+        data: $(form).serialize(),
+        type: 'post',
+        dataType: 'json',
+        success: function(json){
+            if(json.response == "OK")
+            {
+
+            }
+        }
+        , 
+        complete: function()
+        {
+          $.fancybox.hideActivity();
+          $.fancybox.resize();
+        }
+    });
+  }
+  return false;
+}
 </script>

@@ -34,9 +34,32 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
     // add your code here
-    accountsHandler::generateMonthBilling(date('n'), date('Y'));
-    facturaHandler::generateAccountBill(date('n'), date('Y'));
+    //accountsHandler::generateMonthBilling(date('n'), date('Y'));
+    //facturaHandler::generateAccountBill(date('n'), date('Y'));
     
-    $years = array(2013, 2013);
+    $date = new DateTime();
+    $date->modify('-1 year');
+    $nowMonth = date('n');
+    $nowYear = date('Y');
+    $month = $date->format('n');
+    $year = $date->format('Y');
+    var_dump($month);
+    var_dump($year);
+    $termino = false;
+    while(!$termino)
+    {
+      $date->modify('+1 month');
+      $month = $date->format('n');
+      $year = $date->format('Y');
+      var_dump($month);
+      var_dump($year);
+      accountsHandler::generateMonthBilling($month, $year);
+      facturaHandler::generateAccountBill($month, $year);
+      
+      if($year == $nowYear && $month == $nowMonth)
+      {
+          $termino = true;
+      }
+    }
   }
 }

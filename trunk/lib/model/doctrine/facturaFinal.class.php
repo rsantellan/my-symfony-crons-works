@@ -12,4 +12,8 @@
  */
 class facturaFinal extends BasefacturaFinal
 {
+  public function getFormatedTotal()
+  {
+    return number_format($this->getTotal(), 0, ',', '.');
+  }
 }

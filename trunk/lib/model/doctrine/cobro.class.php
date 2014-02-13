@@ -12,4 +12,11 @@
  */
 class cobro extends Basecobro
 {
+  
+  public function postSave($event) {
+    $this->getCuenta()->setPago($this->getMonto());
+    $this->getCuenta()->save();
+    parent::postSave($event);
+  }
+
 }
