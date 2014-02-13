@@ -25,4 +25,14 @@ class facturaFinalTable extends Doctrine_Table
                 ->addWhere('f.year = ?', $year);
         return $query->fetchOne();
     }
+    
+    public function retrieveAllDataFromAccountId($accountId)
+    {
+      $query = $this->createQuery('f')
+              ->innerJoin('f.facturaFinalDetalle ffd')
+              ->addWhere('f.cuenta_id = ?', $accountId)
+              ->orderBy('f.year')
+              ->addOrderBy('f.month');
+      return $query->execute();
+    }
 }

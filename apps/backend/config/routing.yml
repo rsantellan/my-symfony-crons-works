@@ -1,3 +1,12 @@
+cuenta:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                cuenta
+    module:               cuenta
+    prefix_path:          /cuenta
+    column:               id
+    with_wildcard_routes: true
+
 md_galeria:
   class: sfDoctrineRouteCollection
   options:
@@ -83,6 +92,14 @@ egresado:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
 # default rules
+detallecuenta:
+  url:   /cuentas/detalle/:id.html
+  param: { module: cuentas, action: show }
+  
+cuentas:
+  url:   /cuentas.html
+  param: { module: cuentas, action: index }
+
 alertas:
   url:   /alertas/:mes
   param: { module: alertas, action: index, mes: -1 }

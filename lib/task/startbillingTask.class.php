@@ -35,7 +35,8 @@ EOF;
 
     // add your code here
     accountsHandler::generateMonthBilling(date('n'), date('Y'));
-    
     facturaHandler::generateAccountBill(date('n'), date('Y'));
+    
+    $years = array(2013, 2013);
   }
 }

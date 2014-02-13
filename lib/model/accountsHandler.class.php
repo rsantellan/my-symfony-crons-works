@@ -371,5 +371,92 @@ class accountsHandler {
       }
       return $data;
     }
+    
+    public static function retrieveAllAccountsWithUsersAndParents()
+    {
+      $cuentasUsuarios = Doctrine::getTable('cuenta')->retrieveAllWithUsersAndParents();
+      $data = array();
+      foreach($cuentasUsuarios as $cuenta)
+      {
+        if(!isset($data[$cuenta->getId()]))
+        {
+          $data[$cuenta->getId()] = array('cuenta' => $cuenta, 'usuarios' => array(), 'apellido' => '', 'parents' => array());
+        }
+        foreach($cuenta->getCuentausuario() as $cuentaUsuario)
+        {
+          $data[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
+          $data[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
+        }
+        foreach($cuenta->getCuentapadre() as $cuentapadre)
+        {
+          $data[$cuenta->getId()]['parents'][] = $cuentapadre->getProgenitor();
+        }
+      }
+      return $data;
+    }
+    
+    public static function retrieveAllSeparatedAccountsWithUsersAndParentsByDifference()
+    {
+      $cuentasUsuarios = Doctrine::getTable('cuenta')->retrieveAllWithUsersAndParents();
+      $dataZero = array();
+      $dataPositive = array();
+      $dataNegative = array();
+      foreach($cuentasUsuarios as $cuenta)
+      {
+        if($cuenta->getDiferencia() > 0)
+        {
+          if(!isset($dataPositive[$cuenta->getId()]))
+          {
+            $dataPositive[$cuenta->getId()] = array('cuenta' => $cuenta, 'usuarios' => array(), 'apellido' => '', 'parents' => array());
+          }
+          foreach($cuenta->getCuentausuario() as $cuentaUsuario)
+          {
+            $dataPositive[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
+            $dataPositive[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
+          }
+          foreach($cuenta->getCuentapadre() as $cuentapadre)
+          {
+            $dataPositive[$cuenta->getId()]['parents'][] = $cuentapadre->getProgenitor();
+          }
+        }
+        else
+        {
+          if($cuenta->getDiferencia() == 0)
+          {
+            if(!isset($dataZero[$cuenta->getId()]))
+            {
+              $dataZero[$cuenta->getId()] = array('cuenta' => $cuenta, 'usuarios' => array(), 'apellido' => '', 'parents' => array());
+            }
+            foreach($cuenta->getCuentausuario() as $cuentaUsuario)
+            {
+              $dataZero[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
+              $dataZero[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
+            }
+            foreach($cuenta->getCuentapadre() as $cuentapadre)
+            {
+              $dataZero[$cuenta->getId()]['parents'][] = $cuentapadre->getProgenitor();
+            }
+          }
+          else
+          {
+            if(!isset($dataNegative[$cuenta->getId()]))
+            {
+              $dataNegative[$cuenta->getId()] = array('cuenta' => $cuenta, 'usuarios' => array(), 'apellido' => '', 'parents' => array());
+            }
+            foreach($cuenta->getCuentausuario() as $cuentaUsuario)
+            {
+              $dataNegative[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
+              $dataNegative[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
+            }
+            foreach($cuenta->getCuentapadre() as $cuentapadre)
+            {
+              $dataNegative[$cuenta->getId()]['parents'][] = $cuentapadre->getProgenitor();
+            }
+          }
+        }
+        
+      }
+      return array('positive' => $dataPositive, 'negative' => $dataNegative, 'zero' => $dataZero);
+    }
 }
 

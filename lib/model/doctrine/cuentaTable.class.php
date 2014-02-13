@@ -43,4 +43,15 @@ class cuentaTable extends Doctrine_Table
               ->where('q.diferencia > 0')
               ->execute();
     }
+    
+    public function retrieveAllWithUsersAndParents()
+    {
+      $q = $this->createQuery('q')
+              ->innerJoin('q.cuentausuario cu')
+              ->innerJoin('cu.usuario u')
+              ->innerJoin('q.cuentapadre cp')
+              ->innerJoin('cp.progenitor p');
+      return $q->execute();
+    }
+    
 }
