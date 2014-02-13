@@ -14,6 +14,7 @@ class facturaHandler {
 
   public static function generateUserBill($usuario, $month, $year)
   {
+    $debug = false;
     $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($usuario->getId(), $month, $year);
     if(!$facturaUsuario)
     {
@@ -48,7 +49,18 @@ class facturaHandler {
         $detalleDescuentoHermano = new facturaUsuarioDetalle();
         $detalleDescuentoHermano->setFacturaId($facturaUsuario->getId());
         $detalleDescuentoHermano->setDescription('Descuento hermano');
-        $detalleDescuentoHermano->setAmount(-($total * $descuentoHermano / 100));
+        if($debug)
+        {
+            var_dump($descuentoHermano);
+            var_dump($total);
+            var_dump($descuentoHermano);
+            var_dump($total * $descuentoHermano);
+            var_dump(($total * $descuentoHermano) / 100);
+            var_dump((($total * $descuentoHermano) / 100) * -1);
+            var_dump('--------');
+        }
+        $amount = (($total * $descuentoHermano) / 100) * -1;
+        $detalleDescuentoHermano->setAmount($amount);
         $detalleDescuentoHermano->save();
         $total += $detalleDescuentoHermano->getAmount();
       }
@@ -135,6 +147,16 @@ class facturaHandler {
     {
       //Ya existe una factura para ese mes.
     }
+  }
+  
+  public static function getRandomColor() 
+  { 
+     $c = "";
+     for ($i = 0; $i<6; $i++) 
+     { 
+         $c .=  dechex(rand(0,15)); 
+     } 
+     return "#".$c; 
   }
   
   /*

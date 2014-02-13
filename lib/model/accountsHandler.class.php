@@ -351,21 +351,25 @@ class accountsHandler {
         {
           facturaHandler::generateUserBill($usuario, $month, $year);
         }
-        /*
-        
-        foreach($usuarios as $usuario)
+    }
+    
+    public static function retrieveAllDebtsAccountsWithUsers()
+    {
+      $cuentasUsuarios = Doctrine::getTable('cuenta')->retrieveAllWithDebtsAndUsers();
+      $data = array();
+      foreach($cuentasUsuarios as $cuenta)
+      {
+        if(!isset($data[$cuenta->getId()]))
         {
-            try{
-                factura::generateUserBill($usuario, $month, $year);
-            }catch(Exception $e)
-            {
-                if($e->getCode() == 23000)
-                {
-                    factura::updateUserBill($usuario, $month, $year);
-                }
-            }
+          $data[$cuenta->getId()] = array('cuenta' => $cuenta, 'usuarios' => array(), 'apellido' => '');
         }
-        */
+        foreach($cuenta->getCuentausuario() as $cuentaUsuario)
+        {
+          $data[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
+          $data[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
+        }
+      }
+      return $data;
     }
 }
 
