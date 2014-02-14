@@ -1,4 +1,4 @@
-<table>
+<table class="hor-zebra">
   <thead>
     <tr>
       <th>Referencia Bancaria</th>
@@ -9,14 +9,16 @@
     </tr>
   </thead>
   <tbody>
-    <?php foreach($cuentas as $cuentaData): ?>
+    <?php 
+    $counter = 0;
+    foreach($cuentas as $cuentaData): ?>
 
     <?php
       $cuenta = $cuentaData['cuenta'];
       $usuarios = $cuentaData['usuarios'];
       $parents = $cuentaData['parents'];
     ?>
-    <tr class="<?php echo $trclass;?>">
+    <tr class="<?php echo ($counter % 2 == 0)? 'odd' : '';?>">
       <td>
         <a href="<?php echo url_for("@detallecuenta?id=".$cuenta->getId());?>">
           <?php echo $cuenta->getReferenciabancaria();?>
@@ -46,13 +48,15 @@
         ?>
       </td>
       <td>
-        <?php echo $cuenta->getDiferencia();?>
+        $ <?php echo $cuenta->getFormatedDiferencia();?>
       </td>
       <td>
         Accion.
       </td>
     </tr>
-    <?php endforeach; ?>
+    <?php 
+    $counter ++;
+    endforeach; ?>
   </tbody>
 </table>
 <div class="clear"></div>

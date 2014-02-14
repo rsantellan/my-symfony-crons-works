@@ -14,6 +14,9 @@ class cobroForm extends BasecobroForm
   {
     unset($this['created_at'], $this['updated_at']);
     $this->widgetSchema['cuenta_id'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['fecha'] = new sfWidgetFormInputDatepicker(array('value' => time()));
+    $this->widgetSchema['fecha'] = new sfWidgetFormInputDatepicker(array('default' => date('Y-m-d')));
+    $this->validatorSchema['fecha'] = new sfExtraValidatorDatepickerTime();   
+    $this->validatorSchema['monto'] = new sfValidatorNumber(array('required' => true, 'min' => 1));   
+    //$this->validatorSchema['fecha'] = new sfExtraValidatorDatepickerTime();   
   }
 }

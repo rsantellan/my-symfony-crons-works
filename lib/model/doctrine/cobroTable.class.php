@@ -17,11 +17,11 @@ class cobroTable extends Doctrine_Table
         return Doctrine_Core::getTable('cobro');
     }
     
-    public function retrieveOfAccount($accountId)
+    public function retrieveOfAccount($accountId, $order = 'desc')
     {
       $q = $this->createQuery('c')
               ->addWhere('c.cuenta_id = ?', $accountId)
-              ->orderBy('c.fecha');
+              ->orderBy('c.fecha '.$order);
       return $q->execute();
     }
 }

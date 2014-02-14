@@ -14,6 +14,7 @@
  * @property integer $enviado
  * @property integer $cuenta_id
  * @property date $fechavencimiento
+ * @property float $pagadodeltotal
  * @property cuenta $cuenta
  * @property Doctrine_Collection $facturaFinalDetalle
  * @property Doctrine_Collection $facturausuariofinal
@@ -27,6 +28,7 @@
  * @method integer             getEnviado()             Returns the current record's "enviado" value
  * @method integer             getCuentaId()            Returns the current record's "cuenta_id" value
  * @method date                getFechavencimiento()    Returns the current record's "fechavencimiento" value
+ * @method float               getPagadodeltotal()      Returns the current record's "pagadodeltotal" value
  * @method cuenta              getCuenta()              Returns the current record's "cuenta" value
  * @method Doctrine_Collection getFacturaFinalDetalle() Returns the current record's "facturaFinalDetalle" collection
  * @method Doctrine_Collection getFacturausuariofinal() Returns the current record's "facturausuariofinal" collection
@@ -39,6 +41,7 @@
  * @method facturaFinal        setEnviado()             Sets the current record's "enviado" value
  * @method facturaFinal        setCuentaId()            Sets the current record's "cuenta_id" value
  * @method facturaFinal        setFechavencimiento()    Sets the current record's "fechavencimiento" value
+ * @method facturaFinal        setPagadodeltotal()      Sets the current record's "pagadodeltotal" value
  * @method facturaFinal        setCuenta()              Sets the current record's "cuenta" value
  * @method facturaFinal        setFacturaFinalDetalle() Sets the current record's "facturaFinalDetalle" collection
  * @method facturaFinal        setFacturausuariofinal() Sets the current record's "facturausuariofinal" collection
@@ -103,6 +106,13 @@ abstract class BasefacturaFinal extends sfDoctrineRecord
              'type' => 'date',
              'notnull' => true,
              'length' => 25,
+             ));
+        $this->hasColumn('pagadodeltotal', 'float', 12, array(
+             'type' => 'float',
+             'default' => 0,
+             'notnull' => true,
+             'length' => 12,
+             'scale' => '2',
              ));
 
 
