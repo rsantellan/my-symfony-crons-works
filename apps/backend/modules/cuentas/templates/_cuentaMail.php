@@ -23,6 +23,14 @@
 					<th><span data-prefix>Fecha</span></th>
 					<td><span data-prefix><?php echo date('d/n/Y');?></span></td>
 				</tr>
+        <tr>
+					<th><span data-prefix>Alumno(s)</span></th>
+					<td><span data-prefix><?php echo date('d/n/Y');?></span></td>
+				</tr>
+        <tr>
+					<th><span data-prefix>Padre(s)</span></th>
+					<td><span data-prefix><?php echo date('d/n/Y');?></span></td>
+				</tr>
 			</table>
 			<table class="inventory">
 				<thead>
