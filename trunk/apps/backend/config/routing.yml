@@ -92,6 +92,10 @@ egresado:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
 # default rules
+cancelarfactura:
+  url:   /factura/cancelar/:id.html
+  param: { module: cuentas, action: cancelarFactura }
+
 salvarcuenta:
   url:   /cuentas/salvar.html
   param: { module: cuentas, action: doCobroForm }

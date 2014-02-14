@@ -24,6 +24,7 @@ abstract class BasefacturaFinalForm extends BaseFormDoctrine
       'enviado'          => new sfWidgetFormInputText(),
       'cuenta_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('cuenta'), 'add_empty' => false)),
       'fechavencimiento' => new sfWidgetFormDate(),
+      'pagadodeltotal'   => new sfWidgetFormInputText(),
       'created_at'       => new sfWidgetFormDateTime(),
       'updated_at'       => new sfWidgetFormDateTime(),
     ));
@@ -38,6 +39,7 @@ abstract class BasefacturaFinalForm extends BaseFormDoctrine
       'enviado'          => new sfValidatorInteger(array('required' => false)),
       'cuenta_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('cuenta'))),
       'fechavencimiento' => new sfValidatorDate(),
+      'pagadodeltotal'   => new sfValidatorNumber(array('required' => false)),
       'created_at'       => new sfValidatorDateTime(),
       'updated_at'       => new sfValidatorDateTime(),
     ));

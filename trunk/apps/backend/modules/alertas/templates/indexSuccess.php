@@ -68,27 +68,27 @@ $colors_list = array();
           ?>
           <?php //var_dump($cuenta->getId());?> 
           
-            <h3><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)($<?php echo $cuenta->getFormatedDiferencia();?>)</label></h3>
+        <h3 id="accordionHeader_<?php echo $cuenta->getId();?>"><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)($<span id="monto_header_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>)</label></h3>
           
-            <div class="accordionData">
-              <div class="accountslistUsers">
-                <label>Alumnos relacionados</label>
-                <ul class="accountslistUsersList">
-                  <?php foreach($usuarios as $usuario): ?>
-                    <li class="<?php echo ($usuario->getEgresado() == 1)? 'liegresado' : ''; ?>"><?php echo $usuario->getNombre(). " - ".$usuario->getApellido();?> <?php echo ($usuario->getEgresado() == 1)? '(Egresado)' : ''; ?></li>
-                  <?php endforeach;?>
-                </ul>
-              </div>
-              <div class="accountslistActions">
-                <span>Monto adeudado: $<?php echo $cuenta->getFormatedDiferencia();?></span>
-                <a href="<?php echo url_for("@detallecuenta?id=".$cuenta->getId());?>">Ver detalle</a>
-                <div>
-                  <a href="javascript:void(0)">Enviar mail</a>
-                  <a href="<?php echo url_for("@pagarcuenta?id=".$cuenta->getId());?>" class="fancybox">Pagar</a>
-                  <a href="javascript:void(0)">Cancelar</a>
-                </div>
-              </div>
+        <div id="accordionBody_<?php echo $cuenta->getId();?>" class="accordionData">
+          <div class="accountslistUsers">
+            <label>Alumnos relacionados</label>
+            <ul class="accountslistUsersList">
+              <?php foreach($usuarios as $usuario): ?>
+                <li class="<?php echo ($usuario->getEgresado() == 1)? 'liegresado' : ''; ?>"><?php echo $usuario->getNombre(). " - ".$usuario->getApellido();?> <?php echo ($usuario->getEgresado() == 1)? '(Egresado)' : ''; ?></li>
+              <?php endforeach;?>
+            </ul>
+          </div>
+          <div class="accountslistActions">
+            <span>Monto adeudado: $<span id="monto_body_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>
+            <a href="<?php echo url_for("@detallecuenta?id=".$cuenta->getId());?>">Ver detalle</a>
+            <div>
+              <a href="javascript:void(0)">Enviar mail</a>
+              <a href="<?php echo url_for("@pagarcuenta?id=".$cuenta->getId());?>" class="fancybox">Pagar</a>
+              <a href="javascript:void(0)">Cancelar</a>
             </div>
+          </div>
+        </div>
         
           
         <?php endforeach; ?>
@@ -171,7 +171,20 @@ function sendNewCobro(form)
         success: function(json){
             if(json.response == "OK")
             {
-
+              if(json.options.removePanel == 'true' || json.options.removePanel == true)
+              {
+                $('#accordionHeader_'+json.options.accountId).remove();
+                $('#accordionBody_'+json.options.accountId).remove();
+                $('#accountAccordionList').accordion("refresh");
+              }
+              $('#monto_header_'+json.options.accountId).html(json.options.monto);
+              $('#monto_body_'+json.options.accountId).html(json.options.monto);
+              $.fancybox.close();
+              mdShowMessage(json.options.message);
+            }
+            else
+            {
+              $('#cobroformcontainer').html(json.options.partial);
             }
         }
         , 

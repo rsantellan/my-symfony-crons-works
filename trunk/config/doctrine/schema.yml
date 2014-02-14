@@ -572,6 +572,10 @@ facturaFinal:
       notnull: true
     fechavencimiento:
       type: date(25)
+      notnull: true
+    pagadodeltotal:
+      type: float(12,2)
+      default: 0
       notnull: true      
   indexes:
     monthly_yearly_user_index:

@@ -27,12 +27,12 @@ class sfExtraValidatorDatepickerTime extends sfValidatorBase
     */
     protected function doClean($value)
     {
-        if($value['hour'] == '')
+        if(!isset($value['hour']) || $value['hour'] == '')
         {
             $value['hour'] = '00';
         }
         
-        if($value['minute'] == '')
+        if(!isset($value['minute']) || $value['minute'] == '')
         {
             $value['minute'] = '00';
         }

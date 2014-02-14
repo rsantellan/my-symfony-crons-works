@@ -26,13 +26,24 @@ class facturaFinalTable extends Doctrine_Table
         return $query->fetchOne();
     }
     
-    public function retrieveAllDataFromAccountId($accountId)
+    public function retrieveAllDataFromAccountId($accountId, $order = 'asc')
     {
       $query = $this->createQuery('f')
               ->innerJoin('f.facturaFinalDetalle ffd')
               ->addWhere('f.cuenta_id = ?', $accountId)
-              ->orderBy('f.year')
-              ->addOrderBy('f.month');
+              ->orderBy('f.year '.$order)
+              ->addOrderBy('f.month '.$order);
+      return $query->execute();
+    }
+    
+    public function retrieveAllUnpaidFromAccountId($accountId, $order = 'asc')
+    {
+      $query = $this->createQuery('f')
+              ->innerJoin('f.facturaFinalDetalle ffd')
+              ->addWhere('f.pago = ?', 0)
+              ->addWhere('f.cuenta_id = ?', $accountId)
+              ->orderBy('f.year '.$order)
+              ->addOrderBy('f.month '.$order);
       return $query->execute();
     }
 }

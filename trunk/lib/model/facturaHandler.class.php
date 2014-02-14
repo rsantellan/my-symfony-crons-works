@@ -159,6 +159,61 @@ class facturaHandler {
      return "#".$c; 
   }
   
+  public static function payFacturasOfAccount($accountId, $amount)
+  {
+    $facturas = Doctrine::getTable('facturaFinal')->retrieveAllUnpaidFromAccountId($accountId);
+    foreach($facturas as $factura)
+    {
+      if($amount > 0)
+      {
+        $amountFinal = $amount - ($factura->getTotal() - $factura->getPagadodeltotal());
+        if (sfConfig::get('sf_logging_enabled'))
+        {
+          sfContext::getInstance()->getLogger()->info(sprintf('factura id: %s', $factura->getId()));
+          sfContext::getInstance()->getLogger()->info(sprintf('monto: %s', $amount));
+          sfContext::getInstance()->getLogger()->info(sprintf('factura total: %s', $factura->getTotal()));
+          sfContext::getInstance()->getLogger()->info(sprintf('factura pago: %s', $factura->getPagadodeltotal()));
+          sfContext::getInstance()->getLogger()->info(sprintf('factura total - pago: %s', $factura->getTotal() - $factura->getPagadodeltotal()));
+          sfContext::getInstance()->getLogger()->info(sprintf('monto final: %s', $amountFinal));
+        }
+        if(($factura->getTotal() - $factura->getPagadodeltotal()) > $amount)
+        {
+          $factura->setPagadodeltotal($factura->getPagadodeltotal() + $amount);
+        }
+        else
+        {
+          $factura->setPagadodeltotal($factura->getTotal());
+          $factura->setPago(1);
+        }
+        $amount = $amountFinal;
+        $factura->save();
+      }
+    }
+  }
+  
+  public static function cancelFactura($factura)
+  {
+    if($factura->getPago() == 0 && $factura->getCancelado() == 0)
+    {
+      $conn = Doctrine_Manager::connection();
+      try
+      {
+        $conn->beginTransaction();
+        $factura->setCancelado(1);
+        $factura->save();
+        $cuenta = $factura->getCuenta();
+        $cuenta->setDebe($cuenta->getDebe() - $factura->getTotal());
+        $cuenta->save();
+        $conn->commit();
+      }catch (Exception $e){
+        $conn->rollBack();
+        throw $e;
+      }
+      return true;
+    }
+    return false;
+    //$factura->getCuenta()->setDebe($factura->getCuenta()->getDebe() - $factura->getTotal());
+  }
   /*
    * 
 public function retrieveByUserMonthAndYear($userId, $month, $year)

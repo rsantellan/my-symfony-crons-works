@@ -14,9 +14,15 @@ class cobro extends Basecobro
 {
   
   public function postSave($event) {
-    $this->getCuenta()->setPago($this->getMonto());
+    $this->getCuenta()->setPago($this->getCuenta()->getPago() + $this->getMonto());
     $this->getCuenta()->save();
+    facturaHandler::payFacturasOfAccount($this->getCuentaId(), $this->getMonto());
     parent::postSave($event);
+  }
+  
+  public function getFormatedMonto()
+  {
+    return number_format($this->getMonto(), 0, ',', '.');
   }
 
 }
