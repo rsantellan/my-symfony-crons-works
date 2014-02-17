@@ -10,7 +10,6 @@
 		<h1>Factura</h1>
 	</header>-->
 		<article>
-			<h1>Factura</h1>
 			<address data-prefix>
 				<p><?php echo image_tag('logo.jpg', array('absolute' => true)); ?></p>
 			</address>
