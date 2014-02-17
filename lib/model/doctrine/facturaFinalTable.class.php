@@ -41,6 +41,7 @@ class facturaFinalTable extends Doctrine_Table
       $query = $this->createQuery('f')
               ->innerJoin('f.facturaFinalDetalle ffd')
               ->addWhere('f.pago = ?', 0)
+              ->addWhere('f.cancelado = ?', 0)
               ->addWhere('f.cuenta_id = ?', $accountId)
               ->orderBy('f.year '.$order)
               ->addOrderBy('f.month '.$order);

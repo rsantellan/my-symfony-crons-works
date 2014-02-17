@@ -14,72 +14,103 @@ class facturaHandler {
 
   public static function generateUserBill($usuario, $month, $year)
   {
-    $debug = false;
     $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($usuario->getId(), $month, $year);
+	$refreshAccount = false;
+	$account = null;
     if(!$facturaUsuario)
     {
       $facturaUsuario = new facturaUsuario();
-      $facturaUsuario->setYear($year);
-      $facturaUsuario->setMonth($month);
-      $facturaUsuario->setUsuarioId($usuario->getId());
-      $facturaUsuario->setTotal(0);
-      $facturaUsuario->setFechavencimiento(date('Y-m-d'));
-      $facturaUsuario->save();
-      
-      $total = 0;
-      $detalleMensualidad = new facturaUsuarioDetalle();
-      $detalleMensualidad->setFacturaId($facturaUsuario->getId());
-      $detalleMensualidad->setDescription('Mensualidad');
-      $detalleMensualidad->setAmount(costos::getCosto($usuario->getHorario()));
-      $detalleMensualidad->save();
-      $total += $detalleMensualidad->getAmount();
-      foreach($usuario->getActividades() as $actividad)
-      {
-        $detalleActividad = new facturaUsuarioDetalle();
-        $detalleActividad->setFacturaId($facturaUsuario->getId());
-        $detalleActividad->setDescription($actividad->getNombre());
-        $detalleActividad->setAmount($actividad->getCosto());
-        $detalleActividad->save();
-        $total += $detalleActividad->getAmount();
-      }
-      
-      $descuentoHermano = $usuario->calculateBrothersDiscount();
-      if($descuentoHermano > 0)
-      {
-        $detalleDescuentoHermano = new facturaUsuarioDetalle();
-        $detalleDescuentoHermano->setFacturaId($facturaUsuario->getId());
-        $detalleDescuentoHermano->setDescription('Descuento hermano');
-        if($debug)
-        {
-            var_dump($descuentoHermano);
-            var_dump($total);
-            var_dump($descuentoHermano);
-            var_dump($total * $descuentoHermano);
-            var_dump(($total * $descuentoHermano) / 100);
-            var_dump((($total * $descuentoHermano) / 100) * -1);
-            var_dump('--------');
-        }
-        $amount = (($total * $descuentoHermano) / 100) * -1;
-        $detalleDescuentoHermano->setAmount($amount);
-        $detalleDescuentoHermano->save();
-        $total += $detalleDescuentoHermano->getAmount();
-      }
-      if($usuario->getDescuento() !== null && (int) $usuario->getDescuento() > 0)
-      {
-        $detalleDescuentoUsuario = new facturaUsuarioDetalle();
-        $detalleDescuentoUsuario->setFacturaId($facturaUsuario->getId());
-        $detalleDescuentoUsuario->setDescription('Descuento usuario');
-        $detalleDescuentoUsuario->setAmount(-($total * $usuario->getDescuento() / 100));
-        $detalleDescuentoUsuario->save();
-        $total += $detalleDescuentoUsuario->getAmount();
-      }
-      $facturaUsuario->setTotal($total);
-      $facturaUsuario->save();
+	  
+	  //$facturaUsuario->getPago()
     }
     else
     {
-      //Ya existe una factura para este mes.
+	  //Ya existe una factura para este mes.
+	  if($facturaUsuario->getPago() == 1)
+	  {
+		if (sfConfig::get('sf_logging_enabled'))
+		{
+		  sfContext::getInstance()->getLogger()->info('La factura se encuentra paga.');
+		}
+		return true;
+	  }
+	  if($facturaUsuario->getCancelado() == 1)
+	  {
+		if (sfConfig::get('sf_logging_enabled'))
+		{
+		  sfContext::getInstance()->getLogger()->info('La factura se encuentra cancelada.');
+		}
+		return true;
+	  }
+	  $refreshAccount = true;
+	  $facturaUsuario->delete();
+	  $facturaUsuario = new facturaUsuario();
+	  //foreach($facturaUsuario->getFacturaUsuarioDetalle() as $detalle)
+	  //{
+	  //$detalle->delete();
+	  //}
+	  
     }
+	$facturaUsuario->setYear($year);
+	$facturaUsuario->setMonth($month);
+	$facturaUsuario->setUsuarioId($usuario->getId());
+	$facturaUsuario->setTotal(0);
+	$facturaUsuario->setFechavencimiento(date('Y-m-d'));
+	$facturaUsuario->save();
+
+	$total = 0;
+	$detalleMensualidad = new facturaUsuarioDetalle();
+	$detalleMensualidad->setFacturaId($facturaUsuario->getId());
+	$detalleMensualidad->setDescription('Mensualidad');
+	$detalleMensualidad->setAmount(costos::getCosto($usuario->getHorario()));
+	$detalleMensualidad->save();
+	$total += $detalleMensualidad->getAmount();
+	foreach($usuario->getActividades() as $actividad)
+	{
+	  $detalleActividad = new facturaUsuarioDetalle();
+	  $detalleActividad->setFacturaId($facturaUsuario->getId());
+	  $detalleActividad->setDescription($actividad->getNombre());
+	  $detalleActividad->setAmount($actividad->getCosto());
+	  $detalleActividad->save();
+	  $total += $detalleActividad->getAmount();
+	}
+
+	$descuentoHermano = $usuario->calculateBrothersDiscount();
+	if($descuentoHermano > 0)
+	{
+	  $detalleDescuentoHermano = new facturaUsuarioDetalle();
+	  $detalleDescuentoHermano->setFacturaId($facturaUsuario->getId());
+	  $detalleDescuentoHermano->setDescription('Descuento hermano');
+	  if (sfConfig::get('sf_logging_enabled'))
+	  {
+		sfContext::getInstance()->getLogger()->info(sprintf('Descuento hermano: %s', $descuentoHermano));
+		sfContext::getInstance()->getLogger()->info(sprintf('total: %s', $total));
+		sfContext::getInstance()->getLogger()->info(sprintf('Total * descuento de hermano: %s', $total * $descuentoHermano));
+		sfContext::getInstance()->getLogger()->info(sprintf('Total * descuento de hermano / 100: %s', ($total * $descuentoHermano) / 100));
+		sfContext::getInstance()->getLogger()->info(sprintf('(Total * descuento de hermano / 100) * -1: %s', (($total * $descuentoHermano) / 100) * -1));
+	  }
+	  $amount = (($total * $descuentoHermano) / 100) * -1;
+	  $detalleDescuentoHermano->setAmount($amount);
+	  $detalleDescuentoHermano->save();
+	  $total += $detalleDescuentoHermano->getAmount();
+	}
+	if($usuario->getDescuento() !== null && (int) $usuario->getDescuento() > 0)
+	{
+	  $detalleDescuentoUsuario = new facturaUsuarioDetalle();
+	  $detalleDescuentoUsuario->setFacturaId($facturaUsuario->getId());
+	  $detalleDescuentoUsuario->setDescription('Descuento usuario');
+	  $detalleDescuentoUsuario->setAmount(-($total * $usuario->getDescuento() / 100));
+	  $detalleDescuentoUsuario->save();
+	  $total += $detalleDescuentoUsuario->getAmount();
+	}
+	$facturaUsuario->setTotal($total);
+	$facturaUsuario->save();
+	if($refreshAccount)
+	{
+	  //Revisar por el get(0)
+	  $account = $usuario->getCuentausuario()->get(0)->getCuenta();
+	  self::doGenerateAccountBill($month, $year, $account);
+	}
   }
   
   public static function generateAccountBill($month, $year, $accountId = null)
@@ -105,48 +136,79 @@ class facturaHandler {
     if(!$facturaFinal)
     {
       $facturaFinal = new facturaFinal();
-      $facturaFinal->setCuenta($account);
-      $facturaFinal->setMonth($month);
-      $facturaFinal->setYear($year);
-      $facturaFinal->setFechavencimiento(date('Y-m-d'));
-      $facturaFinal->setTotal(0);
-      $facturaFinal->save();
-      $total = 0;
-      foreach($account->getCuentausuario() as $cuentaUsuario)
-      {
-        $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($cuentaUsuario->getUsuarioId(), $month, $year);
-        if($facturaUsuario)
-        {
-          foreach($facturaUsuario->getFacturaUsuarioDetalle() as $facturaUsuarioDetalle)
-          {
-            $detalle = new facturaFinalDetalle();
-            $detalle->setFacturaId($facturaFinal->getId());
-            $detalle->setDescription($facturaUsuarioDetalle->getDescription());
-            $detalle->setAmount($facturaUsuarioDetalle->getAmount());
-            $detalle->save();
-            $total += $detalle->getAmount();
-          }
-          
-          $facturaFinalUsuario = new facturausuariofinal();
-          $facturaFinalUsuario->setFacturaFinalId($facturaFinal->getId());
-          $facturaFinalUsuario->setFacturaUsuarioId($facturaUsuario->getId());
-          $facturaFinalUsuario->save();
-        }
-        else
-        {
-          // No tiene factura para ese mes?? raro...
-        }
-        
-      }
-      $facturaFinal->setTotal($total);
-      $facturaFinal->save();
-      $account->setDebe($account->getDebe() + $total);
-      $account->save();
     }
     else
     {
       //Ya existe una factura para ese mes.
+	  if($facturaFinal->getPago() == 1)
+	  {
+		if (sfConfig::get('sf_logging_enabled'))
+		{
+		  sfContext::getInstance()->getLogger()->info('La factura se encuentra paga.');
+		}
+		return true;
+	  }
+	  if($facturaFinal->getCancelado() == 1)
+	  {
+		if (sfConfig::get('sf_logging_enabled'))
+		{
+		  sfContext::getInstance()->getLogger()->info('La factura se encuentra cancelada.');
+		}
+		return true;
+	  }
+
+	  $facturaFinal->delete();
+	  $facturaFinal = new facturaFinal();
     }
+	
+	
+	$facturaFinal->setCuenta($account);
+	$facturaFinal->setMonth($month);
+	$facturaFinal->setYear($year);
+	$facturaFinal->setFechavencimiento(date('Y-m-d'));
+	$facturaFinal->setTotal(0);
+	$facturaFinal->save();
+	$total = 0;
+	$brothersActive = $account->getCuentausuario()->count();
+	foreach($account->getCuentausuario() as $cuentaUsuario)
+	{
+	  $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($cuentaUsuario->getUsuarioId(), $month, $year);
+	  if($facturaUsuario)
+	  {
+		foreach($facturaUsuario->getFacturaUsuarioDetalle() as $facturaUsuarioDetalle)
+		{
+		  $detalle = new facturaFinalDetalle();
+		  $detalle->setFacturaId($facturaFinal->getId());
+		  $detalleDescription = "";
+		  if($brothersActive > 1)
+		  {
+			$detalleDescription = sprintf('[%s] %s', $cuentaUsuario->getUsuario()->getNombre() , $facturaUsuarioDetalle->getDescription());
+		  }
+		  else
+		  {
+			$detalleDescription = $facturaUsuarioDetalle->getDescription();
+		  }
+		  $detalle->setDescription($detalleDescription);
+		  $detalle->setAmount($facturaUsuarioDetalle->getAmount());
+		  $detalle->save();
+		  $total += $detalle->getAmount();
+		}
+
+		$facturaFinalUsuario = new facturausuariofinal();
+		$facturaFinalUsuario->setFacturaFinalId($facturaFinal->getId());
+		$facturaFinalUsuario->setFacturaUsuarioId($facturaUsuario->getId());
+		$facturaFinalUsuario->save();
+	  }
+	  else
+	  {
+		// No tiene factura para ese mes?? raro...
+	  }
+
+	}
+	$facturaFinal->setTotal($total);
+	$facturaFinal->save();
+	$account->setDebe($account->getDebe() + $total);
+	$account->save();
   }
   
   public static function getRandomColor() 
@@ -184,6 +246,12 @@ class facturaHandler {
         {
           $factura->setPagadodeltotal($factura->getTotal());
           $factura->setPago(1);
+		  foreach($factura->getFacturausuariofinal() as $facturaUsuarioFinal)
+		  {
+			$facturaUsuario = $facturaUsuarioFinal->getFacturaUsuario();
+			$facturaUsuario->setPago(1);
+			$facturaUsuario->save();
+		  }
         }
         $amount = $amountFinal;
         $factura->save();
@@ -201,10 +269,16 @@ class facturaHandler {
         $conn->beginTransaction();
         $factura->setCancelado(1);
         $factura->save();
-        $cuenta = $factura->getCuenta();
+        foreach($factura->getFacturausuariofinal() as $facturaUsuarioFinal)
+		{
+		  $facturaUsuario = $facturaUsuarioFinal->getFacturaUsuario();
+		  $facturaUsuario->setCancelado(1);
+		  $facturaUsuario->save();
+		}
+		$cuenta = $factura->getCuenta();
         $cuenta->setDebe($cuenta->getDebe() - $factura->getTotal());
         $cuenta->save();
-        $conn->commit();
+		$conn->commit();
       }catch (Exception $e){
         $conn->rollBack();
         throw $e;

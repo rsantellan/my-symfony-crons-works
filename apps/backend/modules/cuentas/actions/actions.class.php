@@ -89,8 +89,30 @@ class cuentasActions extends sfActions
   {
     $this->forward404Unless($this->cuenta = (Doctrine::getTable('cuenta')->find($request->getParameter('id'))), sprintf('La cuenta con id (%s) no existe.', $request->getParameter('id')));
     $this->facturas = Doctrine::getTable('facturaFinal')->retrieveAllUnpaidFromAccountId($this->cuenta->getId(), 'asc');
-    
-    $this->setLayout(ProjectConfiguration::getActive()->getTemplateDir('mdMediaContentAdmin', 'clean.php').'/clean');
+//  $html = $this->getPartial('cuentas/cuentaMail', array('cuenta' => $this->cuenta, 'facturas' => $this->facturas));
+//	$dom_pdf = new sfDomPDFPlugin($html);
+//	$dom_pdf->setBasePath(sfConfig::get('sf_web_dir'));
+//	$dom_pdf->getPDF()->render();
+//	$dom_pdf->getPDF()->stream("jardin-" . date('d-m-Y') . ".pdf");
+//	die(0);
+    $this->setLayout('clean');
+    //$this->setLayout(ProjectConfiguration::getActive()->getTemplateDir('mdMediaContentAdmin', 'clean.php').'/clean');
   }
 
+  public function executePrintPdfAccount(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->cuenta = (Doctrine::getTable('cuenta')->find($request->getParameter('id'))), sprintf('La cuenta con id (%s) no existe.', $request->getParameter('id')));
+    $this->facturas = Doctrine::getTable('facturaFinal')->retrieveAllUnpaidFromAccountId($this->cuenta->getId(), 'asc');
+	//$this->setLayout('clean');
+	$html = $this->getPartial('cuentas/cuentaMail', array('cuenta' => $this->cuenta, 'facturas' => $this->facturas));
+	//var_dump($html);die;
+	$dom_pdf = new sfDomPDFPlugin($html);
+	$dom_pdf->setBasePath(sfConfig::get('sf_web_dir'));
+	$dom_pdf->getPDF()->render();
+	$dom_pdf->getPDF()->stream("cuenta-" . date('d-m-Y') . ".pdf");
+	//die(0);
+    
+    //$this->setLayout(ProjectConfiguration::getActive()->getTemplateDir('mdMediaContentAdmin', 'clean.php').'/clean');
+  }  
+  
 }

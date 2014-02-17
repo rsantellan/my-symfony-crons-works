@@ -16,4 +16,16 @@ class facturaFinal extends BasefacturaFinal
   {
     return number_format($this->getTotal(), 0, ',', '.');
   }
+  
+  public function getFormatedPagadoDelTotal()
+  {
+    return number_format($this->getPagadodeltotal(), 0, ',', '.');
+  }
+  
+  public function preDelete($event) {
+	$cuenta = $this->getCuenta();
+	$cuenta->setDebe($cuenta->getDebe() - $this->getTotal());
+	parent::preDelete($event);
+  }
+
 }
