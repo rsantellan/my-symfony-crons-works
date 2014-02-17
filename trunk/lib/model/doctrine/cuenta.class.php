@@ -26,4 +26,104 @@ class cuenta extends Basecuenta
     return number_format($this->getDiferencia(), 0, ',', '.');
   }
 
+  
+  public static function exportToPdf($cuenta)
+  {
+    //$cuenta = Doctrine::getTable('cuenta')->find($accountId);
+    $facturas = Doctrine::getTable('facturaFinal')->retrieveAllUnpaidFromAccountId($cuenta->getId(), 'asc');
+    $alumnos = "";
+    $apellido = "";
+    foreach($cuenta->getCuentausuario() as $cuentaUsuario)
+    {
+      $alumnos .= $cuentaUsuario->getUsuario()->getNombre() . ",";
+      $apellido = $cuentaUsuario->getUsuario()->getApellido();
+    }
+    $alumnos =  rtrim($alumnos, ',');
+    
+    $padres = "";
+    foreach($cuenta->getCuentapadre() as $cuentaPadre)
+    {
+      $padres .= $cuentaPadre->getProgenitor()->getNombre() . " ".$apellido. ",";
+    }
+    $padres = rtrim($padres, ',');
+    
+    $pdf = new PDF_Invoice( 'P', 'mm', 'A4' );
+    $cantidadFacturas = count($facturas);
+    $cantidadFacturasDetalles = 0;
+    $facturasDetailList = array();
+    
+    foreach($facturas as $factura)
+    {
+      foreach($factura->getFacturaFinalDetalle() as $facturaDetalle)
+      {
+        $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalle;
+        $cantidadFacturasDetalles++;
+      }
+      if($factura->getPagadodeltotal() > 0)
+      {
+        $facturaDetalleAux = new facturaFinalDetalle();
+        $facturaDetalleAux->setId(-1);
+        $facturaDetalleAux->setDescription('Pago sobre el total');
+        $facturaDetalleAux->setAmount($factura->getFormatedPagadoDelTotal());
+        $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalleAux;
+        $cantidadFacturasDetalles++;
+      }
+    }
+    $maxPerPage = 30;
+    $cantidadPaginas = $cantidadFacturasDetalles / $maxPerPage;
+    $showPages = true;
+    if($cantidadPaginas < 1)
+    {
+      $showPages = false;
+    }
+    $cantidadFacturasDetalles = 0;
+    $pagina = 1;
+    while($cantidadPaginas >= 0 && $cantidadFacturasDetalles < count($facturasDetailList))
+    {
+      $pdf->AddPage();
+      if($showPages)
+      {
+        $pdf->addPageNumber($pagina);
+      }
+      
+      $pdf->addSociete( "", "");
+      $pdf->temporaire( "Bunny's Kinder" );
+      $pdf->addDate( date('d/m/Y'));
+      $pdf->addClient($cuenta->getReferenciabancaria());
+      $pdf->addAlumnos($alumnos);
+      $pdf->addPadres($padres);
+      $cols=array( 'Item'  => 30,
+                  html_entity_decode("Descripci&oacute;n")    => 130,
+                   "Precio"  => 30
+                  );
+      $pdf->addCols( $cols);
+      $cols=array( 'Item'  => 'C',
+                  html_entity_decode("Descripci&oacute;n")    => "C",
+                   "Precio"  => "C"
+                   );
+      $pdf->addLineFormat($cols);
+      $y    = 70;
+      $size = 0;
+      $counterItems = 1;
+      while($cantidadFacturasDetalles <= $maxPerPage * $pagina && $cantidadFacturasDetalles < count($facturasDetailList))
+      {
+        $facturaDetalle = $facturasDetailList[$cantidadFacturasDetalles];
+        $line = array(
+                'Item' => $counterItems,
+                html_entity_decode("Descripci&oacute;n")    => $facturaDetalle->getDescription(),
+               "Precio"  => '$'.$facturaDetalle->getFormatedAmount()
+        );
+        $size = $pdf->addLine( $y, $line );
+        $y   += $size + 2;
+        $counterItems++;
+        $cantidadFacturasDetalles++;
+      }
+      $pagina++;
+      $cantidadPaginas--;
+    }
+    $pdf->addCadreEurosFrancs('$ '.$cuenta->getFormatedDiferencia());
+    $outputName = sprintf('Cuenta-%s-%s.pdf',$cuenta->getReferenciabancaria(), date('m-Y'));
+    $pdf->Output($outputName, 'I');
+    die(0);
+  }
 }

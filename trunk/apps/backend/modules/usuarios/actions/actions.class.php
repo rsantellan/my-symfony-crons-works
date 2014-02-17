@@ -80,6 +80,16 @@ class usuariosActions extends autoUsuariosActions
   
   public function executeExportar(sfWebRequest $request)
   {
+    $ids = $request->getParameter('ids');
+    if(count($ids) != 1)
+    {
+      $this->forward404("Parametros incorrectos");
+    }
+    $this->forward404Unless($this->usuario = (Doctrine::getTable('usuario')->find($ids[0])), sprintf('El usuario con id (%s) no existe.', $ids[0]));
+    $cuenta = $this->usuario->getCuentausuario()->get(0)->getCuenta();
+    cuenta::exportToPdf($cuenta);
+    die;
+    
     //$request->checkCSRFProtection();
 
     $this->executeBatchExportar($request);
