@@ -68,9 +68,9 @@ $colors_list = array();
           ?>
           <?php //var_dump($cuenta->getId());?> 
           
-        <h3 id="accordionHeader_<?php echo $cuenta->getId();?>"><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)($<span id="monto_header_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>)</label></h3>
+        <h3 id="accordionHeader_<?php echo $cuenta->getId();?>"><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)($<span id="monto_header_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>)</label> <a href='javascript:void(0)'  onclick="$('#accordionBody_<?php echo $cuenta->getId();?>').toggle()">Ver</a></h3>
           
-        <div id="accordionBody_<?php echo $cuenta->getId();?>" class="accordionData">
+        <div id="accordionBody_<?php echo $cuenta->getId();?>" class="accordionData hidden">
           <div class="accountslistUsers">
             <label>Alumnos relacionados</label>
             <ul class="accountslistUsersList">
@@ -85,7 +85,7 @@ $colors_list = array();
             <div>
               <a href="javascript:void(0)">Enviar mail</a>
               <a href="<?php echo url_for("@pagarcuenta?id=".$cuenta->getId());?>" class="fancybox">Pagar</a>
-              <a href="javascript:void(0)">Cancelar</a>
+              <!--<a href="javascript:void(0)">Cancelar</a>-->
             </div>
           </div>
         </div>
@@ -150,10 +150,12 @@ function doExonerar(obj, postUrl){
 }
 
 $(function() {
+  /*
   $('#accountAccordionList').accordion({
     collapsible: true,
     active: false
   });
+  */
   $('a.fancybox').fancybox();
 });
 
@@ -175,7 +177,7 @@ function sendNewCobro(form)
               {
                 $('#accordionHeader_'+json.options.accountId).remove();
                 $('#accordionBody_'+json.options.accountId).remove();
-                $('#accountAccordionList').accordion("refresh");
+                //$('#accountAccordionList').accordion("refresh");
               }
               $('#monto_header_'+json.options.accountId).html(json.options.monto);
               $('#monto_body_'+json.options.accountId).html(json.options.monto);

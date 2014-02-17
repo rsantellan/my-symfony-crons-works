@@ -13,6 +13,7 @@
   <label>
     Resumen de la cuenta: $<?php echo $cuenta->getFormatedDiferencia();?>
   </label>
+  <a href="<?php echo url_for("@pagarcuenta?id=".$cuenta->getId());?>" class="fancybox">Pagar</a>
 </div>
 <hr/>
 <div class="facturasCobrosContainer">
@@ -54,10 +55,13 @@
 
 <script type="text/javascript">
 $(function() {
+  /*
   $('#facturasContainer').accordion({
     collapsible: true,
     active: false
   });
+  */
+ $('a.fancybox').fancybox();
 });
 
 function confirmCancelar(mUrl)
@@ -74,7 +78,7 @@ function confirmCancelar(mUrl)
             {
               $('#factura_title_'+json.options.facturaId).remove();
               $('#factura_body_'+json.options.facturaId).remove();
-              $('#facturasContainer').accordion("refresh");
+              //$('#facturasContainer').accordion("refresh");
             }
             mdShowMessage(json.options.message);
         }, 
@@ -86,4 +90,40 @@ function confirmCancelar(mUrl)
     return false;
   }
 }
+
+function sendNewCobro(form)
+{
+  if(confirm('Esta seguro de querer ingresar el cobro?'))
+  {
+    
+    $.fancybox.showActivity();
+    $.ajax({
+        url: $(form).attr('action'),
+        data: $(form).serialize(),
+        type: 'post',
+        dataType: 'json',
+        success: function(json){
+            if(json.response == "OK")
+            {
+              //$('#monto_header_'+json.options.accountId).html(json.options.monto);
+              //$('#monto_body_'+json.options.accountId).html(json.options.monto);
+              $.fancybox.close();
+              mdShowMessage(json.options.message);
+            }
+            else
+            {
+              $('#cobroformcontainer').html(json.options.partial);
+            }
+        }
+        , 
+        complete: function()
+        {
+          $.fancybox.hideActivity();
+          $.fancybox.resize();
+        }
+    });
+  }
+  return false;
+}
+
 </script>

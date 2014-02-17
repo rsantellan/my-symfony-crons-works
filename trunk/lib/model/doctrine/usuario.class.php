@@ -32,7 +32,6 @@ class usuario extends Baseusuario {
         $usuarios = Doctrine::getTable('usuario')->createQuery('u')->whereIn('u.id', $ids)->execute();
 
         $html = get_partial('usuarios/export', array('usuarios' => $usuarios));
-
         $dom_pdf = new sfDomPDFPlugin($html);
         $dom_pdf->setBasePath(sfConfig::get('sf_web_dir'));
         $dom_pdf->getPDF()->render();
@@ -395,6 +394,7 @@ class usuario extends Baseusuario {
     
   public function postSave($event) {
         parent::postSave($event);
+		facturaHandler::generateUserBill($this, date('n'), date('Y'));
         //factura::updateUserBill($this, date('n'), date('Y'));
   }
   

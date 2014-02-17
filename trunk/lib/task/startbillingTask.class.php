@@ -38,7 +38,8 @@ EOF;
     //facturaHandler::generateAccountBill(date('n'), date('Y'));
     
     $date = new DateTime();
-    $date->modify('-1 year');
+//    $date->modify('-1 year');
+    $date->modify('-2 month');
     $nowMonth = date('n');
     $nowYear = date('Y');
     $month = $date->format('n');

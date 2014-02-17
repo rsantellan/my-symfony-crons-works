@@ -125,7 +125,7 @@ class usuariosActions extends autoUsuariosActions
       $this->getUser()->setFlash('error', 'No puedes exportar mas de 100 alumnos en un solo archivo pdf.');
       $this->redirect('@usuario');
     }
-    
+
     usuario::exportar($ids);
   }
   
@@ -235,7 +235,7 @@ class usuariosActions extends autoUsuariosActions
     //die;
     
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="alumnos.xlsx"');
+    header('Content-Disposition: attachment;filename="alumnos'.date('dnY').'.xlsx"');
     header('Cache-Control: max-age=0');
 
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

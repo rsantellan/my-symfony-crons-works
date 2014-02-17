@@ -5,14 +5,14 @@
         <title>Bunny's Kinder</title>
         <link rel="stylesheet" type="text/css" href="<?php echo stylesheet_path('invoice', true);?>" />
     </head>
-  <body style="background:#FFFFFF; margin:15px 0 0 30px;">
-<header>
-			<h1>Factura</h1>
-		</header>
+  <body style="background:#FFFFFF; margin:15px 0 0 30px;">	
+<!--	<header>
+		<h1>Factura</h1>
+	</header>-->
 		<article>
 			<h1>Factura</h1>
-			<address contenteditable>
-				<p>Some Company<br>c/o Some Guy</p>
+			<address data-prefix>
+				<p><?php echo image_tag('logo.jpg', array('absolute' => true)); ?></p>
 			</address>
 			<table class="meta">
 				<tr>
@@ -25,11 +25,35 @@
 				</tr>
         <tr>
 					<th><span data-prefix>Alumno(s)</span></th>
-					<td><span data-prefix><?php echo date('d/n/Y');?></span></td>
+					<td>
+					  <span data-prefix>
+						<?php 
+						$alumnos = "";
+						$apellido = "";
+						foreach($cuenta->getCuentausuario() as $cuentaUsuario)
+						{
+						  $alumnos .= $cuentaUsuario->getUsuario()->getNombre() . "<br/>";
+						  $apellido = $cuentaUsuario->getUsuario()->getApellido();
+						}
+						echo rtrim($alumnos, '|');
+						?>
+					  </span>
+					</td>
 				</tr>
         <tr>
 					<th><span data-prefix>Padre(s)</span></th>
-					<td><span data-prefix><?php echo date('d/n/Y');?></span></td>
+					<td>
+					  <span data-prefix>
+						<?php 
+						$padres = "";
+						foreach($cuenta->getCuentapadre() as $cuentaPadre)
+						{
+						  $padres .= $cuentaPadre->getProgenitor()->getNombre() . " ".$apellido. "<br/>";
+						}
+						echo rtrim($padres, '|');
+						?>
+					  </span>
+					</td>
 				</tr>
 			</table>
 			<table class="inventory">
@@ -50,7 +74,7 @@
         <?php if($factura->getPagadodeltotal() > 0): ?>
           <tr>
               <td><span data-prefix>Pago sobre el total</span></td>
-              <td><span data-prefix>- $<?php echo $factura->getPagadodeltotal();?></span></td>
+              <td><span data-prefix>- $<?php echo $factura->getFormatedPagadoDelTotal();?></span></td>
           </tr>
         <?php endif; ?>
         <?php endforeach; ?>
