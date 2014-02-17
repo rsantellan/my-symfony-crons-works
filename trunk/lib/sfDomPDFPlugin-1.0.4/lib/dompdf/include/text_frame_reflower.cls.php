@@ -1,43 +1,11 @@
 <?php
 /**
- * DOMPDF - PHP5 HTML to PDF renderer
- *
- * File: $RCSfile: text_frame_reflower.cls.php,v $
- * Created on: 2004-06-17
- *
- * Copyright (c) 2004 - Benj Carson <benjcarson@digitaljunkies.ca>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library in the file LICENSE.LGPL; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
- * 02111-1307 USA
- *
- * Alternatively, you may distribute this software under the terms of the
- * PHP License, version 3.0 or later.  A copy of this license should have
- * been distributed with this file in the file LICENSE.PHP .  If this is not
- * the case, you can obtain a copy at http://www.php.net/license/3_0.txt.
- *
- * The latest version of DOMPDF might be available at:
- * http://www.dompdf.com/
- *
- * @link http://www.dompdf.com/
- * @copyright 2004 Benj Carson
- * @author Benj Carson <benjcarson@digitaljunkies.ca>
  * @package dompdf
-
+ * @link    http://dompdf.github.com/
+ * @author  Benj Carson <benjcarson@digitaljunkies.ca>
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
-/* $Id: text_frame_reflower.cls.php 419 2011-07-19 20:13:34Z fabien.menager $ */
 
 /**
  * Reflows text frames.
@@ -84,10 +52,6 @@ class Text_Frame_Reflower extends Frame_Reflower {
     
     $available_width = $line_width - $current_line_width;
 
-    // split the text into words
-    $words = preg_split('/([\s-]+)/u', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
-    $wc = count($words);
-
     // Account for word-spacing
     $word_spacing = $style->length_in_pt($style->word_spacing);
     $char_spacing = $style->length_in_pt($style->letter_spacing);
@@ -117,6 +81,10 @@ class Text_Frame_Reflower extends Frame_Reflower {
 
     if ( $frame_width <= $available_width )
       return false;
+
+    // split the text into words
+    $words = preg_split('/([\s-]+)/u', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+    $wc = count($words);
 
     // Determine the split point
     $width = 0;
@@ -194,8 +162,6 @@ class Text_Frame_Reflower extends Frame_Reflower {
     $text = $frame->get_text();
     $size = $style->font_size;
     $font = $style->font_family;
-    $word_spacing = $style->length_in_pt($style->word_spacing);
-    $char_spacing = $style->length_in_pt($style->letter_spacing);
 
     // Determine the text height
     $style->height = Font_Metrics::get_font_height( $font, $size );
@@ -323,8 +289,8 @@ class Text_Frame_Reflower extends Frame_Reflower {
       $parent = $frame->get_parent();
       $is_inline_frame = get_class($parent) === 'Inline_Frame_Decorator';
       
-      if ((!$is_inline_frame && !$frame->get_next_sibling()) || 
-          ( $is_inline_frame && !$parent->get_next_sibling())) {
+      if ((!$is_inline_frame && !$frame->get_next_sibling())/* ||
+          ( $is_inline_frame && !$parent->get_next_sibling())*/) { // fails <b>BOLD <u>UNDERLINED</u></b> becomes <b>BOLD<u>UNDERLINED</u></b>
         $t = rtrim($t);
       }
       
@@ -343,7 +309,7 @@ class Text_Frame_Reflower extends Frame_Reflower {
 
   //........................................................................
 
-  function reflow(Frame_Decorator $block = null) {
+  function reflow(Block_Frame_Decorator $block = null) {
     $frame = $this->_frame;
     $page = $frame->get_root();
     $page->check_forced_page_break($this->_frame);
@@ -403,6 +369,9 @@ class Text_Frame_Reflower extends Frame_Reflower {
       // faster than doing a single-pass character by character scan.  Heh,
       // yes I took the time to bench it ;)
       $words = array_flip(preg_split("/[\s-]+/u",$str, -1, PREG_SPLIT_DELIM_CAPTURE));
+      /*foreach($words as &$word) {
+        $word = Font_Metrics::get_text_width($word, $font, $size, $word_spacing, $char_spacing);
+      }*/
       array_walk($words, create_function('&$val,$str',
                                          '$val = Font_Metrics::get_text_width($str, "'.addslashes($font).'", '.$size.', '.$word_spacing.', '.$char_spacing.');'));
       arsort($words);
@@ -411,6 +380,9 @@ class Text_Frame_Reflower extends Frame_Reflower {
 
     case "pre":
       $lines = array_flip(preg_split("/\n/u", $str));
+      /*foreach($words as &$word) {
+        $word = Font_Metrics::get_text_width($word, $font, $size, $word_spacing, $char_spacing);
+      }*/
       array_walk($lines, create_function('&$val,$str',
                                          '$val = Font_Metrics::get_text_width($str, "'.addslashes($font).'", '.$size.', '.$word_spacing.', '.$char_spacing.');'));
 
@@ -439,6 +411,9 @@ class Text_Frame_Reflower extends Frame_Reflower {
     case "pre-wrap":
       // Find the longest word (i.e. minimum length)
       $lines = array_flip(preg_split("/\n/", $text));
+      /*foreach($words as &$word) {
+        $word = Font_Metrics::get_text_width($word, $font, $size, $word_spacing, $char_spacing);
+      }*/
       array_walk($lines, create_function('&$val,$str',
                                          '$val = Font_Metrics::get_text_width($str, "'.$font.'", '.$size.', '.$word_spacing.', '.$char_spacing.');'));
       arsort($lines);
