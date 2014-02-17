@@ -1,56 +1,12 @@
 <?php
 /**
- * DOMPDF - PHP5 HTML to PDF renderer
- *
- * File: $RCSfile: image_cache.cls.php,v $
- * Created on: 2004-08-08
- *
- * Copyright (c) 2004 - Benj Carson <benjcarson@digitaljunkies.ca>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library in the file LICENSE.LGPL; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
- * 02111-1307 USA
- *
- * Alternatively, you may distribute this software under the terms of the
- * PHP License, version 3.0 or later.  A copy of this license should have
- * been distributed with this file in the file LICENSE.PHP .  If this is not
- * the case, you can obtain a copy at http://www.php.net/license/3_0.txt.
- *
- * The latest version of DOMPDF might be available at:
- * http://www.dompdf.com/
- *
- * @link http://www.dompdf.com/
- * @copyright 2004 Benj Carson
- * @author Benj Carson <benjcarson@digitaljunkies.ca>
- * @contributor Helmut Tischer <htischer@weihenstephan.org>
  * @package dompdf
- *
- * Changes
- * @contributor Helmut Tischer <htischer@weihenstephan.org>
- * @version 0.5.1.htischer.20090507
- * - On getting type of images don't require any file endings
- *   and don't strip off url parameters,
- *   to allowing dynamically generated sites with image id
- *   in url parameters and not at end of url or missing file extension
- * @contributor Helmut Tischer <htischer@weihenstephan.org>
- * @version dompdf_trunk_with_helmut_mods.20090524
- * - Made debug messages more individually configurable
- * @version 20090622
- * - don't cache broken image, but refer to original broken image replacement
+ * @link    http://dompdf.github.com/
+ * @author  Benj Carson <benjcarson@digitaljunkies.ca>
+ * @author  Helmut Tischer <htischer@weihenstephan.org>
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
-/* $Id: image_cache.cls.php 422 2011-07-25 20:24:42Z fabien.menager $ */
 
 /**
  * Static class that resolves image urls and downloads and caches
@@ -80,30 +36,35 @@ class Image_Cache {
    * Resolve and fetch an image for use.
    *
    * @param string $url        The url of the image
-   * @param string $proto      Default protocol if none specified in $url
+   * @param string $protocol   Default protocol if none specified in $url
    * @param string $host       Default host if none specified in $url
    * @param string $base_path  Default path if none specified in $url
+   * @param DOMPDF $dompdf     The DOMPDF instance
+   *
+   * @throws DOMPDF_Image_Exception
    * @return array             An array with two elements: The local path to the image and the image extension
    */
-  static function resolve_url($url, $proto, $host, $base_path) {
+  static function resolve_url($url, $protocol, $host, $base_path, DOMPDF $dompdf) {
     $parsed_url = explode_url($url);
     $message = null;
 
-    $remote = ($proto && $proto !== "file://") || ($parsed_url['protocol'] != "");
+    $remote = ($protocol && $protocol !== "file://") || ($parsed_url['protocol'] != "");
     
-    $datauri = strpos($parsed_url['protocol'], "data:") === 0;
+    $data_uri = strpos($parsed_url['protocol'], "data:") === 0;
+    $full_url = null;
+    $enable_remote = $dompdf->get_option("enable_remote");
 
     try {
       
       // Remote not allowed and is not DataURI
-      if ( !DOMPDF_ENABLE_REMOTE && $remote && !$datauri ) {
+      if ( !$enable_remote && $remote && !$data_uri ) {
         throw new DOMPDF_Image_Exception("DOMPDF_ENABLE_REMOTE is set to FALSE");
       } 
       
       // Remote allowed or DataURI
-      else if ( DOMPDF_ENABLE_REMOTE && $remote || $datauri ) {
+      else if ( $enable_remote && $remote || $data_uri ) {
         // Download remote files to a temporary directory
-        $full_url = build_url($proto, $host, $base_path, $url);
+        $full_url = build_url($protocol, $host, $base_path, $url);
   
         // From cache
         if ( isset(self::$_cache[$full_url]) ) {
@@ -112,22 +73,24 @@ class Image_Cache {
         
         // From remote
         else {
-          $resolved_url = tempnam(DOMPDF_TEMP_DIR, "ca_dompdf_img_");
-  
-          if ($datauri) {
+          $tmp_dir = $dompdf->get_option("temp_dir");
+          $resolved_url = tempnam($tmp_dir, "ca_dompdf_img_");
+          $image = "";
+
+          if ($data_uri) {
             if ($parsed_data_uri = parse_data_uri($url)) {
               $image = $parsed_data_uri['data'];
             }
           }
           else {
-            $old_err = set_error_handler("record_warnings");
+            set_error_handler("record_warnings");
             $image = file_get_contents($full_url);
             restore_error_handler();
           }
   
           // Image not found or invalid
           if ( strlen($image) == 0 ) {
-            $msg = ($datauri ? "Data-URI could not be parsed" : "Image not found");
+            $msg = ($data_uri ? "Data-URI could not be parsed" : "Image not found");
             throw new DOMPDF_Image_Exception($msg);
           }
           
@@ -145,9 +108,8 @@ class Image_Cache {
       
       // Not remote, local image
       else {
-        $resolved_url = build_url($proto, $host, $base_path, $url);
+        $resolved_url = build_url($protocol, $host, $base_path, $url);
       }
-  
   
       // Check if the local file is readable
       if ( !is_readable($resolved_url) || !filesize($resolved_url) ) {
@@ -161,8 +123,8 @@ class Image_Cache {
         // Known image type
         if ( $width && $height && in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_BMP)) ) {
           //Don't put replacement image into cache - otherwise it will be deleted on cache cleanup.
-          //Only execute on successfull caching of remote image.
-          if ( DOMPDF_ENABLE_REMOTE && $remote ) {
+          //Only execute on successful caching of remote image.
+          if ( $enable_remote && $remote || $data_uri ) {
             self::$_cache[$full_url] = $resolved_url;
           }
         }
@@ -170,7 +132,6 @@ class Image_Cache {
         // Unknown image type
         else {
           throw new DOMPDF_Image_Exception("Image type unknown");
-          unlink($resolved_url);
         }
       }
     }
@@ -194,10 +155,12 @@ class Image_Cache {
       if (DEBUGPNG) print "[clear unlink $file]";
       unlink($file);
     }
+    
+    self::$_cache = array();
   }
   
   static function detect_type($file) {
-    list($width, $height, $type) = dompdf_getimagesize($img);
+    list(, , $type) = dompdf_getimagesize($file);
     return $type;
   }
   

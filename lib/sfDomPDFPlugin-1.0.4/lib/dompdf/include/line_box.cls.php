@@ -1,42 +1,10 @@
 <?php
 /**
- * DOMPDF - PHP5 HTML to PDF renderer
- *
- * File: $RCSfile: line_box.cls.php,v $
- * Created on: 2011-03-27
- *
- * Copyright (c) 2004 - Benj Carson <benjcarson@digitaljunkies.ca>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library in the file LICENSE.LGPL; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
- * 02111-1307 USA
- *
- * Alternatively, you may distribute this software under the terms of the
- * PHP License, version 3.0 or later.  A copy of this license should have
- * been distributed with this file in the file LICENSE.PHP .  If this is not
- * the case, you can obtain a copy at http://www.php.net/license/3_0.txt.
- *
- * The latest version of DOMPDF might be available at:
- * http://www.dompdf.com/
- *
- * @link http://www.dompdf.com/
- * @copyright 2004 Benj Carson
- * @author Benj Carson <benjcarson@digitaljunkies.ca>
  * @package dompdf
+ * @link    http://dompdf.github.com/
+ * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-
-/* $Id$ */
 
 /**
  * The line box class
@@ -55,7 +23,7 @@ class Line_Box {
   protected $_block_frame;
 
   /**
-   * @var array
+   * @var Frame[]
    */
   protected $_frames = array();
   
@@ -93,7 +61,10 @@ class Line_Box {
    * @var Frame
    */
   public $tallest_frame = null;
-  
+
+  /**
+   * @var bool[]
+   */
   public $floating_blocks = array();
   
   /**
@@ -104,7 +75,7 @@ class Line_Box {
   /**
    * Class constructor
    *
-   * @param Block_Frame_Decorator $frale the Block_Frame_Decorator containing this line
+   * @param Block_Frame_Decorator $frame the Block_Frame_Decorator containing this line
    */
   function __construct(Block_Frame_Decorator $frame, $y = 0) {
     $this->_block_frame = $frame;
@@ -114,61 +85,124 @@ class Line_Box {
     $this->get_float_offsets();
   }
   
+  /**
+   * Returns the floating elements inside the first floating parent
+   *
+   * @param Page_Frame_Decorator $root
+   *
+   * @return Frame[]
+   */
+  function get_floats_inside(Page_Frame_Decorator $root) {
+    $floating_frames = $root->get_floating_frames();
+    
+    if ( count($floating_frames) == 0 ) {
+      return $floating_frames;
+    }
+    
+    // Find nearest floating element
+    $p = $this->_block_frame;
+    while( $p->get_style()->float === "none" ) {
+      $parent = $p->get_parent();
+      
+      if ( !$parent ) {
+        break;
+      }
+      
+      $p = $parent;
+    }
+    
+    if ( $p == $root ) {
+      return $floating_frames;
+    }
+    
+    $parent = $p;
+    
+    $childs = array();
+    
+    foreach ($floating_frames as $_floating) {
+      $p = $_floating->get_parent();
+      
+      while (($p = $p->get_parent()) && $p !== $parent);
+      
+      if ( $p ) {
+        $childs[] = $p;
+      }
+    }
+    
+    return $childs;
+  }
+  
   function get_float_offsets() {
-    static $anti_infinite_loop;
+    $enable_css_float = $this->_block_frame->get_dompdf()->get_option("enable_css_float");
+    if ( !$enable_css_float ) {
+      return;
+    }
+      
+    static $anti_infinite_loop = 500; // FIXME smelly hack
     
     $reflower = $this->_block_frame->get_reflower();
     
-    if ( !$reflower ) return;
+    if ( !$reflower ) {
+      return;
+    }
     
     $cb_w = null;
+  
+    $block = $this->_block_frame;
+    $root = $block->get_root();
     
-    if ( DOMPDF_ENABLE_CSS_FLOAT ) {
-      $block = $this->_block_frame;
-      $root = $block->get_root();
-      $floating_frames = $root->get_floating_frames();
+    if ( !$root ) {
+      return;
+    }
+    
+    $floating_frames = $this->get_floats_inside($root);
+    
+    foreach ( $floating_frames as $child_key => $floating_frame ) {
+      $id = $floating_frame->get_id();
       
-      foreach ( $floating_frames as $child_key => $floating_frame ) {
-        $id = $floating_frame->get_id();
+      if ( isset($this->floating_blocks[$id]) ) {
+        continue;
+      }
+      
+      $floating_style = $floating_frame->get_style();
+      $float = $floating_style->float;
+      
+      $floating_width = $floating_frame->get_margin_width();
+      
+      if (!$cb_w) {
+        $cb_w = $floating_frame->get_containing_block("w");
+      }
+      
+      $line_w = $this->get_width();
+      
+      if ( !$floating_frame->_float_next_line && ($cb_w <= $line_w + $floating_width) && ($cb_w > $line_w) ) {
+        $floating_frame->_float_next_line = true;
+        continue;
+      }
+      
+      // If the child is still shifted by the floating element
+      if ( $anti_infinite_loop-- > 0 &&
+           $floating_frame->get_position("y") + $floating_frame->get_margin_height() > $this->y && 
+           $block->get_position("x") + $block->get_margin_width() > $floating_frame->get_position("x")
+           ) {
+        if ( $float === "left" )
+          $this->left  += $floating_width;
+        else
+          $this->right += $floating_width;
         
-        if ( isset($this->floating_blocks[$id]) ) continue;
-        
-        $float = $floating_frame->get_style()->float;
-        
-        $floating_width = $floating_frame->get_margin_width();
-        
-        if (!$cb_w) {
-          $cb_w = $floating_frame->get_containing_block("w");
-        }
-        
-        $line_w = $this->get_width();
-        
-        if (!$floating_frame->_float_next_line && ($cb_w <= $line_w + $floating_width) && ($cb_w > $line_w) ) {
-          $floating_frame->_float_next_line = true;
-          continue;
-        }
-        
-        // If the child is still shifted by the floating element
-        if ( $anti_infinite_loop++ < 1000 &&
-             $floating_frame->get_position("y") + $floating_frame->get_margin_height() > $this->y && 
-             $block->get_position("x") + $block->get_margin_width() > $floating_frame->get_position("x")
-             ) {
-          if ( $float === "left" )
-            $this->left  += $floating_width;
-          else
-            $this->right += $floating_width;
-            
-          $this->floating_blocks[$id] = true;
-        }
-        
-        // else, the floating element won't shift anymore
-        else {
-          $root->remove_floating_frame($child_key);
-        }
+        $this->floating_blocks[$id] = true;
+      }
+      
+      // else, the floating element won't shift anymore
+      else {
+        $root->remove_floating_frame($child_key);
       }
     }
   }
-  
+
+  /**
+   * @return float
+   */
   function get_width(){
     return $this->left + $this->w + $this->right;
   }
@@ -176,13 +210,20 @@ class Line_Box {
   /**
    * @return Block_Frame_Decorator
    */
-  function get_block_frame() { return $this->_block_frame; }
+  function get_block_frame() {
+    return $this->_block_frame;
+  }
 
   /**
-   * @return array
+   * @return Frame[]
    */
-  function &get_frames() { return $this->_frames; }
-  
+  function &get_frames() {
+    return $this->_frames;
+  }
+
+  /**
+   * @param Frame $frame
+   */
   function add_frame(Frame $frame) {
     $this->_frames[] = $frame;
   }
