@@ -68,7 +68,7 @@ $colors_list = array();
           ?>
           <?php //var_dump($cuenta->getId());?> 
           
-        <h3 id="accordionHeader_<?php echo $cuenta->getId();?>"><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)($<span id="monto_header_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>)</label> <a href='javascript:void(0)'  onclick="$('#accordionBody_<?php echo $cuenta->getId();?>').toggle()">Ver</a></h3>
+        <h3 class="accordionHeaderIndex" id="accordionHeader_<?php echo $cuenta->getId();?>"><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)($<span id="monto_header_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>)</label> <a href='javascript:void(0)'  onclick="$('#accordionBody_<?php echo $cuenta->getId();?>').toggle()">Ver</a></h3>
           
         <div id="accordionBody_<?php echo $cuenta->getId();?>" class="accordionData hidden">
           <div class="accountslistUsers">
@@ -83,7 +83,7 @@ $colors_list = array();
             <span>Monto adeudado: $<span id="monto_body_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>
             <a href="<?php echo url_for("@detallecuenta?id=".$cuenta->getId());?>">Ver detalle</a>
             <div>
-              <a href="javascript:void(0)">Enviar mail</a>
+              <a href="<?php echo url_for("@mailcuenta?id=".$cuenta->getId());?>">Enviar mail</a>
               <a href="<?php echo url_for("@pagarcuenta?id=".$cuenta->getId());?>" class="fancybox">Pagar</a>
               <!--<a href="javascript:void(0)">Cancelar</a>-->
             </div>

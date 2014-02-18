@@ -200,26 +200,34 @@ class usuario extends Baseusuario {
 
     public static function enviar($query) {
         $records = $query->execute();
-        $mdMailXMLHandler = new mdMailXMLHandler();
-        sfContext::getInstance()->getConfiguration()->loadHelpers(array('I18N', 'Partial'));
-        $title = __('Mail_Talon de Pago');
-
         foreach ($records as $usuario) {
-            $body = get_partial('usuarios/mailing', array('usuario' => $usuario));
-            $email = $usuario->getProgenitoresMails();
-
-            /*
-              recipients	Destinatarios	Requerido Puede ser un string de emails separados por coma o un array de emails.
-              sender		Emisor		Requerido (array) con 'name' y 'email'
-              subject		Asunto		Requerido (string)
-              body 		Cuerpo 		REQUERIDO (string)
-              replyTo		Setea el replyTo(string) email . Default
-              attachments	Archivos adjuntos(array) de archivos
-              usePhpMail	Especifica si usa php mail para este envio (bool)
-             */
-            if ($email != '')
-                mdMailHandler::sendMail(array('recipients' => $email, 'sender' => array('name' => $mdMailXMLHandler->getFrom(), 'email' => $mdMailXMLHandler->getEmail()), 'subject' => $title, 'body' => $body));
+            $cuenta = Doctrine::getTable('cuenta')->findByUserId($usuario->getId());
+            self::sendCuentaEmail($cuenta, $usuario);
         }
+    }
+    
+    public static function sendCuentaEmail($cuenta, $usuario)
+    {
+      $title = 'Talon de pago';//__('Mail_Talon de Pago');
+      $mdMailXMLHandler = new mdMailXMLHandler();
+      sfContext::getInstance()->getConfiguration()->loadHelpers(array('I18N', 'Partial'));
+      $facturaPdf = cuenta::exportToPdf($cuenta, 'a');
+      $body = get_partial('usuarios/newMailing', array('usuario' => $usuario, 'cuenta' => $cuenta));
+      $email = $usuario->getProgenitoresMails();
+
+      /*
+        recipients	Destinatarios	Requerido Puede ser un string de emails separados por coma o un array de emails.
+        sender		Emisor		Requerido (array) con 'name' y 'email'
+        subject		Asunto		Requerido (string)
+        body 		Cuerpo 		REQUERIDO (string)
+        replyTo		Setea el replyTo(string) email . Default
+        attachments	Archivos adjuntos(array) de archivos
+        usePhpMail	Especifica si usa php mail para este envio (bool)
+       */
+      if ($email != '')
+      {
+        mdMailHandler::sendMail(array('recipients' => $email, 'sender' => array('name' => $mdMailXMLHandler->getFrom(), 'email' => $mdMailXMLHandler->getEmail()), 'subject' => $title, 'body' => $body, 'attachments' => array($facturaPdf)));
+      }
     }
 
     public function __toString() {

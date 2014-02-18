@@ -30,7 +30,7 @@
         foreach($usuarios as $usuario): 
         if(!$first) echo '|';
         ?>
-          <a href="<?php echo url_for('usuarios/edit/?id=' . $usuario->getId()); ?>"><?php echo $usuario->getNombre(). " ".$usuario->getApellido();?></a>
+          <a href="<?php echo url_for('usuarios/edit/?id=' . $usuario->getId()); ?>"><?php echo $usuario->getNombre(). " ".$usuario->getApellido();?><?php echo ($usuario->getEgresado() == 1)? '(Egresado)' : ''; ?></a>
         <?php 
         $first = false;
         endforeach; ?>

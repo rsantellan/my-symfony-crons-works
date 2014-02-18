@@ -139,6 +139,33 @@ class usuariosActions extends autoUsuariosActions
     usuario::exportar($ids);
   }
   
+  public function executeCheckBankReference(sfWebRequest $request)
+  {
+    $reference = $request->getParameter('referencia');
+    $usuarios = Doctrine::getTable('usuario')->findBy('referencia_bancaria', $reference);
+    $message = "No hay otro alumno con esa referencia";
+    if($usuarios && $usuarios->count() > 0)
+    {
+      if($usuarios->count() > 1)
+      {
+        $message = 'Los siguientes alumnos tienen la misma referencia bancaria.';
+      }
+      else
+      {
+        $message = 'El siguiente alumno tiene la misma referencia bancaria.';
+      }
+      foreach($usuarios as $usuario)
+      {
+        $message .= $usuario->getNombre(). ' '.$usuario->getApellido(). ' ';
+      }
+      //var_dump(get_class($usuarios));
+      //var_dump(($usuarios->count()));
+    }
+    
+    
+    return $this->renderText(mdBasicFunction::basic_json_response(true, array('message' => $message)));
+  }
+  
   public function executeExportarExcel(sfWebRequest $request)
   {
     $objPHPExcel = new PHPExcel();

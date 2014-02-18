@@ -101,6 +101,9 @@ fieldset {
 				   <strong><?php echo $form->getObject()->getReferenciaBancaria();?></strong>
 			   <?php endif;?>	  
 		  </li>
+      <?php if($form->getObject()->isNew()): ?>
+          <li><button type="button" onclick="checkBankReference('<?php echo url_for('@checkBankReference'); ?>'); return false;">Verificar Referencia Bancaria</button></li>
+      <?php endif;?>	  
           <li><button type="button" for="<?php echo url_for('@exportar'); ?>" onclick="exportPdf(this); return false;">CUOTA</button></li>
         </ul>
       
@@ -174,5 +177,30 @@ function exportPdf(obj){
   var form = $('#sf_admin_content_form');
   form.attr('action', $(obj).attr('for'));
   form.submit();
+}
+
+function checkBankReference(myUrl)
+{
+  mdShowLoading();
+  $.ajax({
+      url: myUrl,
+      data: {'referencia': $('#usuario_referencia_bancaria').val()},
+      type: 'post',
+      dataType: 'json',
+      success: function(json){
+          if(json.response == "OK")
+          {
+            mdShowMessage(json.options.message);
+          }
+          
+      }, 
+      complete: function()
+      {
+        mdHideLoading();
+      }
+  });
+
+  return false; 
+  
 }
 </script>
