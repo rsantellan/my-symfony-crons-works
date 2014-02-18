@@ -91,6 +91,11 @@ egresado:
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
+#
+checkBankReference:
+  url:   /usuario/chequear-referencia.html
+  param: { module: usuarios, action: checkBankReference }
+  
 generarPdfCuenta:
   url:   /factura/cancelar/:id.html
   param: { module: cuentas, action: printPdfAccount }
@@ -103,6 +108,10 @@ cancelarfactura:
 salvarcuenta:
   url:   /cuentas/salvar.html
   param: { module: cuentas, action: doCobroForm }
+
+mailcuenta:
+  url:   /cuentas/mail/:id.html
+  param: { module: cuentas, action: mail }
   
 pagarcuenta:
   url:   /cuentas/pagar/:id.html

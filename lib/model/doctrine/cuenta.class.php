@@ -26,8 +26,8 @@ class cuenta extends Basecuenta
     return number_format($this->getDiferencia(), 0, ',', '.');
   }
 
-  
-  public static function exportToPdf($cuenta)
+  // sys_get_temp_dir()
+  public static function exportToPdf($cuenta, $location = NULL)
   {
     //$cuenta = Doctrine::getTable('cuenta')->find($accountId);
     $facturas = Doctrine::getTable('facturaFinal')->retrieveAllUnpaidFromAccountId($cuenta->getId(), 'asc');
@@ -43,7 +43,7 @@ class cuenta extends Basecuenta
     $padres = "";
     foreach($cuenta->getCuentapadre() as $cuentaPadre)
     {
-      $padres .= $cuentaPadre->getProgenitor()->getNombre() . " ".$apellido. ",";
+      $padres .= $cuentaPadre->getProgenitor()->getNombre() . " ". ",";
     }
     $padres = rtrim($padres, ',');
     
@@ -122,8 +122,26 @@ class cuenta extends Basecuenta
       $cantidadPaginas--;
     }
     $pdf->addCadreEurosFrancs('$ '.$cuenta->getFormatedDiferencia());
+    $outputOption = 'I';
+    if($location !== null)
+    {
+      if(!is_dir($location))
+      {
+        $location = sys_get_temp_dir();
+      }
+      $outputOption = 'F';
+      $location .= DIRECTORY_SEPARATOR;
+    }
+    else 
+    {
+      $location = '';
+    }
     $outputName = sprintf('Cuenta-%s-%s.pdf',$cuenta->getReferenciabancaria(), date('m-Y'));
-    $pdf->Output($outputName, 'I');
+    $pdf->Output($location.$outputName, $outputOption);
+    if($outputOption == 'F')
+    {
+      return $location.$outputName;
+    }
     die(0);
   }
 }

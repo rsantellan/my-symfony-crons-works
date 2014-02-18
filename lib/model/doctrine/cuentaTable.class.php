@@ -54,4 +54,13 @@ class cuentaTable extends Doctrine_Table
       return $q->execute();
     }
     
+    public function findByUserId($userId)
+    {
+      $q = $this->createQuery('q')
+              ->select('q.*')
+              ->innerJoin('q.cuentausuario cu')
+              ->where('cu.usuario_id = ?', $userId);
+      return $q->fetchOne();
+    }
+    
 }

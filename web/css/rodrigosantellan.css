@@ -6,7 +6,7 @@
         New Backend Styles
 */
 
-div.accountslist h3{
+div.accountslist h3.accordionHeaderIndex{
   font-size: 22px;
   font-weight: bold;
   text-align: center;
@@ -108,3 +108,10 @@ div.cobrosContainer{
 span.facturaTitleSpan{
   margin-left: 10%;
 }
+
+.accordionData {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
