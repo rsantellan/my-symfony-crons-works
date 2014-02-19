@@ -7,34 +7,6 @@
 <?php slot('alertas'); ?>
 <?php slot('nav') ?>Alertas<?php end_slot(); ?>
 
-<?php 
-/*
-$meses = array(
-  '1' => 'Enero',
-  '2' => 'Febrero',
-  '3' => 'Marzo',
-  '4' => 'Abril',
-  '5' => 'Mayo',
-  '6' => 'Junio',
-  '7' => 'Julio',
-  '8' => 'Agosto',
-  '9' => 'Setiembre',
-  '10' => 'Octubre',
-  '11' => 'Noviembre',
-  '12' => 'Diciembre'
-  );
-
-  $mesactual = date('n');
-
-  $isSetiembreOrOctubre = $mescurrent == 9 || $mescurrent == 10;
-  */
-
-$colors_list = array();
-
-?>
-
-
-
 <section class="column width7 first">
   
   <div class="colgroup leading">
@@ -83,7 +55,7 @@ $colors_list = array();
             <span>Monto adeudado: $<span id="monto_body_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>
             <a href="<?php echo url_for("@detallecuenta?id=".$cuenta->getId());?>">Ver detalle</a>
             <div>
-              <a href="<?php echo url_for("@mailcuenta?id=".$cuenta->getId());?>">Enviar mail</a>
+              <a href="javascript:void(0)" onclick="return sendCuentaEmail('<?php echo url_for("@mailcuenta?id=".$cuenta->getId());?>')">Enviar mail</a>
               <a href="<?php echo url_for("@pagarcuenta?id=".$cuenta->getId());?>" class="fancybox">Pagar</a>
               <!--<a href="javascript:void(0)">Cancelar</a>-->
             </div>
@@ -199,4 +171,25 @@ function sendNewCobro(form)
   }
   return false;
 }
+
+
+function sendCuentaEmail(mUrl){
+    mdShowLoading();
+    $.ajax({
+      url: mUrl,
+      type: 'post',
+      dataType: 'json',
+      success: function(json){
+          mdShowMessage(json.options.message);
+          //mdShowMessage('Los mensajes han sido enviados correctamente.');
+      },
+      error: function(){
+      }, 
+      complete: function()
+      {
+        mdHideLoading();
+      }
+    });
+    return false;
+  }
 </script>

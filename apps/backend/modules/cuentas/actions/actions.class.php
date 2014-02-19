@@ -56,7 +56,7 @@ class cuentasActions extends sfActions
     $this->forward404Unless($cuenta = (Doctrine::getTable('cuenta')->find($request->getParameter('id'))), sprintf('La cuenta con id (%s) no existe.', $request->getParameter('id')));
     $usuario = $cuenta->getCuentausuario()->get(0)->getUsuario();
     usuario::sendCuentaEmail($cuenta, $usuario);
-    return $this->renderText(mdBasicFunction::basic_json_response(true, array()));
+    return $this->renderText(mdBasicFunction::basic_json_response(true, array('message'=> 'El mail a sido enviado con exito.')));
   }
   
   public function executeCobroForm(sfWebRequest $request)

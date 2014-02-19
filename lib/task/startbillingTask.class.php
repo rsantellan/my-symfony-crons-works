@@ -34,9 +34,9 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
     // add your code here
-    //accountsHandler::generateMonthBilling(date('n'), date('Y'));
-    //facturaHandler::generateAccountBill(date('n'), date('Y'));
-    
+    accountsHandler::generateMonthBilling(date('n'), date('Y'));
+    facturaHandler::generateAccountBill(date('n'), date('Y'));
+    return true;
     $date = new DateTime();
 //    $date->modify('-1 year');
     $date->modify('-2 month');
