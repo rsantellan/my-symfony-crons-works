@@ -208,7 +208,7 @@ class usuario extends Baseusuario {
     
     public static function sendCuentaEmail($cuenta, $usuario)
     {
-      $title = 'Talon de pago';//__('Mail_Talon de Pago');
+      $title = sprintf('Talon de pago (%s/%s)', date('n'), date('Y'));//__('Mail_Talon de Pago');
       $mdMailXMLHandler = new mdMailXMLHandler();
       sfContext::getInstance()->getConfiguration()->loadHelpers(array('I18N', 'Partial'));
       $facturaPdf = cuenta::exportToPdf($cuenta, 'a');
