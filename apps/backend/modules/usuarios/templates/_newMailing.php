@@ -11,7 +11,7 @@
 			<td style="padding: 10px 0 30px 0;">
 				<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc; border-collapse: collapse;">
 					<tr>
-						<td align="center" bgcolor="#d2ebd8" style="padding: 40px 0 30px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;">
+						<td align="center" bgcolor="#d2ebd8" style="color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;">
 							<img src="<?php echo image_path('logo-pdf.jpg', array('absolute' => true)); ?>" alt="Bunny's Kinder" style="display: block;" />
 						</td>
 					</tr>

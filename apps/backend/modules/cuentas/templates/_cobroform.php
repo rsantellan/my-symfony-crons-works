@@ -1,3 +1,4 @@
+<h3>Crear cobro</h3>
 <form action="<?php echo url_for('@salvarcuenta'); ?>" method="post" onsubmit="return sendNewCobro(this);">
   <?php echo $form->renderHiddenFields(false) ?>
   <?php echo $form->renderGlobalErrors() ?>
