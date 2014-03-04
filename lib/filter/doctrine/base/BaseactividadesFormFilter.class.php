@@ -5,7 +5,7 @@
  *
  * @package    jardin
  * @subpackage filter
- * @author     Rodrigo Santellan
+ * @author     Gaston Caldeiro
  * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 29570 2010-05-21 14:49:47Z Kris.Wallsmith $
  */
 abstract class BaseactividadesFormFilter extends BaseFormFilterDoctrine

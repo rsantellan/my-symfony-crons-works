@@ -14,9 +14,7 @@ class saveMdNewsLetterContentSendedAction extends sfAction {
       $postParameters = $request->getPostParameters();
       $mdNewsletterContentSended = $this->form->save();
       $mdNewsletterContentSended->setSubject($mdNewsletterContentSended->getMdNewsletterContent()->getSubject());
-      $body = $this->getPartial("mdNewsletterBackend/mailing", array('body' => $mdNewsletterContentSended->getMdNewsletterContent()->getBody(), 'subject' => $mdNewsletterContentSended->getMdNewsletterContent()->getSubject()));
-      //$mdNewsletterContentSended->setBody($mdNewsletterContentSended->getMdNewsletterContent()->getBody());
-      $mdNewsletterContentSended->setBody($body);
+      $mdNewsletterContentSended->setBody($mdNewsletterContentSended->getMdNewsletterContent()->getBody());
       $mdNewsletterContentSended->save();
       switch ($postParameters["send"]) {
         case 0:

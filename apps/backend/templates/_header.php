@@ -34,14 +34,7 @@
         <li class="<?php echo (has_slot('progenitores') ? 'current' : ''); ?>"><a href="<?php echo url_for('@progenitor'); ?>">Padres</a></li>
         <li class="<?php echo (has_slot('actividades') ? 'current' : ''); ?>"><a href="<?php echo url_for('@actividades'); ?>">Actividades</a></li>
         <li class="<?php echo (has_slot('newsletter') ? 'current' : ''); ?>"><a href="<?php echo url_for('@manage_newsletter') ?>">Newsletter</a></li>        
-        <li class="<?php echo (has_slot('pagos') ? 'current' : ''); ?>">
-          <a href="javascrip:void(0)">Cuentas</a>
-          <ul>
-            <li><a href="<?php echo url_for('@cuentas'); ?>">Cuentas</a></li>
-            <li><a href="<?php echo url_for('@pagos'); ?>">Pagos(Obsoleto)</a></li>
-          </ul>
-          
-        </li>
+        <li class="<?php echo (has_slot('pagos') ? 'current' : ''); ?>"><a href="<?php echo url_for('@pagos'); ?>">Pagos</a></li>
        	<li><a href="<?php echo url_for('@md_galeria')?>" class="<?php if(has_slot('md_galeria')){ echo 'current'; } else { echo ''; } ?>">Galeria de imágenes</a></li>
         <li class="<?php echo (has_slot('settings') ? 'current' : ''); ?>">
           <a href="<?php echo url_for('@costos'); ?>">Configuraciones</a>

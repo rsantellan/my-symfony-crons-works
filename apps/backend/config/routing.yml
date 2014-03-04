@@ -1,12 +1,3 @@
-cuenta:
-  class: sfDoctrineRouteCollection
-  options:
-    model:                cuenta
-    module:               cuenta
-    prefix_path:          /cuenta
-    column:               id
-    with_wildcard_routes: true
-
 md_galeria:
   class: sfDoctrineRouteCollection
   options:
@@ -91,40 +82,7 @@ egresado:
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
-#
-checkBankReference:
-  url:   /usuario/chequear-referencia.html
-  param: { module: usuarios, action: checkBankReference }
-  
-generarPdfCuenta:
-  url:   /factura/cancelar/:id.html
-  param: { module: cuentas, action: printPdfAccount }
-  
 # default rules
-cancelarfactura:
-  url:   /factura/cancelar/:id.html
-  param: { module: cuentas, action: cancelarFactura }
-
-salvarcuenta:
-  url:   /cuentas/salvar.html
-  param: { module: cuentas, action: doCobroForm }
-
-mailcuenta:
-  url:   /cuentas/mail/:id.html
-  param: { module: cuentas, action: mail }
-  
-pagarcuenta:
-  url:   /cuentas/pagar/:id.html
-  param: { module: cuentas, action: cobroForm }
-  
-detallecuenta:
-  url:   /cuentas/detalle/:id.html
-  param: { module: cuentas, action: show }
-  
-cuentas:
-  url:   /cuentas.html
-  param: { module: cuentas, action: index }
-
 alertas:
   url:   /alertas/:mes
   param: { module: alertas, action: index, mes: -1 }
@@ -132,10 +90,6 @@ alertas:
 exportar:
   url:   /exportar
   param: { module: usuarios, action: exportar }
-
-exportarExcel:
-  url:   /exportarExcel
-  param: { module: usuarios, action: exportarExcel }
   
 enviar:
   url:   /enviar

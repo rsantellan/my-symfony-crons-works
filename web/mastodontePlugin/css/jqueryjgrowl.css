@@ -1,0 +1,47 @@
+div.jGrowl { z-index: 9999; }
+
+/** Special IE6 Style Positioning **/
+div.ie6 { position:absolute; height: 1% }
+div.ie6 .closeButton { right: 12px; }
+div.ie6.top-right { right: 	auto; bottom: auto; left: 	expression( ( 0 - jGrowl.offsetWidth + ( document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth ) + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' ); top: expression( ( 0 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' ); }
+div.ie6.top-left { 
+	left: expression( ( 0 + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' ); 
+	top: 	expression( ( 0 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' ); 
+}
+div.ie6.bottom-right {
+ left: expression( ( 0 - jGrowl.offsetWidth + ( document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth ) + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' ); 
+	top: 	expression( ( 0 - jGrowl.offsetHeight + ( document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+}
+div.ie6.bottom-left {
+	left: 	expression( ( 0 + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
+	top: 	expression( ( 0 - jGrowl.offsetHeight + ( document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+}
+div.ie6.center {
+	left: 	expression( ( 0 + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
+	top: 	expression( ( 0 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+	width: 	100%;
+}
+/** Normal Style Positions **/
+body > div.jGrowl { position: fixed; }
+body > div.jGrowl.top-left { left: 0; top: 0; }
+body > div.jGrowl.top-right { right: 0; top: 	0; }
+body > div.jGrowl.bottom-left {	left: 0; bottom:	0; }
+body > div.jGrowl.bottom-right { right: 0; bottom: 0; }
+body > div.jGrowl.center { top: 0; width: 50%; left: 	25%; }
+
+/* Growl */
+.jGrowl * { padding: 0; margin: 0; z-index: 99; }
+.jGrowl { position: fixed; cursor: pointer; width: 270px; padding: 20px; }
+.jGrowl-notification { position: relative; margin-top: 10px; }
+.jGrowl-notification .closeButton { background: url(/images/closeButton.png); cursor:pointer; width:38px; height:38px; overflow:visible; position:absolute; right:-12px; top:-12px; z-index:9999; }
+.jGrowl table { border-collapse: separate; border-collapse: collapse; width: 100%; }
+.jGrowl table td { vertical-align: top; text-align: left; }
+.jGrowl .info_area { width: 150px; }
+.jGrowl .thumb_area { width: 62px; }
+.jGrowl .info_area h1 { font-size: 15px; font-weight: bold;	margin: 0; padding-bottom: 3px; white-space: nowrap; width: 150px; overflow: hidden; text-overflow: ellipsis; }
+
+/* growl skin */
+.jGrowlMain { background: #111111; border: 5px solid #211F1F; padding: 20px; /* border */ -webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px; /*alpha*/ filter: alpha(opacity=90); -moz-opacity: 0.90; opacity:.90; height: 100%; }
+.jGrowlSkin .subtitle { padding: 5px 0 5px; line-height: 1.2em; }
+.jGrowlSkin .title { font-size: 16px; font-weight: bold; }
+.jGrowlMain:hover  { /*swadow*/ -webkit-box-shadow: 0 0 30px #000; -moz-box-shadow: 0 0 30px #000; box-shadow: 0 0 30px #000; /*alpha*/filter: alpha(opacity=99);	-moz-opacity: 0.99;	opacity:.99; -webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px; }

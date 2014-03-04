@@ -32,6 +32,7 @@ class usuario extends Baseusuario {
         $usuarios = Doctrine::getTable('usuario')->createQuery('u')->whereIn('u.id', $ids)->execute();
 
         $html = get_partial('usuarios/export', array('usuarios' => $usuarios));
+
         $dom_pdf = new sfDomPDFPlugin($html);
         $dom_pdf->setBasePath(sfConfig::get('sf_web_dir'));
         $dom_pdf->getPDF()->render();
@@ -56,29 +57,6 @@ class usuario extends Baseusuario {
         return $discount;
     }
 
-    public function calculateBrothersDiscount()
-    {
-        $sql = "select count(*) as cantidad from hermanos where usuario_from = ? and usuario_to not in (select id from usuario where egresado = 1);";
-        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-        $hermanos_cantidad = $q->fetchRow($sql, array($this->getId()));
-        $discount = 0;
-        $descuento = Doctrine::getTable('descuentos')->findOneByCantidadDeHermanos($hermanos_cantidad['cantidad']);
-        if ($descuento) {
-            $discount = (int) $descuento->getPorcentaje();
-        }
-        return $discount;
-    }
-    
-    public function retrieveBillingDescription()
-    {
-        $string = "Turno: ".$this->getHorario()."\r\n";
-        foreach ($this->getActividades() as $actividad) {
-            $string .= "Actividad: ".$actividad->getNombre()."\r\n";
-        }
-        return $string;
-        
-    }
-    
     /**
      * Formula: total = ($cuota_mensual - $descuento) + $actividades + $billetera + (matricula si es Set u Oct)
      * @return float 
@@ -92,25 +70,12 @@ class usuario extends Baseusuario {
 
     public function _applyMatricula() {
         $mes_current = date('n');
-        /*
         if ($mes_current == 9 || $mes_current == 10) {
             $this->total+= costos::getCosto('matricula') / 2;
         }
-        */
-        $this->total += $this->calculateMatricula($mes_current);
         return $this;
     }
 
-    public function calculateMatricula($month)
-    {
-        return 0;
-        $total = 0;
-        if ($month == 9 || $month == 10) {
-            $total = costos::getCosto('matricula') / 2;
-        }
-        return $total;
-    }
-    
     public function _applyDiscount() {
         $discount = $this->calcularDescuento();
         $this->total = ($this->total - ($this->total * $discount / 100));
@@ -118,21 +83,15 @@ class usuario extends Baseusuario {
     }
 
     public function _applyActividades() {
-        
-        $this->total+= $this->calculateActividades();
-        return $this;
-    }
-
-    public function calculateActividades()
-    {
         $actividades = $this->getActividades();
         $sum = 0;
         foreach ($actividades as $actividad) {
             $sum+= $actividad->getCosto();
         }
-        return $sum;
+        $this->total+= $sum;
+        return $this;
     }
-    
+
     public function _applyImpuesto() {
         $billetera = $this->getBilletera();
         if ($billetera) {
@@ -200,34 +159,26 @@ class usuario extends Baseusuario {
 
     public static function enviar($query) {
         $records = $query->execute();
-        foreach ($records as $usuario) {
-            $cuenta = Doctrine::getTable('cuenta')->findByUserId($usuario->getId());
-            self::sendCuentaEmail($cuenta, $usuario);
-        }
-    }
-    
-    public static function sendCuentaEmail($cuenta, $usuario)
-    {
-      $title = sprintf('Talon de pago (%s/%s)', date('n'), date('Y'));//__('Mail_Talon de Pago');
-      $mdMailXMLHandler = new mdMailXMLHandler();
-      sfContext::getInstance()->getConfiguration()->loadHelpers(array('I18N', 'Partial'));
-      $facturaPdf = cuenta::exportToPdf($cuenta, 'a');
-      $body = get_partial('usuarios/newMailing', array('usuario' => $usuario, 'cuenta' => $cuenta));
-      $email = $usuario->getProgenitoresMails();
+        $mdMailXMLHandler = new mdMailXMLHandler();
+        sfContext::getInstance()->getConfiguration()->loadHelpers(array('I18N', 'Partial'));
+        $title = __('Mail_Talon de Pago');
 
-      /*
-        recipients	Destinatarios	Requerido Puede ser un string de emails separados por coma o un array de emails.
-        sender		Emisor		Requerido (array) con 'name' y 'email'
-        subject		Asunto		Requerido (string)
-        body 		Cuerpo 		REQUERIDO (string)
-        replyTo		Setea el replyTo(string) email . Default
-        attachments	Archivos adjuntos(array) de archivos
-        usePhpMail	Especifica si usa php mail para este envio (bool)
-       */
-      if ($email != '')
-      {
-        mdMailHandler::sendMail(array('recipients' => $email, 'sender' => array('name' => $mdMailXMLHandler->getFrom(), 'email' => $mdMailXMLHandler->getEmail()), 'subject' => $title, 'body' => $body, 'attachments' => array($facturaPdf)));
-      }
+        foreach ($records as $usuario) {
+            $body = get_partial('usuarios/mailing', array('usuario' => $usuario));
+            $email = $usuario->getProgenitoresMails();
+
+            /*
+              recipients	Destinatarios	Requerido Puede ser un string de emails separados por coma o un array de emails.
+              sender		Emisor		Requerido (array) con 'name' y 'email'
+              subject		Asunto		Requerido (string)
+              body 		Cuerpo 		REQUERIDO (string)
+              replyTo		Setea el replyTo(string) email . Default
+              attachments	Archivos adjuntos(array) de archivos
+              usePhpMail	Especifica si usa php mail para este envio (bool)
+             */
+            if ($email != '')
+                mdMailHandler::sendMail(array('recipients' => $email, 'sender' => array('name' => $mdMailXMLHandler->getFrom(), 'email' => $mdMailXMLHandler->getEmail()), 'subject' => $title, 'body' => $body));
+        }
     }
 
     public function __toString() {
@@ -389,28 +340,4 @@ class usuario extends Baseusuario {
             }
         }
     }
-	
-	public function postInsert($event) {
-	  parent::postInsert($event);
-	  $accountId = accountsHandler::createUsuarioAccount($this->getId(), $this->getReferenciaBancaria());
-    if($accountId !== null)
-    {
-      hermanos::checkBrothersByAccounts($accountId);
-      hermanos::checkAllParentsByBrothers();
-    }
-	}
-    
-  public function postSave($event) {
-        parent::postSave($event);
-		facturaHandler::generateUserBill($this, date('n'), date('Y'));
-        //factura::updateUserBill($this, date('n'), date('Y'));
-  }
-  
-  public static function getAllUsersWithoutParents($egresado = false)
-  {
-    return Doctrine::getTable('usuario')->getWithoutParents($egresado);
-    //select * from usuario where id not in (select usuario_id from usuario_progenitor) and egresado = 0;
-  }
-
-
 }

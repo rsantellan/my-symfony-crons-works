@@ -90,20 +90,7 @@ fieldset {
     
     <fieldset>
         <ul class="right">
-          <li>
-              Referencia Bancaria:
-			  <?php if($form->getObject()->isNew()): ?>
-				  <?php echo $form['referencia_bancaria']->render(array('class' => ($form['referencia_bancaria']->hasError() ? 'errors' : ''))); ?>
-				  <?php if($form['referencia_bancaria']->hasError()): ?>
-					  <label style="color: red"><?php echo $form['referencia_bancaria']->getError();?></label>
-				  <?php endif; ?>
-			   <?php else: ?>
-				   <strong><?php echo $form->getObject()->getReferenciaBancaria();?></strong>
-			   <?php endif;?>	  
-		  </li>
-      <?php if($form->getObject()->isNew()): ?>
-          <li><button type="button" onclick="checkBankReference('<?php echo url_for('@checkBankReference'); ?>'); return false;">Verificar Referencia Bancaria</button></li>
-      <?php endif;?>	  
+          <li>Referencia Bancaria <?php echo $form['referencia_bancaria']->render(array('class' => ($form['referencia_bancaria']->hasError() ? 'errors' : ''))); ?></li>
           <li><button type="button" for="<?php echo url_for('@exportar'); ?>" onclick="exportPdf(this); return false;">CUOTA</button></li>
         </ul>
       
@@ -177,30 +164,5 @@ function exportPdf(obj){
   var form = $('#sf_admin_content_form');
   form.attr('action', $(obj).attr('for'));
   form.submit();
-}
-
-function checkBankReference(myUrl)
-{
-  mdShowLoading();
-  $.ajax({
-      url: myUrl,
-      data: {'referencia': $('#usuario_referencia_bancaria').val()},
-      type: 'post',
-      dataType: 'json',
-      success: function(json){
-          if(json.response == "OK")
-          {
-            mdShowMessage(json.options.message);
-          }
-          
-      }, 
-      complete: function()
-      {
-        mdHideLoading();
-      }
-  });
-
-  return false; 
-  
 }
 </script>

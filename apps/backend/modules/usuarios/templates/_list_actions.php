@@ -2,8 +2,6 @@
 
 <li class="sf_admin_action_pdf"><a href="<?php echo url_for('@exportar'); ?>" target="_blank" onclick="exportPdf(this); return false;">Exportar</a></li>
 
-<li class="sf_admin_action_pdf"><a href="<?php echo url_for('@exportarExcel'); ?>" target="_blank" onclick="exportPdf(this); return false;">Exportar Excel</a></li>
-
 <li class="sf_admin_action_print"><a href="<?php echo url_for('@printSave'); ?>" onclick="return printUsers(this);">Imprimir</a></li>
 
 <li class="sf_admin_action_mail"><a href="<?php echo url_for('@enviar'); ?>" onclick="return sendUsers(this);">Enviar</a></li>

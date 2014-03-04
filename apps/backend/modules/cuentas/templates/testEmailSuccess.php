@@ -1,2 +1,0 @@
-<?php include_partial('cuentas/cuentaMail', array('cuenta' => $cuenta, 'facturas' => $facturas)); ?>
-<?php //include_partial('cuentas/cuentaPdf', array('cuenta' => $cuenta, 'facturas' => $facturas)); ?>

@@ -57,18 +57,6 @@ class actividades extends Baseactividades
       $mdNewsLetterGroup = $this->getMdNewsLetterGroup();
       $mdNewsLetterGroup->delete();
     }
-	accountsHandler::generateMonthBilling(date('n'), date('Y'));
   }
-  
-  public function postSave($event) {
-	parent::postSave($event);
-	accountsHandler::generateMonthBilling(date('n'), date('Y'));
-  }
-
-  public function postUpdate($event) {
-	parent::postUpdate($event);
-	accountsHandler::generateMonthBilling(date('n'), date('Y'));
-  }
-
   
 }

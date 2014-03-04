@@ -6,7 +6,7 @@ default:
     content-type: text/html
 
   metas:
-    title:        "Bunnys Kinder Administrador"
+    #title:        symfony project
     #description:  symfony project
     #keywords:     symfony, project
     #language:     en

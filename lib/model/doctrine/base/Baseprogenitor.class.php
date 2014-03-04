@@ -16,7 +16,6 @@
  * @property mdUser $mdUser
  * @property Doctrine_Collection $hijos
  * @property Doctrine_Collection $usuario_progenitor
- * @property Doctrine_Collection $cuentapadre
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getNombre()             Returns the current record's "nombre" value
@@ -29,7 +28,6 @@
  * @method mdUser              getMdUser()             Returns the current record's "mdUser" value
  * @method Doctrine_Collection getHijos()              Returns the current record's "hijos" collection
  * @method Doctrine_Collection getUsuarioProgenitor()  Returns the current record's "usuario_progenitor" collection
- * @method Doctrine_Collection getCuentapadre()        Returns the current record's "cuentapadre" collection
  * @method progenitor          setId()                 Sets the current record's "id" value
  * @method progenitor          setNombre()             Sets the current record's "nombre" value
  * @method progenitor          setDireccion()          Sets the current record's "direccion" value
@@ -41,11 +39,10 @@
  * @method progenitor          setMdUser()             Sets the current record's "mdUser" value
  * @method progenitor          setHijos()              Sets the current record's "hijos" collection
  * @method progenitor          setUsuarioProgenitor()  Sets the current record's "usuario_progenitor" collection
- * @method progenitor          setCuentapadre()        Sets the current record's "cuentapadre" collection
  * 
  * @package    jardin
  * @subpackage model
- * @author     Rodrigo Santellan
+ * @author     Gaston Caldeiro
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Baseprogenitor extends sfDoctrineRecord
@@ -112,10 +109,6 @@ abstract class Baseprogenitor extends sfDoctrineRecord
              'foreign' => 'usuario_id'));
 
         $this->hasMany('usuario_progenitor', array(
-             'local' => 'id',
-             'foreign' => 'progenitor_id'));
-
-        $this->hasMany('cuentapadre', array(
              'local' => 'id',
              'foreign' => 'progenitor_id'));
     }

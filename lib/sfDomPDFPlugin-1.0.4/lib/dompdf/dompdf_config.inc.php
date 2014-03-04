@@ -1,15 +1,58 @@
 <?php
 /**
+ * DOMPDF - PHP5 HTML to PDF renderer
+ *
+ * File: $RCSfile: dompdf_config.inc.php,v $
+ * Created on: 2004-08-04
+ *
+ * Copyright (c) 2004 - Benj Carson <benjcarson@digitaljunkies.ca>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library in the file LICENSE.LGPL; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+ * 02111-1307 USA
+ *
+ * Alternatively, you may distribute this software under the terms of the
+ * PHP License, version 3.0 or later.  A copy of this license should have
+ * been distributed with this file in the file LICENSE.PHP .  If this is not
+ * the case, you can obtain a copy at http://www.php.net/license/3_0.txt.
+ *
+ * The latest version of DOMPDF might be available at:
+ * http://www.dompdf.com/
+ *
+ * @link http://www.dompdf.com/
+ * @copyright 2004 Benj Carson
+ * @author Benj Carson <benjcarson@digitaljunkies.ca>
+ * @contributor Helmut Tischer <htischer@weihenstephan.org>
  * @package dompdf
- * @link    http://dompdf.github.com/
- * @author  Benj Carson <benjcarson@digitaljunkies.ca>
- * @author  Helmut Tischer <htischer@weihenstephan.org>
- * @author  Fabien Ménager <fabien.menager@gmail.com>
- * @autho   Brian Sweeney <eclecticgeek@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ *
+ * Changes
+ * @contributor Helmut Tischer <htischer@weihenstephan.org>
+ * @version 0.5.1.htischer.20090507
+ * - Allow overriding of configuration settings by calling php script.
+ *   This allows replacing of dompdf by a new version in an application
+ *   without any modification,
+ * - Optionally separate font cache folder from font folder.
+ *   This allows write protecting the entire installation
+ * - Add settings to enable/disable additional debug output categories
+ * - Change some defaults to more practical values
+ * - Add comments about configuration parameter implications
  */
 
-if ( class_exists( 'DOMPDF' , false ) ) { return; }
+/* $Id: dompdf_config.inc.php 438 2011-10-23 17:53:59Z fabien.menager $ */
+
+//error_reporting(E_STRICT | E_ALL | E_DEPRECATED);
+//ini_set("display_errors", 1);
 
 PHP_VERSION >= 5.0 or die("DOMPDF requires PHP 5.0+");
 
@@ -60,17 +103,18 @@ def("DOMPDF_ADMIN_PASSWORD", "password");
 /**
  * The location of the DOMPDF font directory
  *
- * The location of the directory where DOMPDF will store fonts and font metrics
- * Note: This directory must exist and be writable by the webserver process.
+ * If DOMPDF_FONT_DIR identical to DOMPDF_FONT_CACHE or user executing DOMPDF from the CLI,
+ * this directory must be writable by the webserver process ().
  * *Please note the trailing slash.*
  *
  * Notes regarding fonts:
  * Additional .afm font metrics can be added by executing load_font.php from command line.
+ * Converting ttf fonts to afm requires the external tool referenced by TTF2AFM
  *
  * Only the original "Base 14 fonts" are present on all pdf viewers. Additional fonts must
  * be embedded in the pdf file or the PDF may not display correctly. This can significantly
- * increase file size unless font subsetting is enabled. Before embedding a font please
- * review your rights under the font license.
+ * increase file size and could violate copyright provisions of a font. Font subsetting is
+ * not currently supported.
  *
  * Any font specification in the source HTML is translated to the closest font available
  * in the font directory.
@@ -79,17 +123,20 @@ def("DOMPDF_ADMIN_PASSWORD", "password");
  * Courier, Courier-Bold, Courier-BoldOblique, Courier-Oblique,
  * Helvetica, Helvetica-Bold, Helvetica-BoldOblique, Helvetica-Oblique,
  * Times-Roman, Times-Bold, Times-BoldItalic, Times-Italic,
- * Symbol, ZapfDingbats.
+ * Symbol,
+ * ZapfDingbats,
+ *
+ * *Please note the trailing slash.*
  */
 def("DOMPDF_FONT_DIR", DOMPDF_DIR . "/lib/fonts/");
 
 /**
  * The location of the DOMPDF font cache directory
  *
- * This directory contains the cached font metrics for the fonts used by DOMPDF.
- * This directory can be the same as DOMPDF_FONT_DIR
- * 
- * Note: This directory must exist and be writable by the webserver process.
+ * Note this directory must be writable by the webserver process
+ * This folder must already exist!
+ * It contains the .afm files, on demand parsed, converted to php syntax and cached
+ * This folder can be the same as DOMPDF_FONT_DIR
  */
 def("DOMPDF_FONT_CACHE", DOMPDF_FONT_DIR);
 
@@ -120,24 +167,38 @@ def("DOMPDF_CHROOT", realpath(DOMPDF_DIR));
  * Whether to use Unicode fonts or not.
  *
  * When set to true the PDF backend must be set to "CPDF" and fonts must be
- * loaded via load_font.php.
+ * loaded via the modified ttf2ufm tool included with dompdf (see below).
+ * Unicode font metric files (with .ufm extensions) must be created with
+ * ttf2ufm.  load_font.php should do this for you if the TTF2AFM define below
+ * points to the modified ttf2ufm tool included with dompdf.
  *
- * When enabled, dompdf can support all Unicode glyphs. Any glyphs used in a
+ * When enabled, dompdf can support all Unicode glyphs.  Any glyphs used in a
  * document must be present in your fonts, however.
  */
 def("DOMPDF_UNICODE_ENABLED", true);
 
 /**
- * Whether to enable font subsetting or not.
+ * The path to the tt2pt1 utility (used to convert ttf to afm)
+ *
+ * Not strictly necessary, but useful if you would like to install
+ * additional fonts using the {@link load_font.php} utility.
+ *
+ * Windows users should use something like this:
+ * define("TTF2AFM", "C:\\Program Files\\Ttf2Pt1\\bin\\ttf2pt1.exe");
+ *
+ * @link http://ttf2pt1.sourceforge.net/
  */
-def("DOMPDF_ENABLE_FONTSUBSETTING", false);
+if ( strpos(PHP_OS, "WIN") === false )
+  def("TTF2AFM", DOMPDF_LIB_DIR ."/ttf2ufm/src/ttf2ufm");
+else 
+  def("TTF2AFM", DOMPDF_LIB_DIR ."/ttf2ufm/bin/ttf2ufm.exe");
 
 /**
  * The PDF rendering backend to use
  *
  * Valid settings are 'PDFLib', 'CPDF' (the bundled R&OS PDF class), 'GD' and
- * 'auto'. 'auto' will look for PDFLib and use it if found, or if not it will
- * fall back on CPDF. 'GD' renders PDFs to graphic files. {@link
+ * 'auto'.  'auto' will look for PDFLib and use it if found, or if not it will
+ * fall back on CPDF.  'GD' renders PDFs to graphic files.  {@link
  * Canvas_Factory} ultimately determines which rendering class to instantiate
  * based on this setting.
  *
@@ -146,15 +207,15 @@ def("DOMPDF_ENABLE_FONTSUBSETTING", false);
  * image and font support, etc.) differ between backends.  Please see
  * {@link PDFLib_Adapter} for more information on the PDFLib backend
  * and {@link CPDF_Adapter} and lib/class.pdf.php for more information
- * on CPDF. Also see the documentation for each backend at the links
+ * on CPDF.  Also see the documentation for each backend at the links
  * below.
  *
  * The GD rendering backend is a little different than PDFLib and
- * CPDF. Several features of CPDF and PDFLib are not supported or do
+ * CPDF.  Several features of CPDF and PDFLib are not supported or do
  * not make any sense when creating image files.  For example,
  * multiple pages are not supported, nor are PDF 'objects'.  Have a
- * look at {@link GD_Adapter} for more information.  GD support is
- * experimental, so use it at your own risk.
+ * look at {@link GD_Adapter} for more information.  GD support is new
+ * and experimental, so use it at your own risk.
  *
  * @link http://www.pdflib.com
  * @link http://www.ros.co.nz/pdf
@@ -174,7 +235,7 @@ def("DOMPDF_PDF_BACKEND", "CPDF");
  * If pdflib present in web server and auto or selected explicitely above,
  * a real license code must exist!
  */
-//def("DOMPDF_PDFLIB_LICENSE", "your license key here");
+#def("DOMPDF_PDFLIB_LICENSE", "your license key here");
 
 /**
  * html target media view which should be rendered into pdf.
@@ -218,7 +279,7 @@ def("DOMPDF_DEFAULT_FONT", "serif");
  *
  * For the purposes of DOMPDF, pixels per inch (PPI) = dots per inch (DPI).
  * If a size in html is given as px (or without unit as image size),
- * this tells the corresponding size in pt at 72 DPI.
+ * this tells the corresponding size in pt.
  * This adjusts the relative sizes to be similar to the rendering of the
  * html page in a reference browser.
  *
@@ -281,7 +342,7 @@ def("DOMPDF_ENABLE_JAVASCRIPT", true);
  *
  * @var bool
  */
-def("DOMPDF_ENABLE_REMOTE", true);
+def("DOMPDF_ENABLE_REMOTE", false);
 
 /**
  * The debug output log
@@ -303,14 +364,7 @@ def("DOMPDF_FONT_HEIGHT_RATIO", 1.1);
 def("DOMPDF_ENABLE_CSS_FLOAT", false);
 
 /**
- * Enable the built in DOMPDF autoloader
- *
- * @var bool
- */
-def("DOMPDF_ENABLE_AUTOLOAD", true);
-
-/**
- * Prepend the DOMPDF autoload function to the spl_autoload stack
+ * Prepend the DOMPDF autoload function the spl_autoload stack
  *
  * @var bool
  */
@@ -324,13 +378,7 @@ require_once(DOMPDF_LIB_DIR . "/html5lib/Parser.php");
 
 // ### End of user-configurable options ###
 
-/**
- * Load autoloader
- */
-if (DOMPDF_ENABLE_AUTOLOAD) {
-  require_once(DOMPDF_INC_DIR . "/autoload.inc.php");
-  require_once(DOMPDF_LIB_DIR . "/php-font-lib/classes/Font.php");
-}
+require_once(DOMPDF_INC_DIR . "/autoload.inc.php");
 
 /**
  * Ensure that PHP is working with text internally using UTF8 character encoding.

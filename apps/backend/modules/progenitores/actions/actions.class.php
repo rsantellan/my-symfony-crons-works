@@ -17,17 +17,10 @@ class progenitoresActions extends autoProgenitoresActions
   {
     $usuario_from = $request->getParameter('usuario_id');
     $usuario_to = $request->getParameter('progenitor_id');
-    $message = "";
-    $response = false;
-    try
-    {
-      $response = usuario_progenitor::addPadre($usuario_from, $usuario_to);
-    }catch(Exception $e){
-      $message = $e->getMessage();
-    }
+
+    $response = usuario_progenitor::addPadre($usuario_from, $usuario_to);
     
-    
-    return $this->renderText(mdBasicFunction::basic_json_response($response, array('message' => $message)));    
+    return $this->renderText(mdBasicFunction::basic_json_response($response, array()));    
   }
   
   public function executeRemoveProgenitor(sfWebRequest $request)

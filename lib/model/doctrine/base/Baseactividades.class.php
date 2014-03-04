@@ -33,7 +33,7 @@
  * 
  * @package    jardin
  * @subpackage model
- * @author     Rodrigo Santellan
+ * @author     Gaston Caldeiro
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Baseactividades extends sfDoctrineRecord
@@ -52,10 +52,10 @@ abstract class Baseactividades extends sfDoctrineRecord
              'notnull' => true,
              'length' => 64,
              ));
-        $this->hasColumn('costo', 'float', 10, array(
+        $this->hasColumn('costo', 'float', 6, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 10,
+             'length' => 6,
              'scale' => '2',
              ));
         $this->hasColumn('horario', 'enum', null, array(

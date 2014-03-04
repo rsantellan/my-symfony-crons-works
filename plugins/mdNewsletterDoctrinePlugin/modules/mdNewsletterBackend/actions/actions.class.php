@@ -213,9 +213,7 @@ class mdNewsletterBackendActions extends sfActions
         $postParameters = $request->getPostParameters();
         $mdNewsletterContentSended = $this->form->save();
         $mdNewsletterContentSended->setSubject($mdNewsletterContentSended->getMdNewsletterContent()->getSubject());
-        $body = $this->getPartial("mdNewsletterBackend/mailing", array('body' => $mdNewsletterContentSended->getMdNewsletterContent()->getBody(), 'subject' => $mdNewsletterContentSended->getMdNewsletterContent()->getSubject()));
-        //$mdNewsletterContentSended->setBody($mdNewsletterContentSended->getMdNewsletterContent()->getBody());
-        $mdNewsletterContentSended->setBody($body);
+        $mdNewsletterContentSended->setBody($mdNewsletterContentSended->getMdNewsletterContent()->getBody());
         $mdNewsletterContentSended->save();
         switch ($postParameters["send"])
         {
@@ -301,7 +299,7 @@ class mdNewsletterBackendActions extends sfActions
     
     public function executeRetrieveUsersBox(sfWebRequest $request)
     {
-      $users = mdNewsletterHandler::retrieveAllForBox();
+      $users = mdNewsletterHandler::retriveAll();
       $body = $this->getPartial('usersList', array("users" => $users));
       return $this->renderText(mdBasicFunction::basic_json_response(true, array('body' => $body)));
     }

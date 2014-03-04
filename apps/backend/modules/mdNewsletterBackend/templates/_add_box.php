@@ -19,4 +19,19 @@
         $("input:button", "#md_object_save_cancel_button").button();
         $("a", "#md_object_delete").button();
     });
+    
+    function updateTextArea(){
+        try {
+            if (tinyMCE.activeEditor != null) {
+              tinyMCE.execCommand("mceRemoveControl", true, 'translation_new_1');
+              tinyMCE.execCommand("mceAddControl", true, 'translation_new_1');
+
+              tinyMCE.triggerSave();
+
+              tinyMCE.execCommand("mceRemoveControl", true, 'translation_new_1');
+            }
+        } catch (e) {
+           //alert(e);
+        }
+    }
 </script>

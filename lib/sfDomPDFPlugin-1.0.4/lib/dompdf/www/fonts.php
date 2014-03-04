@@ -33,7 +33,6 @@ function to_bytes($string) {
 <h3 id="installed-fonts">Installed fonts</h3>
 
 <?php 
-Font_Metrics::init();
 $fonts = Font_Metrics::get_font_families();
 $extensions = array("ttf", "afm", "afm.php", "ufm", "ufm.php");
 ?>
@@ -58,10 +57,8 @@ $extensions = array("ttf", "afm", "afm.php", "ufm", "ufm.php");
     <tr>
       <td class="title" rowspan="<?php echo count($variants); ?>">
         <?php 
-          echo htmlentities($family);
-          if ($family == DOMPDF_DEFAULT_FONT) {
-            echo ' <strong>(default)</strong>';
-          }
+          echo $family; 
+          if ($family == DOMPDF_DEFAULT_FONT) echo ' <strong>(default)</strong>';
         ?>
       </td>
       <?php 
@@ -73,7 +70,7 @@ $extensions = array("ttf", "afm", "afm.php", "ufm", "ufm.php");
         
         echo "
         <td>
-          <strong style='width: 10em;'>".htmlentities($name)."</strong> : ".htmlentities($path)."<br />
+          <strong style='width: 10em;'>$name</strong> : $path<br />
         </td>";
         
         foreach ($extensions as $ext) {
@@ -96,7 +93,7 @@ $extensions = array("ttf", "afm", "afm.php", "ufm", "ufm.php");
               }
               else {
                 ob_start();
-                $d = include "$path.$ext";
+                $d = include("$path.$ext");
                 ob_end_clean();
                 
                 if ($d == 1)
@@ -124,12 +121,7 @@ $extensions = array("ttf", "afm", "afm.php", "ufm", "ufm.php");
 
 <script type="text/javascript">
 function checkFileName(form) {
-  var fields = {
-    normal: "Normal",
-    bold: "Bold",
-    bold_italic: "Bold italic",
-    italic: "Italic"
-  };
+  var fields = {normal: "Normal", bold: "Bold", bold_italic: "Bold italic", italic: "Italic"};
   var pattern = /\.[ot]tf$/i;
   var ok = true;
 

@@ -1,71 +1,122 @@
-<?php use_helper('I18N', 'Date', 'mdAsset');?>
-<?php use_stylesheet('rodrigosantellan.css', 'last');?>
-<?php use_plugin_stylesheet('mastodontePlugin', '../js/jquery-ui-1.8.4/css/smoothness/jquery-ui-1.8.4.custom.css') ?>
-<?php use_plugin_javascript('mastodontePlugin', 'jquery-ui-1.8.4/js/jquery-ui-1.8.4.custom.min.js', 'last') ?>
+<?php use_helper('I18N', 'Date') ?>
+
 <link href="/css/imprimir.css" type="text/css" rel="stylesheet" media="print" />
 
 <?php slot('alertas'); ?>
 <?php slot('nav') ?>Alertas<?php end_slot(); ?>
 
+<?php $meses = array(
+  '1' => 'Enero',
+  '2' => 'Febrero',
+  '3' => 'Marzo',
+  '4' => 'Abril',
+  '5' => 'Mayo',
+  '6' => 'Junio',
+  '7' => 'Julio',
+  '8' => 'Agosto',
+  '9' => 'Setiembre',
+  '10' => 'Octubre',
+  '11' => 'Noviembre',
+  '12' => 'Diciembre'
+  );
+
+  $mesactual = date('n');
+?>
+
+<?php $isSetiembreOrOctubre = $mescurrent == 9 || $mescurrent == 10; ?>
+
 <section class="column width7 first">
   
   <div class="colgroup leading">
     <div class="column width7 first">
-      <h3></h3>
+      <h3>Meses anteriores</h3>
       <p>
+        <?php foreach($meses as $key => $value): ?>
+        
+          <a <?php echo ($mescurrent == $key ? 'class="current"' : ''); ?> href="<?php echo url_for('@alertas?mes=' . $key); ?>"><?php echo $value; ?></a>
 
+          <?php if($key == $mesactual): break; ?>
+          <?php else: echo ' - '; endif; ?>
+          
+        <?php endforeach; ?>
       </p>
     </div>
   </div>
   
-  
+  <br />
   
   <div class="colgroup leading">
-    <div class="box box-warning">A continuacion se listan los usuarios que tienen deudas pendientes</div>
+    <div class="box box-warning">A continuacion se listan los usuarios que aun no han pagado la cuota del mes de <?php echo $meses[$mescurrent]; ?></div>
+    
     <div id="sf_admin_container2" class="column width6 first">
-      <h3>Cuentas con deudas:&nbsp;&nbsp;<a href="#" id="count-deudores"><?php echo count($cuentas); ?></a></h3>
+      <h4>Alumnos con deudas:&nbsp;&nbsp;<a href="#" id="count-deudores"><?php echo $usuarios->count(); ?></a></h4>
       <ul class="sf_admin_actions" style="list-style: none;">
         <li class="sf_admin_action_print">
           <a href="javascript:void(0)" onclick="javascript:window.print(); return false;" id="print-button" class="iframe" style="padding-left: 20px;">Imprimir</a>
         </li>
       </ul>
       <hr />
-      <div id="accountAccordionList" class="accountslist">
-        <?php foreach($cuentas as $cuentaUsuario): ?>
-        
-          <?php
-          $cuenta = $cuentaUsuario['cuenta'];
-          $usuarios = $cuentaUsuario['usuarios'];
-          $apellido = $cuentaUsuario['apellido'];
-          ?>
-          <?php //var_dump($cuenta->getId());?> 
-          
-        <h3 class="accordionHeaderIndex" id="accordionHeader_<?php echo $cuenta->getId();?>"><?php echo $apellido;?> <label class="accountListTitleRef">(Ref: <?php echo $cuenta->getReferenciabancaria();?>)($<span id="monto_header_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>)</label> <a href='javascript:void(0)'  onclick="$('#accordionBody_<?php echo $cuenta->getId();?>').toggle()">Ver</a></h3>
-          
-        <div id="accordionBody_<?php echo $cuenta->getId();?>" class="accordionData hidden">
-          <div class="accountslistUsers">
-            <label>Alumnos relacionados</label>
-            <ul class="accountslistUsersList">
-              <?php foreach($usuarios as $usuario): ?>
-                <li class="<?php echo ($usuario->getEgresado() == 1)? 'liegresado' : ''; ?>"><?php echo $usuario->getNombre(). " - ".$usuario->getApellido();?> <?php echo ($usuario->getEgresado() == 1)? '(Egresado)' : ''; ?></li>
-              <?php endforeach;?>
-            </ul>
-          </div>
-          <div class="accountslistActions">
-            <span>Monto adeudado: $<span id="monto_body_<?php echo $cuenta->getId();?>"><?php echo $cuenta->getFormatedDiferencia();?></span>
-            <a href="<?php echo url_for("@detallecuenta?id=".$cuenta->getId());?>">Ver detalle</a>
-            <div>
-              <a href="javascript:void(0)" onclick="return sendCuentaEmail('<?php echo url_for("@mailcuenta?id=".$cuenta->getId());?>')">Enviar mail</a>
-              <a href="<?php echo url_for("@pagarcuenta?id=".$cuenta->getId());?>" class="fancybox">Pagar</a>
-              <!--<a href="javascript:void(0)">Cancelar</a>-->
-            </div>
-          </div>
-        </div>
-        
-          
-        <?php endforeach; ?>
-          
-      </div>
+      
+      <?php if($usuarios->count() > 0): ?>
+      <table class="no-style full">
+        <thead>
+          <tr>
+            <td>Ref. Bancaria</td>
+            <td>Alumno</td>
+            <td class="ta-center">Costo</td>
+
+            <!-- <td class="ta-center">Detalle</td> -->
+            
+            <td class="">Fuera de fecha ?</td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($usuarios as $usuario): ?>
+          <?php $total = $usuario->calcularTotal(); ?>
+          <tr>
+            <td><?php echo $usuario->getReferenciaBancaria(); ?></td>
+            <td><a href="<?php echo url_for('usuarios/edit/?id=' . $usuario['id']); ?>"><?php echo $usuario['apellido'] . ', ' . $usuario['nombre']; ?></a></td>
+            <td class="ta-center">$U <?php echo $total; ?></td>           
+            <!-- <td class="ta-center">
+              <?php //echo 'Cuota - '; ?>
+              
+              <?php //if($isSetiembreOrOctubre): ?>
+                <?php //echo 'Matricula - '; ?>
+              <?php //endif; ?>
+              
+              <?php //$first = true; ?>
+              <?php //foreach($usuario->getActividades() as $actividad): ?>
+              
+                <?php //if(!$first): ?>
+                  <?php //echo ' - '; ?>
+                <?php //endif; ?>
+                <?php //$first = false; ?>              
+                
+                <?php //echo $actividad; ?>
+              
+              <?php //endforeach; ?>
+            </td>-->
+            
+            <td class="ta-center">
+              <form class="alert-form" action="<?php echo url_for('@pagar'); ?>" method="POST" style="float:left">
+                <input type="hidden" name="id" value="<?php echo $usuario->getId(); ?>" />
+                <input type="hidden" name="price-to-pay" value="<?php echo $total; ?>" />
+                <input type="hidden" name="mes" value="<?php echo $mescurrent; ?>" />
+                <input type="checkbox" name="out-of-date" />
+                <input type="text" name="price" value="" />
+                <a href="#" onclick="doPay(this); return false;">pagar</a> / <a href="#" onclick="doExonerar(this, '<?php echo url_for('@exonerar?id=' . $usuario->getId() . '&mes=' . $mescurrent); ?>'); return false;">cancelar</a>
+                
+                <!--<input class="as-link" type="submit" value="pago" />-->
+              </form>
+              <label class="ok" style="display: none; vertical-align: middle;"></label>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+        </table>
+        <?php else: ?>
+          <p>No hay alumnos con deudas en el mes de <?php echo $meses[$mescurrent]; ?></p>
+        <?php endif; ?>
     </div>
   </div>
 
@@ -120,76 +171,4 @@ function doExonerar(obj, postUrl){
   });
   return false;
 }
-
-$(function() {
-  /*
-  $('#accountAccordionList').accordion({
-    collapsible: true,
-    active: false
-  });
-  */
-  $('a.fancybox').fancybox();
-});
-
-function sendNewCobro(form)
-{
-  if(confirm('Esta seguro de querer ingresar el cobro?'))
-  {
-    
-    $.fancybox.showActivity();
-    $.ajax({
-        url: $(form).attr('action'),
-        data: $(form).serialize(),
-        type: 'post',
-        dataType: 'json',
-        success: function(json){
-            if(json.response == "OK")
-            {
-              if(json.options.removePanel == 'true' || json.options.removePanel == true)
-              {
-                $('#accordionHeader_'+json.options.accountId).remove();
-                $('#accordionBody_'+json.options.accountId).remove();
-                //$('#accountAccordionList').accordion("refresh");
-              }
-              $('#monto_header_'+json.options.accountId).html(json.options.monto);
-              $('#monto_body_'+json.options.accountId).html(json.options.monto);
-              $.fancybox.close();
-              mdShowMessage(json.options.message);
-            }
-            else
-            {
-              $('#cobroformcontainer').html(json.options.partial);
-            }
-        }
-        , 
-        complete: function()
-        {
-          $.fancybox.hideActivity();
-          $.fancybox.resize();
-        }
-    });
-  }
-  return false;
-}
-
-
-function sendCuentaEmail(mUrl){
-    mdShowLoading();
-    $.ajax({
-      url: mUrl,
-      type: 'post',
-      dataType: 'json',
-      success: function(json){
-          mdShowMessage(json.options.message);
-          //mdShowMessage('Los mensajes han sido enviados correctamente.');
-      },
-      error: function(){
-      }, 
-      complete: function()
-      {
-        mdHideLoading();
-      }
-    });
-    return false;
-  }
 </script>

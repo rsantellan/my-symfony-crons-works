@@ -14,12 +14,6 @@ class hermanos extends Basehermanos
 {
   public static function addHermano($usuario_from, $usuario_to)
   {
-    if(!accountsHandler::checkThatBrothersHasSameReference($usuario_from, $usuario_to))
-    {
-      throw new Exception("Los hermanos tienen distinta referencia bancaria. Debe ser la misma para poder agregarlos como hermanos.", 1201);
-    }
-    
-    
     $conn = Doctrine_Manager::connection();
     
     try
@@ -41,8 +35,8 @@ class hermanos extends Basehermanos
     }catch (Exception $e){
 
       $conn->rollBack();
-      throw $e;
-      //return false;
+
+      return false;
       
     }
     
@@ -62,79 +56,4 @@ class hermanos extends Basehermanos
     $usuario = Doctrine::getTable('usuario')->find($usuario_from);
     $usuario->updateNewsletter();
   }
-  
-  public function postInsert($event) {
-	  parent::postInsert($event);
-	  accountsHandler::syncParentChildsBrothersAccounts($this->getUsuarioFrom());
-	  accountsHandler::syncParentChildsBrothersAccounts($this->getUsuarioTo());
-	}
-  
-  public static function checkBrothersByAccounts($accountId = null)
-  {
-    $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-    $parameteres = array();
-    $sql = "";
-    if($accountId === null)
-    {
-      $sql = "select usuario_id, cuenta_id from cuentausuario where cuenta_id in (select q.cuenta_id from (select count(*) as cantidad, cuenta_id from cuentausuario group by cuenta_id having cantidad > 1 order by cantidad) q) order by cuenta_id";
-    }
-    else
-    {
-      $sql = "select usuario_id, cuenta_id from cuentausuario where cuenta_id = ?";
-      $parameteres[] = $accountId;
-    }
-    
-    $usuarios = $q->fetchAssoc($sql, $parameteres);
-    $data = array();
-    foreach($usuarios as $usuario)
-    {
-      if(!isset($data[$usuario["cuenta_id"]]))
-      {
-        $data[$usuario["cuenta_id"]] = array();
-      }
-      $data[$usuario["cuenta_id"]][] = $usuario["usuario_id"];
-    }
-    
-    foreach($data as $cuenta => $users)
-    {
-      while(count($users) > 0)
-      {
-        $last_user = array_pop($users);
-        foreach($users as $brother)
-        {
-          try{
-            self::addHermano($last_user, $brother);
-          }catch(Exception $e){
-            var_dump($e->getMessage());
-          }
-        }
-      }
-    }
-  }
-  
-  public static function checkAllParentsByBrothers()
-  {
-    $brothers = Doctrine::getTable("hermanos")->findAll();
-    foreach($brothers as $brother)
-    {
-      self::checkParentByBrothers($brother->getUsuarioFrom(), $brother->getUsuarioTo());
-    }
-  }
-  
-  public static function checkParentByBrothers($user_from_id, $user_to_id)
-  {
-    $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-    $sql = "select progenitor_id from usuario_progenitor where usuario_id = ? and progenitor_id not in (select progenitor_id from usuario_progenitor where usuario_id = ?)";
-    $parentsIds = $q->fetchAssoc($sql, array($user_from_id, $user_to_id));
-    foreach($parentsIds as $parentId)
-    {
-      try{
-        usuario_progenitor::addPadre($user_to_id, $parentId["progenitor_id"]);
-      }catch(Exception $e){
-        var_dump($e->getMessage());
-      }
-      
-    }
-  }
-  
 }

@@ -20,10 +20,6 @@ class progenitor extends Baseprogenitor {
         }
     }
     
-	public function postInsert($event) {
-	  parent::postInsert($event);
-	}
-	
     public function preSave($event) {
 
         if ($this->getMail() == "")

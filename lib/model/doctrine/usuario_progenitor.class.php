@@ -13,10 +13,6 @@
 class usuario_progenitor extends Baseusuario_progenitor
 {
     public static function addPadre($usuario_id, $progenitor_id) {
-        if(!accountsHandler::checkThatParentAndSonHasSameAccount($progenitor_id, $usuario_id))
-        {
-          throw new Exception("El padre que selecciono tiene una cuenta con referencia bancaria distinta al hijo.", 1200);
-        }
         $register_one = new usuario_progenitor();
         $register_one->setUsuarioId($usuario_id);
         $register_one->setProgenitorId($progenitor_id);
@@ -46,14 +42,4 @@ class usuario_progenitor extends Baseusuario_progenitor
         $register_one = Doctrine::getTable('usuario_progenitor')->find(array($usuario_id, $progenitor_id));
         $register_one->delete();
     }
-	
-	public function postInsert($event) {
-	  parent::postInsert($event);
-	  accountsHandler::syncParentChildsBrothersAccounts($this->getUsuarioId(), $this->getProgenitorId());
-	}
-	
-	public function postDelete($event) {
-	  parent::postDelete($event);
-	  accountsHandler::removeParentAccountOfChilds($this->getProgenitorId());
-	}
 }

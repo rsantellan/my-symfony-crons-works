@@ -50,7 +50,7 @@
   var _USUARIO_ID = '<?php echo $usuario->getId(); ?>';
   function initializePadres(){
     $.ajax({
-        url:   '<?php echo url_for('progenitores/getProgenitores')?>',
+        url:   __MD_CONTROLLER_BACKEND_SYMFONY + "/progenitores/getProgenitores",
         type: 'post',
         dataType: 'json',
         success: function(json){
@@ -90,7 +90,7 @@
     var _TEMPLATE_LI = '<li><a href="' + __MD_CONTROLLER_BACKEND_SYMFONY + '/progenitores/{progenitor_id}/edit' + '">{name}</a><img class="cursor-pointer" src="/images/ierror.png" alt="" onclick="removePadre(this, {usuario_id}, {progenitor_id})" /></li>';
     mdShowLoading();
     $.ajax({
-        url:    '<?php echo url_for('progenitores/addProgenitor')?>',
+        url:   __MD_CONTROLLER_BACKEND_SYMFONY + "/progenitores/addProgenitor",
         type: 'post',
         dataType: 'json',
         data: [{name: "usuario_id", value: _USUARIO_ID}, {name: "progenitor_id", value: data.attributes.value}],
@@ -99,10 +99,6 @@
           if(json.response == "OK"){
             $('#jardin-no-padres').hide();
             $('#jardin-padres-list').append(_TEMPLATE_LI.replace('{name}', data.attributes.name).replace('{usuario_id}', _USUARIO_ID).replace('{progenitor_id}', data.attributes.value).replace('{progenitor_id}', data.attributes.value)).show();
-          }
-          else
-          {
-            mdShowMessage(json.options.message);
           }
         },
         complete: function(){},
@@ -114,7 +110,7 @@
   function removePadre(obj, usuario_id, progenitor_id){
     mdShowLoading();
     $.ajax({
-        url:   '<?php echo url_for('progenitores/removeProgenitor')?>',
+        url:   __MD_CONTROLLER_BACKEND_SYMFONY + "/progenitores/removeProgenitor",
         type: 'post',
         dataType: 'json',
         data: [{name: "usuario_id", value: usuario_id}, {name: "progenitor_id", value: progenitor_id}],

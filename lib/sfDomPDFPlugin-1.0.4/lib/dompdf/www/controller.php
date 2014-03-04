@@ -9,7 +9,7 @@ include "functions.inc.php";
 
 switch ($cmd) {
   case "clear-font-cache":
-    $files = glob(DOMPDF_FONT_CACHE."*.{UFM,AFM,ufm,afm}.php", GLOB_BRACE);
+    $files = glob(DOMPDF_FONT_DIR."*.{UFM,AFM,ufm,afm}.php", GLOB_BRACE);
     foreach($files as $file) {
       unlink($file);
     }
@@ -61,14 +61,11 @@ switch ($cmd) {
         "style"  => $style,
       );
       
-      Font_Metrics::init();
-      
       if (!Font_Metrics::register_font($style_arr, $data["tmp_name"][$name])) {
-        echo htmlentities($data["name"][$name])." is not a valid font file";
+        echo $data["name"][$name]." is not a valid font file";
       }
       else {
-        $font_view = htmlentities("$family $weight $style");
-        echo "The <strong>$font_view</strong> font was successfully installed !<br />";
+        echo "The <strong>$family $weight $style</strong> font was successfully installed !<br />";
       }
     }
   break;

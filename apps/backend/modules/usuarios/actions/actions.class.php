@@ -17,19 +17,10 @@ class usuariosActions extends autoUsuariosActions
   {
     $usuario_from = $request->getParameter('usuario_from');
     $usuario_to = $request->getParameter('usuario_to');
-    $message = "No puede ser el mismo alumno.";
-    $response = false;
-    if($usuario_from != $usuario_to)
-    {
-      try
-      {
-        $response = hermanos::addHermano($usuario_from, $usuario_to);
-      }catch(Exception $e){
-        $message = $e->getMessage();
-      }
-    }
     
-    return $this->renderText(mdBasicFunction::basic_json_response($response, array('message' => $message)));
+    $response = hermanos::addHermano($usuario_from, $usuario_to);
+    
+    return $this->renderText(mdBasicFunction::basic_json_response($response, array()));    
   }
   
   public function executeRemoveHermano(sfWebRequest $request)
@@ -80,16 +71,6 @@ class usuariosActions extends autoUsuariosActions
   
   public function executeExportar(sfWebRequest $request)
   {
-    $ids = $request->getParameter('ids');
-    if(count($ids) != 1)
-    {
-      $this->forward404("Parametros incorrectos");
-    }
-    $this->forward404Unless($this->usuario = (Doctrine::getTable('usuario')->find($ids[0])), sprintf('El usuario con id (%s) no existe.', $ids[0]));
-    $cuenta = $this->usuario->getCuentausuario()->get(0)->getCuenta();
-    cuenta::exportToPdf($cuenta);
-    die;
-    
     //$request->checkCSRFProtection();
 
     $this->executeBatchExportar($request);
@@ -135,150 +116,9 @@ class usuariosActions extends autoUsuariosActions
       $this->getUser()->setFlash('error', 'No puedes exportar mas de 100 alumnos en un solo archivo pdf.');
       $this->redirect('@usuario');
     }
-
+    
     usuario::exportar($ids);
-  }
-  
-  public function executeCheckBankReference(sfWebRequest $request)
-  {
-    $reference = $request->getParameter('referencia');
-    $usuarios = Doctrine::getTable('usuario')->findBy('referencia_bancaria', $reference);
-    $message = "No hay otro alumno con esa referencia";
-    if($usuarios && $usuarios->count() > 0)
-    {
-      if($usuarios->count() > 1)
-      {
-        $message = 'Los siguientes alumnos tienen la misma referencia bancaria.';
-      }
-      else
-      {
-        $message = 'El siguiente alumno tiene la misma referencia bancaria.';
-      }
-      foreach($usuarios as $usuario)
-      {
-        $message .= $usuario->getNombre(). ' '.$usuario->getApellido(). ' ';
-      }
-      //var_dump(get_class($usuarios));
-      //var_dump(($usuarios->count()));
-    }
-    
-    
-    return $this->renderText(mdBasicFunction::basic_json_response(true, array('message' => $message)));
-  }
-  
-  public function executeExportarExcel(sfWebRequest $request)
-  {
-    $objPHPExcel = new PHPExcel();
-    $objPHPExcel->getProperties()
-            ->setCreator("Rodrigo Santellan")
-            ->setLastModifiedBy("Rodrigo Santellan")
-            ->setTitle("Listado de alumnos")
-            ->setSubject("Listado de alumnos")
-            ->setDescription("Listado de alumnos.");      
-
-
-    $objPHPExcel->setActiveSheetIndex(0);
-    
-    $query = $this->buildQuery()->limit(PHP_INT_MAX);
-    
-    $users = $query->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-    
-    $data = array();
-    foreach($users as $user)
-    {
-      $data[] = $user["id"];
-    }
-    //var_dump($data);
-    unset($users);
-    //var_dump(get_class($query));die;
-    $sql = 'select usuario.id, usuario.nombre as u_nombre, usuario.apellido, usuario.fecha_nacimiento, usuario.anio_ingreso, usuario.sociedad, usuario.referencia_bancaria, usuario.emergencia_medica, usuario.horario, usuario.futuro_colegio, usuario.descuento, usuario.clase, progenitor.nombre as p_nombre, progenitor.direccion, progenitor.telefono, progenitor.celular, progenitor.mail from usuario left outer join usuario_progenitor on usuario.id = usuario_progenitor.usuario_id left join progenitor on progenitor.id = usuario_progenitor.progenitor_id ';
-    $sql .= ' where usuario.id IN ('. implode(',', $data).')';
-    $excel_data = array();
-    if(count($data) > 0)
-    {
-      $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-      $excel_data = $q->fetchAssoc($sql);
-    }
-    $index = 1;
-    $letter = (string)(mdBasicFunction::retrieveLeters(0).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Nombre");
-    $letter = (string)(mdBasicFunction::retrieveLeters(1).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Apellido");
-    $letter = (string)(mdBasicFunction::retrieveLeters(2).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Fecha de nacimiento");
-    $letter = (string)(mdBasicFunction::retrieveLeters(3).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Año de ingreso");
-    $letter = (string)(mdBasicFunction::retrieveLeters(4).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Sociedad");
-    $letter = (string)(mdBasicFunction::retrieveLeters(5).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Referencia bancaria");
-    $letter = (string)(mdBasicFunction::retrieveLeters(6).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Emergencia medica");
-    $letter = (string)(mdBasicFunction::retrieveLeters(7).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Horario");
-    $letter = (string)(mdBasicFunction::retrieveLeters(8).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Futuro colegio");
-    $letter = (string)(mdBasicFunction::retrieveLeters(9).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Descuento");
-    $letter = (string)(mdBasicFunction::retrieveLeters(10).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Clase");
-    $letter = (string)(mdBasicFunction::retrieveLeters(11).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "Padre: nombre");
-    $letter = (string)(mdBasicFunction::retrieveLeters(12).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "dirección");
-    $letter = (string)(mdBasicFunction::retrieveLeters(13).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "telefono");
-    $letter = (string)(mdBasicFunction::retrieveLeters(14).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "celular");
-    $letter = (string)(mdBasicFunction::retrieveLeters(15).$index);
-    $objPHPExcel->getActiveSheet()->setCellValue($letter, "mail");
-    foreach($excel_data as $row)
-    {
-      $index ++;
-      $letter = (string)(mdBasicFunction::retrieveLeters(0).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['u_nombre']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(1).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['apellido']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(2).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['fecha_nacimiento']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(3).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['anio_ingreso']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(4).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['sociedad']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(5).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['referencia_bancaria']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(6).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['emergencia_medica']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(7).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['horario']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(8).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['futuro_colegio']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(9).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['descuento']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(10).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['clase']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(11).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['p_nombre']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(12).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['direccion']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(13).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['telefono']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(14).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['celular']);
-      $letter = (string)(mdBasicFunction::retrieveLeters(15).$index);
-      $objPHPExcel->getActiveSheet()->setCellValue($letter, $row['mail']);
-    }
-    //var_dump($excel_data);
-    //die;
-    
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="alumnos'.date('dnY').'.xlsx"');
-    header('Cache-Control: max-age=0');
-
-    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-    $objWriter->save('php://output');
-    exit;
-  }
+  }  
   
   public function executeBunnys(sfWebRequest $request)
   {

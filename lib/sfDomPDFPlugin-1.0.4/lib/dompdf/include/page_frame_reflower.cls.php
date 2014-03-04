@@ -1,11 +1,43 @@
 <?php
 /**
+ * DOMPDF - PHP5 HTML to PDF renderer
+ *
+ * File: $RCSfile: page_frame_reflower.cls.php,v $
+ * Created on: 2004-06-16
+ *
+ * Copyright (c) 2004 - Benj Carson <benjcarson@digitaljunkies.ca>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library in the file LICENSE.LGPL; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+ * 02111-1307 USA
+ *
+ * Alternatively, you may distribute this software under the terms of the
+ * PHP License, version 3.0 or later.  A copy of this license should have
+ * been distributed with this file in the file LICENSE.PHP .  If this is not
+ * the case, you can obtain a copy at http://www.php.net/license/3_0.txt.
+ *
+ * The latest version of DOMPDF might be available at:
+ * http://www.dompdf.com/
+ *
+ * @link http://www.dompdf.com/
+ * @copyright 2004 Benj Carson
+ * @author Benj Carson <benjcarson@digitaljunkies.ca>
  * @package dompdf
- * @link    http://dompdf.github.com/
- * @author  Benj Carson <benjcarson@digitaljunkies.ca>
- * @author  Fabien Ménager <fabien.menager@gmail.com>
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+
  */
+
+/* $Id: page_frame_reflower.cls.php 438 2011-10-23 17:53:59Z fabien.menager $ */
 
 /**
  * Reflows pages
@@ -28,8 +60,22 @@ class Page_Frame_Reflower extends Frame_Reflower {
    * @var Canvas
    */
   private $_canvas;
+  
+  /**
+   * The stacking context, containing all z-indexed frames
+   * @var array
+   */
+  private $_stacking_context = array();
 
   function __construct(Page_Frame_Decorator $frame) { parent::__construct($frame); }
+
+  /**
+   * @param $frame Frame
+   * @return void
+   */
+  function add_frame_to_stacking_context(Frame $frame, $z_index) {
+    $this->_stacking_context[$z_index][] = $frame;
+  }
   
   function apply_page_style(Frame $frame, $page_number){
     $style = $frame->get_style();
@@ -74,7 +120,7 @@ class Page_Frame_Reflower extends Frame_Reflower {
    * Paged layout:
    * http://www.w3.org/TR/CSS21/page.html
    */
-  function reflow(Block_Frame_Decorator $block = null) {
+  function reflow(Frame_Decorator $block = null) {
     $fixed_children = array();
     $prev_child = null;
     $child = $this->_frame->get_first_child();
@@ -126,8 +172,24 @@ class Page_Frame_Reflower extends Frame_Reflower {
       // Check for begin render callback
       $this->_check_callbacks("begin_page_render", $child);
       
+      $renderer = $this->_frame->get_renderer();
+
       // Render the page
-      $this->_frame->get_renderer()->render($child);
+      $renderer->render($child);
+      
+      Renderer::$stacking_first_pass = false;
+      
+      // http://www.w3.org/TR/CSS21/visuren.html#z-index
+      ksort($this->_stacking_context);
+      
+      foreach( $this->_stacking_context as $_frames ) {
+        foreach ( $_frames as $_frame ) {
+          $renderer->render($_frame);
+        }
+      }
+      
+      Renderer::$stacking_first_pass = true;
+      $this->_stacking_context = array();
       
       // Check for end render callback
       $this->_check_callbacks("end_page_render", $child);

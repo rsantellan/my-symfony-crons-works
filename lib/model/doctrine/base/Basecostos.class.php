@@ -24,7 +24,7 @@
  * 
  * @package    jardin
  * @subpackage model
- * @author     Rodrigo Santellan
+ * @author     Gaston Caldeiro
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Basecostos extends sfDoctrineRecord
@@ -38,28 +38,28 @@ abstract class Basecostos extends sfDoctrineRecord
              'autoincrement' => true,
              'length' => 4,
              ));
-        $this->hasColumn('matricula', 'float', 10, array(
+        $this->hasColumn('matricula', 'float', 6, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 10,
+             'length' => 6,
              'scale' => '2',
              ));
-        $this->hasColumn('matutino', 'float', 10, array(
+        $this->hasColumn('matutino', 'float', 6, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 10,
+             'length' => 6,
              'scale' => '2',
              ));
-        $this->hasColumn('vespertino', 'float', 10, array(
+        $this->hasColumn('vespertino', 'float', 6, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 10,
+             'length' => 6,
              'scale' => '2',
              ));
-        $this->hasColumn('doble_horario', 'float', 10, array(
+        $this->hasColumn('doble_horario', 'float', 6, array(
              'type' => 'float',
              'notnull' => true,
-             'length' => 10,
+             'length' => 6,
              'scale' => '2',
              ));
     }

@@ -16,7 +16,7 @@
         <table cellpadding="0" cellspacing="0" style="border:none; width:600px; margin:15px 0 0 30px;">
             <tr>
                 <td style="margin:10px 0">
-                    <?php echo image_tag('logo-pdf.jpg', array('absolute' => true, 'size' => '124x53')); ?>
+                    <?php echo image_tag('/images/logo-pdf.jpg', array('absolute' => true, 'size' => '124x53')); ?>
                 </td>
                 <td style="font-size:14px; padding:15px 0 8px 0; font-family:Lucida Grande, Lucida Sans Unicode, sans-serif; color:#353535; font-weight:bold; text-align:right;"><?php echo ucfirst(mdHelp::month($mes_current)) . ' ' . date('Y'); ?></td>
             </tr>

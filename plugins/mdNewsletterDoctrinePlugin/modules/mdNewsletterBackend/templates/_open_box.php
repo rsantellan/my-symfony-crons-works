@@ -1,30 +1,21 @@
 <div ajax-url="<?php echo url_for('mdNewsletterBackend/closedBox?id='.$form->getObject()->getId()) ?>">
     <ul class="md_objects" >
         <li class="md_objects open" id='md_object_<?php echo $form->getObject()->getId() ?>'>
-          <a href="javascript:void(0)" onclick="$('#form_edit_container<?php echo $form->getObject()->getId();?>').toggle();">
-          Editar mensaje.
-          </a>
-            <div id="form_edit_container<?php echo $form->getObject()->getId();?>" class="hidden">
-              <form action='<?php echo url_for('mdNewsletterBackend/saveMdNewsLetterContent'); ?>' onsubmit="return false;" method="post" id='newsletter_edit_form_<?php echo $form->getObject()->getId() ?>'>
-                <?php echo $form->renderHiddenFields()?>
-                <?php include_partial('newsletter_content_basic_info', array('form' => $form)) ?>
-              </form>
-<!--              <label style="color: red">
-                ADVERTENCIA: El editar el texto del mensaje no afectara a los mensajes que ya estan por ser enviados
-                <br>
-                Se recomienda ponerle formato al texto para que se pueda respetar los cabezales correctamente
-              </label>-->
-              <div class="clear"></div>
-              <div class="buttons_holder" style="float: right">
-                <input type="button" value="<?php echo __('newsletter_save') ?>" onclick="updateTextArea(); return mdNeewsLetterBackend.getInstance().editNewsletterContent(<?php echo $form->getObject()->getId() ?>);"/>
-              </div>
+            <form action='<?php echo url_for('mdNewsletterBackend/saveMdNewsLetterContent'); ?>' onsubmit="return false;" method="post" id='newsletter_edit_form_<?php echo $form->getObject()->getId() ?>'>
+              <?php echo $form->renderHiddenFields()?>
+              <?php //include_partial('newsletter_content_basic_info', array('form' => $form)) ?>
+            </form>
+            <div id="product_extra_info">
+
             </div>
-            <div class="clear"></div>
+            
             <a href="<?php echo url_for("mdNewsletterBackend/showContent?id=".$form->getObject()->getId());?>" class="visualizar iframe"><?php echo __("newsletter_Visualizar");?></a>
             <a onclick="return mdNeewsLetterBackend.getInstance().confirmDeleteMdNewsletterContent('<?php echo __("newsletter_esta seguro de querer eliminar?");?>', '<?php echo url_for("mdNewsletterBackend/deleteContent?id=".$form->getObject()->getId());?>');" href="javascript:void(0)"><?php echo __("newsletter_Eliminar");?></a>
             <div class="clear"></div>
             <div class="buttons_holder" style="float: right">
-              
+              <!--
+                <input type="button" value="<?php //echo __('newsletter_save') ?>" onclick="mdNeewsLetterBackend.getInstance().editNewsletterContent(<?php //echo $form->getObject()->getId() ?>);"/>
+              -->  
                 <input type="button" onclick="mastodontePlugin.UI.BackendBasic.getInstance().close();" value="<?php echo __('newsletter_cancel') ?>" />
             </div>
 
