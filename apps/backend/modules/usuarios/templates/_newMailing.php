@@ -20,13 +20,14 @@
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tr>
 									<td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-										<b>Factura generada para la cuenta.</b>
+										<b>Queridos Padres:</b>
 									</td>
 								</tr>
 								<tr>
 									<td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
 										<?php 
                     //$cantidadUsuarios = $cuenta->getCuentausuario()->count();
+                    /*
                     $nombres = '';
                     $texto = 'A continuación se adjunta el archivo con la deuda de %s:';
                     $cantidadUsuarios = 0;
@@ -46,10 +47,17 @@
                     {
                       $texto = sprintf($texto, 'el alumno');
                     }
-                    echo $texto.rtrim($nombres, ','). ".";
+                    */
+                    //echo $texto.rtrim($nombres, ','). ".";
+                    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
                     ?>
-                    Para la fecha <?php echo date('n/Y');?>.<br/>
-                    Por cualquier consulta no dude en comunicarse con nosotros. <a href="http://bunnyskinder.com.uy/contacto.html">Contacto</a>
+                    Les recordamos que el pago de la cuota correspondiente al mes de <strong><?php echo $meses[date('n')-1];?></strong>
+					deberá realizarse dentro de los diez primeros días
+					de dicho mes en las buzoneras del Banco Santander , con su número de
+					referencia: <strong><?php echo $cuenta->getReferenciabancaria();?></strong>
+					El monto se encuentra en el archivo adjunto en el mail.
+					Por cualquier consulta no dude en comunicarse con nosotros ,
+					<strong>Bunny's Kinder</strong>
 									</td>
 								</tr>
 							</table>
