@@ -1,0 +1,6 @@
+#md_captcha img{ margin-bottom: 0px !important; }
+#md_captcha input { width:143px; margin-bottom: 5px; }
+#md_captcha .imagen  { clear:both; padding: 0px; margin:0px;  }
+#md_captcha .ingresodecodigo { margin-top:5px; margin-bottom:4px }
+#md-captcha-error ul { margin-bottom: 0px !important; }
+#md-captcha-error ul li{ color:#CC0000; }

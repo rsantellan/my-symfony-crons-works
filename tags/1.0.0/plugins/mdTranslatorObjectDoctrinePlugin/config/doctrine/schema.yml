@@ -1,0 +1,7 @@
+mdI18NManageClasses:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    class_name: { type: string(255), notnull: true }

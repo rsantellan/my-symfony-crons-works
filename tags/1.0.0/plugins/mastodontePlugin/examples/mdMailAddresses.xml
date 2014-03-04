@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<mails>
+  <titles> 
+    <contact>Contacto desde Mastodonte.net</contact>
+    <automatic>Mastodonte.net</automatic>
+  </titles>
+  <from>Mastodonte | Demo Institucional</from>
+  <email>niko@mauitz.com</email>
+</mails>

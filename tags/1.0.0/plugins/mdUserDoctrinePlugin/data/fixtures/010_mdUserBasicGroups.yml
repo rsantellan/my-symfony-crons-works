@@ -1,0 +1,38 @@
+<?php if (sfConfig::get('sf_plugins_user_groups_permissions', false)): ?>
+
+mdGroup:
+  mdAdminGroup:
+    name: 'Admin'
+    description: 'Acceso al backend'
+
+  Configuraciones:
+    name: 'Configuraciones'
+    description: 'Para modificar las configuraciones del backend'
+
+
+mdPermission:
+  Admin:
+    name: 'Admin'
+    description: 'For use in the backend'
+
+  ClearCache:
+    name: 'Admin limpiar cache'
+    description: 'Para limpiar el chache del frontend y del backend'
+
+  BackendConfiguraciones:
+    name: 'Configuración'
+    description: 'Permite utilizar el módulo de configuración del backend'
+        
+mdGroupPermission:
+	adminAdmin:
+	  mdGroup: mdAdminGroup
+	  mdPermission: Admin
+  adminLimpiarCacheApp:
+    mdGroup: mdAdminGroup
+    mdPermission: ClearCache
+  configuracionesBackendConfiguraciones:
+    mdGroup: Configuraciones
+    mdPermission: BackendConfiguraciones
+            
+<?php endif; ?>
+ 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="es" datatype="plaintext" original="messages" date="2010-07-28T16:17:04Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>mdContact_text_name</source>
+        <target>Nombre</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>mdContact_text_lastname</source>
+        <target>Apellido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>mdContact_text_mail</source>
+        <target>Correo electronico</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>mdContact_text_phone</source>
+        <target>Telefono</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>mdContact_text_country</source>
+        <target>Pais</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>mdContact_text_comment</source>
+        <target>Comentario</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>mdContact_text_send</source>
+        <target>Enviar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>mdContact_text_requieredFields</source>
+        <target>campos obligatorios</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>mdContact_text_contact</source>
+        <target>Contacto</target>
+        <note>es</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

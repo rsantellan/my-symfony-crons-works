@@ -1,0 +1,153 @@
+mdNewsLetterUser:
+  actAs: { Timestampable: ~ }
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    md_user_id:
+      type: integer(4)
+      notnull: true
+  relations:
+    mdUser:
+      local: md_user_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+mdNewsletterContent:
+  actAs: { Timestampable: ~ }
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    subject:
+      type: string(256)
+      notnull: true
+    body:
+      type: blob
+      notnull: true
+    send_counter:
+      type: integer(4)
+      notnull: true    
+
+mdNewsletterContentSended:
+  actAs: { Timestampable: ~ }
+  options:
+    symfony:
+      filter: false  
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    subject:
+      type: string(256)
+      notnull: true
+    body:
+      type: blob
+      notnull: true
+    send_counter:
+      type: integer(4)
+      notnull: true
+    sending_date:
+      type: timestamp       
+    sended:
+      type: boolean
+      default: 0
+    for_status:
+      type: integer(2)
+      default: 0      
+    md_newsletter_content_id:
+      type: integer(4)
+      notnull: true       
+  relations:
+    mdNewsletterContent:
+      local: md_newsletter_content_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+                       
+mdNewsletterSend:
+  actAs: { Timestampable: ~ }
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    md_news_letter_user_id:
+      type: integer(4)
+      notnull: true
+    md_newsletter_content_sended_id:
+      type: integer(4)
+      notnull: true
+    sending_date:
+      type: timestamp
+  relations:
+    mdNewsLetterUser:
+      local: md_news_letter_user_id
+      foreign: id
+      type: one
+      onDelete: CASCADE        
+    mdNewsletterContentSended:
+      local: md_newsletter_content_sended_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+mdNewsLetterGroup:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(256)
+      notnull: true
+
+mdNewsLetterGroupUser:
+  options:
+    symfony:
+      form:   false
+      filter: false
+  actAs: [Timestampable]
+  columns:
+    md_newsletter_group_id:
+      type: integer(4)
+      primary: true
+    md_newsletter_user_id:
+      type: integer(4)
+      primary: true
+  relations:
+    mdNewsLetterGroup:
+      local: md_newsletter_group_id
+      onDelete: CASCADE
+    mdNewsLetterUser:
+      local: md_newsletter_user_id
+      onDelete: CASCADE
+
+mdNewsLetterGroupSended:
+  options:
+    symfony:
+      form:   false
+      filter: false
+  actAs: [Timestampable]
+  columns:
+    md_newsletter_group_id:
+      type: integer(4)
+      primary: true
+    md_newsletter_contend_sended_id:
+      type: integer(4)
+      primary: true
+  relations:
+    mdNewsLetterGroup:
+      local: md_newsletter_group_id
+      onDelete: CASCADE
+    mdNewsletterContentSended:
+      local: md_newsletter_contend_sended_id
+      onDelete: CASCADE

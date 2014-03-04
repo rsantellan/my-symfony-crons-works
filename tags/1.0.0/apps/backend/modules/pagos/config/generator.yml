@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           pagos
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          pagos
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions:
+      fields:
+        fecha: { date_format: dd/MM/yyyy }
+        price: { label: Precio }
+        out_of_date: {label: 'Fuera de fecha ?'}
+      list:
+        batch_actions: []
+        object_actions: []
+        actions: []
+        display:  [usuario, _price, _mes, fecha, _saldo, _out_of_date]
+        max_per_page: 30
+      filter:
+        display:  [referencia_bancaria, usuario_id, mes, fecha, out_of_date]
+      form:    ~
+      edit:    ~
+      new:
+        display:  [usuario, price, fecha]

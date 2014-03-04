@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="es" datatype="plaintext" original="messages" date="2013-09-23T14:27:04Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>Pie_Contacto</source>
+        <target>Bunny's Kinder | La Tahona - Canelones | 26839057 | </target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Pie_email</source>
+        <target>info@bunnyskinder.com.uy</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Menu_inicio</source>
+        <target>&lt;span style="font-size: large;"&gt;Inicio&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Menu_filosofia</source>
+        <target>&lt;span style="font-size: large;"&gt;Filosofía&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Menu_historia</source>
+        <target>&lt;span style="font-size: large;"&gt;Historia&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>Menu_actividades</source>
+        <target>&lt;span style="font-size: large;"&gt;Actividades&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>Menu_galeria</source>
+        <target>&lt;span style="font-size: large;"&gt;Galería&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>Menu_inscripciones</source>
+        <target>&lt;span style="font-size: large;"&gt;Inscripciones&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>Actividades_Titulo</source>
+        <target>Actividades</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Actividades_Tips</source>
+        <target>&lt;p&gt;&lt;br /&gt;&lt;span style="font-size: small;"&gt;&lt;span style="color: #ffcc00;"&gt; Yellow Class&lt;/span&gt;: de 1 a 2 años.&lt;/span&gt;&lt;br /&gt;&lt;span style="font-size: small;"&gt;&lt;span style="color: #339966;"&gt; Green Class&lt;/span&gt;: de 2 a 3 años.&lt;/span&gt;&lt;br /&gt;&lt;span style="font-size: small;"&gt;&lt;span style="color: #ff0000;"&gt; Red  Class&lt;/span&gt;: de 3 a 4 años.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small;"&gt; Upper Class: de 4 a 5 años. &lt;/span&gt;&lt;br /&gt;  &lt;br /&gt;&lt;span style="font-size: small;"&gt;Nuestras actividades  se desarrollan en dos horarios&lt;/span&gt;&lt;br /&gt;&lt;span style="font-size: small;"&gt;Matutino: de 8:30 a 12:00hrs.&lt;/span&gt;&lt;br /&gt;&lt;span style="font-size: small;"&gt;Vespertino: de 12:30 a 16:00hrs.&lt;/span&gt;&lt;br /&gt;&lt;span style="font-size: small;"&gt;Contamos para los que lo deseen modalidad de doble horario, de 8:30 a 16:00hrs  y extensión horaria de 8 a 8:30 y de 16 a 17:45hrs.&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;&lt;span style="font-size: small;"&gt;Para comodidad de nuestros alumnos ofrecemos también servicio de camioneta.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="text-decoration: none; color: #333399; font-size: small;"&gt;Playtime &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small;"&gt;&lt;span style="color: #ff0000;"&gt;&lt;span style="color: #000000;"&gt;A partir del mes de Setiembre , f&lt;/span&gt;&lt;/span&gt;&lt;span style="color: #ff0000;"&gt;&lt;span style="color: #000000;"&gt;unciona un playtime, &lt;/span&gt;&lt;/span&gt;&lt;span style="color: #ff0000;"&gt;&lt;span style="color: #000000;"&gt;de&lt;/span&gt;&lt;/span&gt;&lt;span style="color: #000000;"&gt; 15:45hrs a &lt;/span&gt;&lt;span style="color: #ff0000;"&gt;&lt;span style="color: #000000;"&gt;las 17:45hrs, es un espacio donde se realizan todo tipo de actividades lùdicas (dramatizaciones, cuentos , tìteres, manualidades,expresiòn corporal , etc.). &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small;"&gt;&lt;span style="color: #ff0000;"&gt;&lt;span style="color: #000000;"&gt;Las ùnicas consignas son divertirse y hablar ùnicamente en inglès.&lt;/span&gt;&lt;/span&gt;&lt;span style="text-decoration: underline;"&gt;&lt;span style="color: #ff0000;"&gt;&lt;br /&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #333399;"&gt;&lt;span style="text-decoration: none;"&gt;Summer Camp&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: medium;"&gt;&lt;span style="color: #000000; font-size: small;"&gt;Ademàs de estar abierta en invierno, en Enero y Febrero funciona nuestro "Summer Camp", con distintas  actividades recreativas. &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: medium;"&gt;&lt;span style="color: #000000; font-size: small;"&gt;Haz click en las actividades para ampliar informaciòn.&lt;br /&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>Filosofia_Titulo</source>
+        <target>&lt;span style="color: #000080; font-size: small;"&gt;Filosofía&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>Filosofia_Texto</source>
+        <target>&lt;p&gt;&lt;span style="color: #000000;"&gt;N&lt;span style="font-size: small;"&gt;uestra filosofía se constituye a partir de bases sólidas, desarrollando un proyecto educativo que se basa en dos pilares fundamentales: la propuesta académica  y los valores humanos.&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;La  propuesta formativa se apoya en una concepción metodológica que emplea lo lúdico, como estrategia didáctica especifica. El juego es la base de toda educación en esta etapa y es por eso que las actividades se planifican en forma de juego. A través del mismo, buscamos desarrollar en los niños diferentes competencias y capacidades.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Nuestros objetivos abarcan todas las áreas de aprendizaje y otorgamos a todas nuestras actividades, una profunda intencionalidad pedagógica. Para esto, contamos con un equipo docente altamente calificado.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Como centro de educación inicial, proponemos formar a nuestros niños en el marco de una educación integral en el mundo de los valores.  De la convivencia diaria, surgen en el jardín innumerables ocasiones en donde  los valores son vivenciados; en ese sentido, nuestra intención como docentes, es que puedan  trasladarlos  al mundo en que les toca vivir.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;La incorporación del niño a la vida escolar, es un proceso muy importante, porque debe  empezar a desprenderse de sus afectos cotidianos. Por esto, buscamos asegurarle al niño calidez, cariño y afecto, de manera que pueda sentirse en el Jardín como en su propia casa.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;La escolarización  transforma a toda la familia;  es por ésto que desarrollamos variadas experiencias de participación con las mismas. Consideramos de suma importancia la comunicación con los padres, porque familia y jardín, son copartícipes del proceso educativo.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;En Bunnys Kinder cada niño recibirá una educación personalizada, basada en pincipios que parten del respeto del niño en su totalidad.&lt;/span&gt;&lt;/p&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>Historia_Titulo</source>
+        <target>Historia</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>Historia_Texto</source>
+        <target>&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Bunny's Kinder es un centro educativo con historia. Se remonta a 1974, cuando Elena del Campo y su amiga Claudia Pérez del Castillo, ambas,con una gran vocación por los niños, iniciaban sus actividades de educación preescolar, fundando "Pussycat", una de las  Jardineras pioneras en Carrasco. Años más tarde, Cecilia e Inés  del Campo, descubrieron que, al igual que su hermana mayor, también tenían un gran amor por los niños y una necesidad innata de enseñarles y dedicarse a ellos.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Fue entonces que comenzaron a acompañar a su hermana en esa tarea, disfrutando de participar con los chicos en distintas actividades.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Luego de unos años, Cecilia e  Inés  decidieron mudarse a una casa que funcionò exclusivamente como Jardinera debido al gran crecimiento. La casa que les gustó desde un primer momento, contaba con espacios ideales para realizar las diferentes actividades pedagógicas.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Desde el 2003 Bunny's Kinder tiene su sede en  Altos de Tahona. Allí concurren niños del lugar y de otros barrios vecinos. Está ubicada en un lugar único e inigualable, donde los niños tienen permanentemente contacto con la naturaleza.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Los espacios, colores, objetos, materiales, juegos y juguetes con los que cuenta Bunny`s Kinder, han sido traídos especialmente desde Estados Unidos y están pensados para enriquecer la percepción y producir serenidad y alegría.&lt;/span&gt;&lt;/p&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>Inicio_Bienvenidos</source>
+        <target>Bienvenidos a Bunny's Kinder</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>Inicio_Texto</source>
+        <target>&lt;span style="font-size: large;"&gt;"&lt;span style="color: #000000;"&gt;Somos un centro educativo que se caracteriza por ofrecer un ambiente familiar, con una cálida atención humana, brindada por personal altamente calificado y preparado, en una edificación construida especialmente para ello, en una tranquila zona de pura naturaleza y espacios verdes, que cuenta con todas las medidas de privacidad y seguridad.-&lt;/span&gt;&lt;/span&gt; &lt;br /&gt;&lt;span style="font-size: large; color: #000000;"&gt;Consideramos que el medio para lograr una buena educación es hacerlos sentirse felices;  es por esto que nuestra prioridad es brindarles afecto, alegría y ternura, como pilares fundamentales para la obtención de la mejor formación y educación.-&lt;/span&gt; &lt;br /&gt;&lt;span style="font-size: large; color: #000000;"&gt; &lt;/span&gt;&lt;span style="font-size: large; color: #000000;"&gt;Estimulamos el aprendizaje de nuestros pequeños alumnos a través del juego y del cariño, ya que de esta manera se producen las adquisiciones cognitivas más importantes, en especial, en cuanto a los valores humanos."&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>Actividades_Ingles Titulo</source>
+        <target>&lt;span style="color: #000080;"&gt;Inglés&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>Actividades_Ingles Texto</source>
+        <target>&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Este idioma se ira incorporando poco a poco de una forma lúdica tratando de que los niños se familiaricen con el. El objetivo es que a fin de año  hayan adquirido un vocabulario básico y sean capaces de comprender órdenes y formar frases sencillas.&lt;/span&gt;&lt;/p&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>Actividades_Plastica Titulo</source>
+        <target>&lt;span style="color: #000080;"&gt;Plástica&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="21">
+        <source>Actividades_Plastica Texto</source>
+        <target>&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;A través  de materiales y herramientas variadas tratamos de que los niños sean capaces de manifestar lo que sienten y los conmueve.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;La expresión plástica es un medio de auto expresión que conduce a desarrollar la autoestima, potenciando y multiplicando los recursos expresivos del niño, incrementando así su capacidad creativa.&lt;/span&gt;&lt;/p&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="22">
+        <source>Actividades_Musica Titulo</source>
+        <target>&lt;span style="color: #000080;"&gt;Música y Expresión corporal&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>Actividades_Musica Texto</source>
+        <target>&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Las clases de música en  nuestro jardín tienen como objetivo proporcionar un estado de placer y gusto por la música. Los niños podrán disfrutar desde excelentes piezas clásicas como de las divertidísimas canciones infantiles. Con  el uso de los diferentes instrumentos musicales lograremos que la  música  sea el  medio para despertar las valoraciones artísticas, estéticas y emocionales.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;El niño en el nivel inicial está conformando su imagen corporal, por esto  necesita reconocer las distintas partes de su cuerpo y sus movimientos. Vivenciar las distintas técnicas de Expresión Corporal, le permitirá a cada niño construir un lenguaje y un canal para la interiorización y exteriorización de sensaciones, emociones y sentimientos para satisfacer las necesidades de expresar, comunicar, crear, e interactuar con los otros.&lt;/span&gt;&lt;/p&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="24">
+        <source>Actividades_Cocina Titulo</source>
+        <target>Cocina</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="25">
+        <source>Actividades_Cocina Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="26">
+        <source>Actividades_Lectoescritura Titulo</source>
+        <target>&lt;span style="text-decoration: underline;"&gt;&lt;span style="font-size: small;"&gt;Lectoescritura&lt;/span&gt;&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="27">
+        <source>Actividades_Lectoescritura Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="28">
+        <source>Actividades_Logico Titulo</source>
+        <target>&lt;span style="text-decoration: underline; color: #000080;"&gt;&lt;span style="font-size: small;"&gt;Pensamiento Lógico-Matemático&lt;/span&gt;&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="29">
+        <source>Actividades_Logico Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="30">
+        <source>Actividades_Gym Titulo</source>
+        <target>&lt;span style="color: #000080;"&gt;Yoga&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="31">
+        <source>Actividades_Gym Texto</source>
+        <target>&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Los más grandes del jardín disfrutan de una clase semanal de esta actividad. Practicando yoga a través de juegos, posturas, narraciones y visualizaciones los niños tendrán la oportunidad de aprender a conocer su propio cuerpo y trabajar su respiración disfrutando de la actividad y los espacios de silencio.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;La practica de yoga desde temprana edad como actividad curricular los ayuda a prepararse para el futuro aprendizaje formal y generar un mayor entendimiento frente al mundo que nos rodea.&lt;/span&gt;&lt;/p&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="32">
+        <source>Actividades_Psico Titulo</source>
+        <target>&lt;span style="color: #000080;"&gt;Psicomotricidad&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="33">
+        <source>Actividades_Psico Texto</source>
+        <target>&lt;p&gt;&lt;span style="color: #000000;"&gt;C&lt;span style="font-size: small;"&gt;ontamos con una sala equipada con todo lo necesario para que los niños reciban una educación psicomotriz adecuada.&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Queremos destacar la importancia de esta actividad en la educación inicial, ya que atiende a la relación fundamental que existe entre el manejo del cuerpo y los procesos de aprendizaje.&lt;/span&gt;&lt;/p&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="34">
+        <source>Actividades_Natacion Titulo</source>
+        <target>&lt;span style="color: #000080;"&gt;Natación&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="35">
+        <source>Actividades_Natacion Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="36">
+        <source>Actividades_Huerta Titulo</source>
+        <target>&lt;span style="text-decoration: underline;"&gt;&lt;span style="font-size: small; color: #000080;"&gt;Huerta&lt;/span&gt;&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="37">
+        <source>Actividades_Huerta Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="38">
+        <source>Actividades_Juego Titulo</source>
+        <target>&lt;span style="text-decoration: underline;"&gt;&lt;span style="font-size: small;"&gt;Juego Libre&lt;/span&gt;&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="39">
+        <source>Actividades_Juego Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="40">
+        <source>Actividades_Lectura Titulo</source>
+        <target>&lt;span style="text-decoration: underline; font-size: small;"&gt;&lt;span style="color: #000080;"&gt;Rincón de Lectura&lt;/span&gt;&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="41">
+        <source>Actividades_Lectura Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="42">
+        <source>Actividades_Ciencias Titulo</source>
+        <target>&lt;span style="text-decoration: underline;"&gt;&lt;span style="color: #000080; font-size: small;"&gt;Rincón de Ciencias&lt;/span&gt;&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="43">
+        <source>Actividades_Ciencias Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="44">
+        <source>Actividades_Paseos Titulo</source>
+        <target>&lt;span style="color: #000080;"&gt;Paseos&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="45">
+        <source>Actividades_Paseos Texto</source>
+        <target>&lt;p&gt;&lt;span style="font-size: small; color: #000000;"&gt;Durante el año se realizaran paseos a distintos lugares considerados de interés para los niños.&lt;/span&gt;&lt;/p&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="46">
+        <source>Actividades_Teatro Titulo</source>
+        <target>&lt;span style="text-decoration: underline;"&gt;&lt;span style="color: #000080; font-size: small;"&gt;Teatro&lt;/span&gt;&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="47">
+        <source>Actividades_Teatro Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="48">
+        <source>Actividades_Festejo Titulo</source>
+        <target>&lt;span style="font-size: small;"&gt;Festejo día del niño, madre, padre, abuelos&lt;/span&gt;</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="49">
+        <source>Actividades_Festejo Texto</source>
+        <target/>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="50">
+        <source>Inicio_Procesando, por favor espere ...</source>
+        <target>Procesando, por favor espere ...</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="53">
+        <source>Inscripciones_Titulo</source>
+        <target>Formulario de Inscripciones</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="54">
+        <source>Inscripciones_Texto</source>
+        <target>Complete los siguientes datos y luego el personal de Bunny's Kinder se pondrá en contacto son usted.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="55">
+        <source>Inscripciones_Enviar</source>
+        <target>Enviar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="56">
+        <source>Inscripciones_Mensaje Enviado</source>
+        <target>Mensaje Enviado</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="57">
+        <source>Contacto_Titulo</source>
+        <target>Contacto</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="58">
+        <source>Contacto_Texto</source>
+        <target>Si desea ponerse en contacto o enviarnos sus comentarios por favor complete el siguiente formulario y nos comunicaremos a la brevedad.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="59">
+        <source>Contacto_Enviar</source>
+        <target>enviar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="60">
+        <source>Contacto_Mensaje Enviado</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="61">
+        <source>Contacto_Info Direccion</source>
+        <target>Camino de los Horneros - La Tahona</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="62">
+        <source>Contacto_Info Ciudad</source>
+        <target>Canelones - Uruguay</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="63">
+        <source>Contacto_Info Telefono</source>
+        <target>(598) 2683 90 57</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="71">
+        <source>Contacto_Nombre</source>
+        <target>Nombre</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="72">
+        <source>Contacto_Apellido</source>
+        <target>Apellido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="73">
+        <source>Contacto_Email</source>
+        <target>Mail</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="74">
+        <source>Contacto_Telefono</source>
+        <target>Teléfono</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="75">
+        <source>Contacto_Mensaje</source>
+        <target>Mensaje</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="76">
+        <source>Contacto_Error Campo requerido</source>
+        <target>Campo requerido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="77">
+        <source>Contacto_Error Formato incorrecto</source>
+        <target>Formato incorrecto</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="78">
+        <source>Inscripciones_Nombre</source>
+        <target>Nombre</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="79">
+        <source>Inscripciones_Apellido</source>
+        <target>Apellido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="80">
+        <source>Inscripciones_Año</source>
+        <target>E-mail:</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="81">
+        <source>Inscripciones_Horario</source>
+        <target>Horario</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="82">
+        <source>Inscripciones_Fecha nacimiento</source>
+        <target>Fecha de Nacimiento</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="83">
+        <source>Inscripciones_Futuro Colegio</source>
+        <target>Futuro Colegio</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="84">
+        <source>Inscripciones_Direccion</source>
+        <target>Dirección</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="85">
+        <source>Inscripciones_Telefono</source>
+        <target>Teléfono</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="86">
+        <source>Inscripciones_Mensaje</source>
+        <target>Mensaje</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="87">
+        <source>Inscripciones_Error Campo requerido</source>
+        <target>Mail:</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="88">
+        <source>Inscripciones_Error Formato incorrecto</source>
+        <target>Formato incorrecto</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="89">
+        <source>Inicio_authentication fail</source>
+        <target>Falla en la autentificacion</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="90">
+        <source>Inicio_activation fail</source>
+        <target>Falla en la activación</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="91">
+        <source>Inicio_activation success</source>
+        <target>Ha activado su cuenta con éxito</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="92">
+        <source>Inicio_Requerido</source>
+        <target>requerido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="93">
+        <source>Inicio_Los passwords no coinciden.</source>
+        <target>Las claves no coinciden</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="94">
+        <source>Inicio_Verification fail</source>
+        <target>falló la verificación</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="95">
+        <source>Usuarios_Username</source>
+        <target>Email</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="96">
+        <source>Usuarios_Clave</source>
+        <target>Clave</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="97">
+        <source>Usuarios_Error Campo requerido</source>
+        <target>no puede ser vacío</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="98">
+        <source>Usuarios_Error Formato incorrecto</source>
+        <target>formato incorrecto.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="99">
+        <source>Usuarios_Ingresar</source>
+        <target>ingresar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="102">
+        <source>Galeria_Titulo</source>
+        <target>Galería</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="103">
+        <source>Galeria_Usuario no identificado</source>
+        <target>Para ver el contenido de esta sección se requiere tener un usuario habilitado. El mismo será entregado por Bunny's Kinder. Si usted es padre de un alumno y aún no lo tiene, por favor envíe un mail para solicitarlo a </target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="105">
+        <source>Galeria_Habilitado para cursos</source>
+        <target>Usted esta habilitado para visualizar las galerías de imágenes de los grupos</target>
+        <note>es</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

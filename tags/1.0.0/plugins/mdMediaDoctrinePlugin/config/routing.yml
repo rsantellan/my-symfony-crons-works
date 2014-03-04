@@ -1,0 +1,31 @@
+images:
+  url: /images
+  param: { module: Images, action: index }
+
+editMedia:
+  url: /editMedia
+  param: { module: mdMediaContentAdmin, action: editMedia }
+
+downloadMedia:
+  url: /downloadMedia
+  param: { module: mdMediaContentAdmin, action: downloadData }
+  
+processMediaForm:
+  url: /processMediaForm
+  param: { module: mdMediaContentAdmin, action: processMedia }
+
+mdVideoAvatarUpload:
+  url: /uploadVideoAvatar
+  param: {module: mdMediaContentAdmin, action: uploaderVideoAvatar }
+
+showMediaPartial:
+  url: /showMedia/:mdMediaContentId
+  param: {module: mdMediaContentAdmin, action: showSingleMediaPartial }  
+
+showAlbumPartial:
+  url: /showMedia/:albumId/:albumName
+  param: {module: mdMediaContentAdmin, action: showAlbumMediaPartial }  
+
+downloadFile:
+  url: /download/:id/:classname
+  param: {module: mdMediaContentFrontend, action: downloadFile } 
