@@ -1,0 +1,282 @@
+/* Image Manager */
+/* core stuff */
+/* ########################################################## */
+
+body {
+	background:#fff; 
+	color:#000;
+	margin:0 0;
+	padding:0;
+	font:70% arial, helvetica, sans-serif;
+	text-align:center;
+}
+
+td {
+	font-size: 11px;
+}
+
+img	{
+	border: 0;
+}
+
+hr {
+	clear:both; 
+	border:0; 
+	color:#e5e5e5; 
+	background-color:#e5e5e5; 
+	height:1px; 
+}
+
+div {
+	font-size:11px;
+}
+
+/* Lists */
+
+ul {
+	margin:0; 
+	padding:0; 
+	list-style:none;
+}
+
+ul li {
+	margin:0; 
+	padding:0; 
+}
+
+
+/* Layout */
+
+#center	{
+	width:auto; 
+	max-width:1200px; 
+	margin:0 auto; 
+	text-align:left;
+}
+
+/* Links */
+
+a			{background:transparent; }
+a:link 			{color:#000; }
+a:visited 		{color:#000; }
+a:visited:hover {color:#000; }
+a:hover 		{color:#000; }
+a:active 		{color:#000; }
+
+
+#thearea {
+	position:relative;
+}
+
+#secondarea {
+	position:absolute;
+	left:200px;
+}
+
+
+
+/* dialog popups */
+/* ########################################################## */
+
+body {
+	overflow: auto;
+}
+
+.dialog { 
+	position:relative;
+	text-align:left;
+	width:100%;
+}
+
+.dialog .top { 
+	padding:10px 12px;
+	background:#f3f2f0 url('/mdMediaManagerPlugin/images/dialog-top.png') no-repeat right bottom;
+}
+
+.dialog .close { 
+	position:absolute;
+	top:4px;
+	right:4px;
+}
+
+.dialog h2 {
+	font:bold 115% tahoma, arial, sans-serif;
+	margin:0px;
+}
+
+.dialog .description {
+	margin:0px;
+}
+
+.dialog .headline	{ 
+	padding:8px 0px 12px 40px; 
+}
+
+.dialog .createdir {
+	background: url('/mdMediaManagerPlugin/images/dialog-icon-newfolder.png') no-repeat left;
+}
+
+.dialog .upload {
+	background: url('/mdMediaManagerPlugin/images/dialog-icon-upload.png') no-repeat left;
+}
+
+
+.dialog .facts { 
+	background:#f3f2f0;
+	padding:8px 16px 12px 20px;
+	font:90% tahoma, arial, sans-serif;
+}
+
+.dialog .body	{ 
+	padding:8px 16px 12px 20px;
+}
+
+#content { /*display: none;*/ }
+
+/* Upload */
+
+#uploadarea {
+	position: relative;
+	padding: 16px;
+	height: 220px;
+	overflow: hidden;
+}
+
+* html #uploadarea {
+	height: 208px;
+}
+
+#uploadarea .small {
+    margin: 2em 0 -1em;
+    color: #6d88c4;
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+
+#uploadarea .addbutton, #uploadarea #uploadstart, .button {
+    display: block;
+    width: 182px;
+    height: 26px;
+    margin: 0 0 1em;
+    background: url('/mdMediaManagerPlugin/images/submit-greyWide.png') no-repeat;
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 26px;
+    text-decoration: none;
+}
+
+.button{
+    display: inline;
+}
+
+#uploadarea #uploadstart{
+    background: url('/mdMediaManagerPlugin/images/submit-greyWide.png') no-repeat;
+}
+
+#uploadarea #fileblock {
+    display:none;
+}
+
+#uploadarea #filelist {
+    position:relative;
+    max-height: 7em;
+    overflow: auto;
+    margin-bottom: 6px;
+    border: 1px solid #9fadc4;
+}
+
+* html #uploadarea #filelist {
+    height: 7em;
+}
+
+#uploadarea #fileshead {
+    width: 100%;
+    font-weight: bold;
+    background: #eee;
+    border-bottom: 1px solid #fff;
+}
+
+#uploadarea #files {
+    width:100%;
+}
+
+#uploadarea #status {
+    border: 1px solid #9fadc4;
+    padding: 1px;
+    width: 506px;
+    height: 34px;
+}
+
+#uploadarea #progressbar {
+    position: relative;
+    width: 100%;
+    height: 34px;
+    background: url(/mdMediaManagerPlugin/images/progress.gif);
+    z-index: 10;
+}
+
+#uploadarea .progresstext {
+    position: relative;
+    top: -34px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #535353;
+    font-weight: bold;
+    line-height: 36px;
+    z-index: 11;
+}
+
+#uploadarea .progresstext a {
+    text-decoration: none;
+    color: #535353;
+}
+
+.uploadtype{
+    margin-top:30px;
+}
+
+#files .fname a {display:block; width:260px; overflow:hidden}
+#files .disabled {text-decoration:none; cursor:default}
+#files .done {color:gray}
+#files .failed {color:red}
+
+#multiupload_view {/*display:none;*/ position:relative}
+#singleupload_view {display:none}
+#multiupload_view #selectview {position:relative}
+#files input.text {width:290px; margin:0; padding:0}
+
+select {font:100% tahoma;}
+
+input.file, input.text { font:90% tahoma, arial, sans-serif; }
+
+.progressWindow{
+    font-family:Arial,Verdana;
+    font-weight:bold;
+    line-height:30px;
+    padding-left:30px;
+    padding-right:10px;
+}
+
+.upload_progress {
+    background: url("/mdMediaManagerPlugin/images/loading.gif") no-repeat scroll 5px 8px #FFFFFF;
+    border:1px solid gray;
+    height:30px;
+    left:220px;
+    position:absolute;
+    text-align:left;
+    top:160px;
+    z-index:100101;
+
+}
+.upload_container{
+    position: absolute;
+    background-color: #FFF;
+    height:100%;
+    width: 100%;
+    opacity: 0.7;
+    text-align:left;
+    top:0;
+    z-index:100100;
+}

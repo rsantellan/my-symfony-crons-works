@@ -1,0 +1,45 @@
+
+/* root element for accordion. decorated with rounded borders and gradient background image */
+#accordion {
+    width: 560px;
+	margin-top:15px;
+	}
+
+/* accordion header */
+#accordion h2 {
+	font-family:Trebuchet MS;
+    font-size:14px;
+	color:#545454;
+	cursor:pointer;
+	margin-bottom:5px;
+	}
+#accordion h2 img{
+	margin-right:5px;
+	}
+/* currently active header */
+#accordion h2 a{
+	text-decoration:none;
+	color:#e7c91d;
+	}
+#accordion h2.current {
+    cursor:default;
+	color:#e7c91d;
+}
+
+/* accordion pane */
+#accordion .pane {
+    display:none;
+    padding:0 15px;
+    color:#545454;
+    font-size:12px;
+	font-family:Trebuchet MS;
+	margin-bottom:15px;
+}
+
+#accordion .pane img{
+	margin:10px 0;
+	float:left;
+	}
+#accordion p span{
+	color:#545454;
+}

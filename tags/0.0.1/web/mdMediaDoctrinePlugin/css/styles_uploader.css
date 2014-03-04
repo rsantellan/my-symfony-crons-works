@@ -1,0 +1,161 @@
+/* CSS Document */
+
+
+/*RESET*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big,
+cite, code, del, dfn, em, font, img,
+ins, kbd, q, s, samp, small, strike,
+sub, sup, tt, var, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+center, u, b, i {
+     margin: 0;
+     padding: 0;
+     border: 0;
+     outline: 0;
+     font-weight: normal;
+     font-style: normal;
+     font-size: 100%;
+     font-family: inherit;
+     vertical-align: baseline
+}
+body{
+	font-family:Trebuchet MS;
+	color:#999999;
+	font-size:13px;
+	}
+#conteiner{
+	width:360px;
+	padding:15px 10px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border:1px solid #dadada;
+	background:#FFFFFF;
+	}
+.clear{
+	clear:both;
+	}
+h1{
+	font-size:22px;
+	margin-left:15px;
+	font-weight:bold;
+	}
+hr{
+	width:360px;
+	height:1px;
+	border:none;
+	background:#dadada;
+	}
+#galeria{
+	margin:20px 0 20px 15px;
+	overflow:hidden;
+	}
+label{
+	float:left;
+	margin:2px 8px 0 0;
+	}
+select{
+	float:left;
+	font-size:12px;
+	margin-right:8px;
+	border:2px solid #DADADA;
+	background:#FFFFFF;
+	height:25px;
+	width:180px;
+	font-family:Trebuchet MS;
+	color:#666666;
+	}
+#galeria img{
+	float:left;
+	margin-top:5px;
+	}
+p{
+	clear:both;
+	margin-left:15px;
+	}
+#archivos{
+	/*border:2px solid #dadada;*/
+	margin:10px  0 20px 15px;
+	width:330px;
+	overflow:hidden;
+	}
+.archivo{
+	float:left;
+	margin:8px 0 15px 8px;
+	}
+.carga{
+	float:right;
+	margin:15px 8px 0 0;
+	font-size:10px;
+	}
+.examinar{
+	margin-left: 15px;
+}
+#archivos hr{
+	width:330px;
+	background:#dadada;
+	border:none;
+	height:2px;
+	margin:10px 0;
+	}
+.img img{
+	float:left;
+	margin:0 10px 20px 8px !important;
+	}
+.name{
+	float:left;
+	margin-top:3px;
+	}
+.tipo{
+	float:right;
+	margin:6px 8px 0 20px;
+	font-size:10px;
+	}
+#uploader_gris{
+	width:310px;
+	margin:5px 0 10px 8px;
+	background:#dadada;
+	height:3px;
+	clear:both;
+	}
+#uploader_verde{
+	width:100px;
+	background:#00a61b;
+	height:3px;
+	clear:both;
+	}
+#listo{
+	overflow:hidden;
+	}
+#listo a{
+	float:right;
+	font-size:15px;
+	font-weight:bold;
+	margin:0 8px 5px 0;
+	text-decoration:none;
+	color:#999999;
+	display:block;
+	}
+.blur{ 
+   background-color: #ccc; /*shadow color*/
+   color: inherit; 
+   margin-left: 4px; 
+   margin-top: 4px; 
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	width:382px;
+	}
+.shadow, 
+.content{ 
+   position: relative; 
+   bottom: 2px; 
+   right: 2px; 
+   } 
+#newGalleryDiv{
+	clear:both;
+}
+
+/**************************/
+/*YOUTUBE*/

@@ -1,0 +1,78 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big,
+cite, code, del, dfn, em, font, img,
+ins, kbd, q, s, samp, small, strike,
+sub, sup, tt, var, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+center, u, b, i {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline
+}
+
+:focus {
+  outline: 0
+}
+
+ol, ul {
+  list-style: none
+}
+.float_left{
+  float:left;
+}
+.float_right{
+  float:right;
+}
+.clear{
+  clear:both;
+}
+body{
+  font-family:Lucida Grande;
+  color:#333333;
+  font-size:13px;
+}
+#wrapper{
+  width:500px;
+  margin:20px 47px 0 47px;
+  border-bottom:1px solid #333333;
+}
+.cabezal{
+  margin-bottom:10px;
+}
+.mes{
+  float:right;
+  padding-top:25px;
+  padding-left: 265px;
+  font-weight:bold;
+  font-size:15px;
+}
+.descripcion{
+  padding:10px 10px 0 0;
+  line-height:20px;
+}
+span.cuota{
+  font-size:14px;
+  font-weight:bold;
+}
+.total{
+  font-size:15px;
+  font-weight:bold;
+  margin:10px 0;
+}
+.footer{
+  background:url(../images/footer.jpg) right top no-repeat;
+  height:70px;
+}
+.alumno{
+  font-weight:bold;
+  padding-top:15px;
+  font-size:15px;
+}

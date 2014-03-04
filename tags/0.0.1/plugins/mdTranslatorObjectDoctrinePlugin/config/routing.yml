@@ -1,0 +1,3 @@
+mdObjectTranslator:
+  url: /translateObject.html
+  param: { module: mdObjectTranslator, action: index }

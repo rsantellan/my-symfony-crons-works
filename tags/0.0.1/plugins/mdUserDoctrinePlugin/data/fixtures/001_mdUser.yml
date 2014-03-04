@@ -1,0 +1,17 @@
+mdUser:
+  mdUser_base:
+    email: admin@admin.com
+    super_admin: 1
+
+mdPassport:
+  mdPassport_base:
+    username: admin
+    password: 123
+    mdUser: mdUser_base
+    account_active: 1
+
+mdUserProfile:
+  mdUserProfile_0:
+    mdUserIdTmp: 1
+    name: Admin
+    last_name: Admin

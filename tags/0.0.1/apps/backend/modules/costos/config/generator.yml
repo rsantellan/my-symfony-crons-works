@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           costos
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          costos
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+      
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        object_actions: 
+          _edit: ~
+        actions: []
+        batch_actions: []
+        display: [_matricula, _matutino, _vespertino, _doble_horario]       
+      filter:
+        class: false
+      form:
+        actions:
+          _list: ~
+          _save: ~
+      edit:    ~
+      new:     ~

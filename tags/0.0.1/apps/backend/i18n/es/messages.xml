@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="es" datatype="plaintext" original="messages" date="2012-10-29T18:03:52Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>Home_Procesando, por favor espere ...</source>
+        <target>Procesando, por favor espere ...</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Actividades_Actividades List</source>
+        <target>Listado de actividades</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Actividades_Edit Actividades</source>
+        <target>Editar actividad</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Actividades_New Actividades</source>
+        <target>Crear nueva actividad</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Actividades_Actividades</source>
+        <target>Actividades</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>Actividades_No tiene actividades</source>
+        <target>No tiene actividades</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>Actividades_Seleccione las actividades que desea agregar a este alumno &lt;br /&gt;y luego presione en el boton de agregar</source>
+        <target>Seleccione las actividades que desea agregar a este alumno&lt;br /&gt;y luego presione en el boton de agregar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>Descuentos_Descuentos List</source>
+        <target>Listado de descuentos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>Descuentos_Edit Descuentos</source>
+        <target>Editar descuento</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Descuentos_New Descuentos</source>
+        <target>Crear nuevo descuento</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>Costos_Costos List</source>
+        <target>Listado de costos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>Costos_Edit Costos</source>
+        <target>Editar costo</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>Costos_New Costos</source>
+        <target>Crear nuevo costo</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>Usuarios_Hermanos</source>
+        <target>Hermanos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>Usuarios_No tiene hermanos</source>
+        <target>No tiene hermanos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>Usuarios_Usuarios List</source>
+        <target>Listado de usuarios</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>PDF_Referencia bancaria:</source>
+        <target>Referencia bancaria:</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>PDF_Actividades adicionales:</source>
+        <target>Actividades adicionales:</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>PDF_Nombre Alumno:</source>
+        <target>Nombre Alumno:</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>Usuarios_Edit Usuarios</source>
+        <target>Editar usuario</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="21">
+        <source>PDF_Titulo</source>
+        <target>Bunny's Kinder</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="22">
+        <source>Usuarios_New Usuarios</source>
+        <target>Crear nuevo usuario</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>Pagos_Pagos List</source>
+        <target>Listado de pagos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="24">
+        <source>Pagos_Edit Pagos</source>
+        <target>Editar pago</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="25">
+        <source>Pagos_New Pagos</source>
+        <target>Crear nuevo pago</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="26">
+        <source>Home_Jardin</source>
+        <target>Jardin Bunny's Kinder</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="27">
+        <source>PDF_Total:</source>
+        <target>Total</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="28">
+        <source>newsletter_seleccionar todos</source>
+        <target>Enviar a todos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="29">
+        <source>newsletter_seleccionar algunos</source>
+        <target>Elegir usuarios</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="30">
+        <source>newsletter_seleccionar padres</source>
+        <target>Enviar a los padres</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="31">
+        <source>newsletter_Enviado a padres</source>
+        <target>Enviado a los padres</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="32">
+        <source>PDF_Cuota fija mensual:</source>
+        <target>Cuota fija mensual:</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="33">
+        <source>PDF_Saldo:</source>
+        <target>Saldo:</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="36">
+        <source>Usuarios_No tiene padres</source>
+        <target>No tiene padres</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="37">
+        <source>Mail_::Newsletter Bunnys Kinder::</source>
+        <target>::Newsletter Bunnys Kinder::</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="38">
+        <source>Mail_Activación de cuenta</source>
+        <target>Activación de cuenta</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="39">
+        <source>Mail_Estimados,</source>
+        <target>Estimados,</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="40">
+        <source>Mail_Les informamos se le ha generdo una cuenta pora poder ingresar al a galería de imágenes del sitio web.</source>
+        <target>Les informamos que se le ha generdo una cuenta pora poder ingresar a la galería de imágenes del sitio web.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="41">
+        <source>Mail_Para activar la misma y configurar su nueva clave debe ingresar al siguiente %link%</source>
+        <target>Para activar la misma y configurar su nueva clave debe ingresar al siguiente %link%</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="42">
+        <source>Mail_Saluda Atentamente,</source>
+        <target>Saluda Atentamente,</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="43">
+        <source>Mail_Bunnys Kinder.</source>
+        <target>Bunnys Kinder.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="46">
+        <source>PDF_Matricula:</source>
+        <target>Matricula:</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="47">
+        <source>Mail_Activacion de cuenta</source>
+        <target>Activación de cuenta</target>
+        <note>es</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
