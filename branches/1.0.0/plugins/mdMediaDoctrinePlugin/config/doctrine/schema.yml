@@ -1,0 +1,275 @@
+mdMedia:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    object_class_name:
+       type: string(128)
+       notnull: true
+    object_id:
+       type: integer(4)
+       notnull: true
+  indexes:
+    md_media_index:
+      fields: [object_class_name, object_id]
+      type: unique
+      
+mdMediaAlbum:
+  actAs:
+<?php if( sfConfig::get( 'sf_plugins_media_commentable', false ) ):  ?>
+    Commentable: ~
+<?php endif; ?>
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true  
+    md_media_id:
+      type: integer(4)
+    title:
+      type: string(64)
+      notnull: true
+    description:
+      type:	string(255)
+    type:
+      type: enum
+      values: [Image, Video, File, Mixed]
+      default: Mixed
+    deleteAllowed:
+      type: bool
+      notnull: true
+    md_media_content_id:
+      type: integer(4)
+  relations:
+    mdMediaContent:
+      local: md_media_content_id
+      foreign: id
+      type: one 
+    mdMedia:
+      local: md_media_id
+      foreign: id
+      type: one
+  indexes:
+    md_media_album_title_index:
+      fields: [md_media_id, title]
+      type: unique
+
+mdMediaContent:
+  actAs:
+    mdContentBehavior: ~
+    Timestampable: ~
+<?php if( sfConfig::get( 'sf_plugins_media_rating', false ) ):  ?>
+    mdRatingBehavior: ~
+<?php endif; ?>
+<?php if( sfConfig::get( 'sf_plugins_media_commentable', false ) ):  ?>
+    mdCommentableBehavior: ~
+<?php endif; ?>
+<?php if( sfConfig::get( 'sf_plugins_media_i_like_it', false ) ):  ?>
+    mdILikeItBehavior: ~
+<?php endif; ?>
+<?php if( sfConfig::get( 'sf_plugins_media_report_abuse', false ) ):  ?>
+    mdReporAbuseBehavior: ~
+<?php endif; ?>
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    object_class_name:
+       type: string(128)
+       notnull: true
+    object_id:
+       type: integer(4)
+       notnull: true
+  indexes:
+    md_media_content_index:
+      fields: [object_class_name, object_id]
+      type: unique
+
+mdMediaAlbumContent:
+  actAs:
+    mdCountCacheBehavior:
+      relations:
+        mdMediaAlbum:
+          columnName: counter_content
+          foreignAlias: mdMediaAlbumContent
+  columns:
+    md_media_album_id:
+      type: integer(4)
+      primary: true
+    md_media_content_id:
+      type: integer(4)
+      primary: true
+    object_class_name:
+       type: string(128)
+       notnull: true
+    priority:
+      type: integer
+      notnull: true
+  indexes:
+      md_media_album_content_index:
+        fields:
+          priority:
+            sorting: ASC
+  relations:
+    mdMediaContent:
+      local: md_media_content_id
+      foreign: id
+      type: one
+    mdMediaAlbum:
+      local: md_media_album_id
+      foreign: id
+      foreignAlias: mdMediaAlbumContent
+      type: one
+
+mdMediaImage:
+  actAs: 
+    mdMediaContentBehavior: ~
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      notnull: true
+    filename:
+      type: string(64)
+      notnull: true      
+    description:
+      type:	string(255)
+    path:
+      type: string(255)
+
+mdMediaVideo:
+  actAs:
+    mdMediaContentBehavior: ~
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      notnull: true
+    filename:
+      type: string(64)
+      notnull: true
+    duration:
+      type: string(64)
+      notnull: true
+    type:
+      type: string(64)
+      notnull: true
+    description:
+      type:	string(255)
+    path:
+      type: string(255)
+    avatar:
+      type: string(255)
+
+mdMediaYoutubeVideo:
+  actAs:
+    mdMediaContentBehavior: ~
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      notnull: true
+    src:
+      type: string(255)
+      notnull: true
+    code:
+      type: string(64)
+      notnull: true
+    duration:
+      type: string(64)
+      notnull: true
+    description:
+      type:	string(255)
+    path:
+      type: string(255)
+    avatar:
+      type: string(255)
+
+mdMediaVimeoVideo:
+  actAs:
+    mdMediaContentBehavior: ~
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    vimeo_url:
+      type: string(64)
+      notnull: true      
+    # <title>Meet the office</title>
+    title:
+      type: string(255)
+      notnull: true
+    # http://player.vimeo.com/video/27582408
+    src:
+      type: string(255)
+      notnull: true
+    # <video_id>757219</video_id> 
+    duration:
+      type: string(64)
+      notnull: true
+    description:
+      type:	string(512)      
+    # <thumbnail_url>http://90.media.vimeo.com/d1/5/38/21/85/thumbnail-38218529.jpg</thumbnail_url>
+    avatar:
+      type: string(255)
+    # <thumbnail_width>160</thumbnail_width>      
+    avatar_width:
+      type: integer(1)
+    # <thumbnail_height>120</thumbnail_height>      
+    avatar_height:
+      type: integer(1)      
+    # <author_name>Blake Whitman</author_name>
+    author_name:
+      type: string(255)
+    # <author_url>http://www.vimeo.com/blakewhitman</author_url>
+    author_url:
+      type: string(255)
+
+mdMediaIssuuVideo:
+  actAs:
+    mdMediaContentBehavior: ~
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    documentId:
+      type: string(512)
+      notnull: true
+    embed_code:
+      type: text
+      notnull: true
+      
+mdMediaFile:
+  actAs: 
+    mdMediaContentBehavior: ~
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      notnull: true
+    filename:
+      type: string(64)
+      notnull: true
+    filetype:
+      type: string(64)
+      notnull: true      
+    description:
+      type:	string(255)
+    path:
+      type: string(255)      

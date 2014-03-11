@@ -1,0 +1,17 @@
+mdTranslator:
+  url: /translate.html
+  param: { module: mdTranslator, action: index }
+
+mdPluginTranslator:
+  url: /translatePlugin.html
+  param: { module: mdPluginTranslator, action: index }
+
+change_language:
+  url:   /change_language
+  param: { module: mdChangeLenguage, action: changeLanguage }
+  
+localized_homepage:
+  url:   /:sf_culture/
+  param: { module: default, action: index }
+  requirements:
+    sf_culture: (?:es|en|pt)  

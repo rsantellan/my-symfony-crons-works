@@ -1,0 +1,8 @@
+all:
+  vimeo:
+
+    API_ENDPOINT: http://vimeo.com/api/v2
+    
+    OEMBED_ENDPOINT: http://vimeo.com/api/oembed.xml
+
+    DEBUG: false

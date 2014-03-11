@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header />
+    <body>
+      <!-- Form -->
+      <trans-unit>
+        <source>Usuario_The item was created successfully.</source>
+        <target>El elemento se ha creado correctamente.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Usuario_The item was updated successfully.</source>
+        <target>El elemento se ha actualizado correctamente.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Usuario_The item was created successfully. You can add another one below.</source>
+        <target>El elemento se ha creado correctamente y ahora puede crear otro elemento.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Usuario_The item was updated successfully. You can add another one below.</source>
+        <target>El elemento se ha actualizado correctamente y ahora puede crear otro elemento.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Usuario_The item has not been saved due to some errors.</source>
+        <target>No se pudo agregar el usuario porque hay campos sin completar. Se especifican abajo en rojo.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Usuario_The item was deleted successfully.</source>
+        <target>El elemento se ha borrado correctamente.</target>
+      </trans-unit>
+      <trans-unit>
+        <source><![CDATA[The form submission cannot be processed. It probably means that you have uploaded a file that is too big.]]>
+        </source>
+        <target><![CDATA[El formulario no puede ser procesado. Problamente significa que ha cargado un archivo muy grande.]]>
+        </target>
+      </trans-unit>
+      <trans-unit>
+        <source><![CDATA[Unexpected extra form field named "%field%".]]>
+        </source>
+        <target><![CDATA[Campo extra no esperado "%field%".]]>
+        </target>
+      </trans-unit>
+      <trans-unit>
+        <source><![CDATA[CSRF attack detected.]]>
+        </source>
+        <target><![CDATA[Ataque CSRF detectado.]]>
+        </target>
+      </trans-unit>
+      
+      <!-- Batch Actions-->
+      <trans-unit>
+        <source>Usuario_You must at least select one item.</source>
+        <target>Debe seleccionar al menos un elemento.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Usuario_You must select an action to execute on the selected items.</source>
+        <target>Seleccione la acción que quiera ejecutar sobre los elementos seleccionados.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Usuario_A problem occurs when deleting the selected items as some items do not exist anymore.</source>
+        <target>Se ha producido un error al borrar los elementos seleccionados porque al menos uno de ellos ya no existe.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Usuario_The selected items have been deleted successfully.</source>
+        <target>Los elementos seleccionados se han borrado correctamente.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Usuario_A problem occurs when deleting the selected items.</source>
+        <target>Se ha producido un error al borrar los elementos seleccionados.</target>
+      </trans-unit>
+      
+      <!-- Form Mastodonte-->
+      <trans-unit>
+        <source>Usuario_The item has not been saved due to some errors.</source>
+        <target>No se pudo agregar el usuario porque hay campos sin completar. Se especifican abajo en rojo.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

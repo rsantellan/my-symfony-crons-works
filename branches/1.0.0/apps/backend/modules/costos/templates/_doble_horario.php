@@ -1,0 +1,1 @@
+<?php echo costos::getSymbol() . ' ' . $costos->getDobleHorario(); ?>

@@ -1,0 +1,4 @@
+# default rules
+logout:
+  url:   /logout.html
+  param: { module: mdFileAuth, action: logout }

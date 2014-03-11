@@ -1,0 +1,32 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           emails
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          emails
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        from_name: { label: Nombre (desde) }
+        from_mail: { label: Email (desde) }
+      list:
+        object_actions: 
+          _edit: ~
+        actions: []
+        batch_actions: []
+        display: [from_name, from_mail]       
+      filter:
+        class: false
+      form:
+        actions:
+          _list: ~
+          _save: ~
+      edit:    ~
+      new:     ~

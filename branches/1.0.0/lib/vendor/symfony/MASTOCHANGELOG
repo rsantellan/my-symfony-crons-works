@@ -1,0 +1,352 @@
+2011-04-25 16:30:33 r22 to r23
+-------------------
+
+- Rodrigo change file: symfony/skeleton/apps/backend/templates/layout.php
+
+* svn log:
+  Fix Layout
+
+2011-04-19 14:04:50 r21 to r22
+-------------------
+
+- Rodrigo added file: symfony/skeleton/apps/frontend/config/settings.yml
+- Rodrigo added file: symfony/skeleton/apps/frontend/config
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default/actions/actions.class.php
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default/actions
+
+* svn log:
+  added errors pages
+
+2011-04-08 16:31:40 r20 to r21
+-------------------
+
+- Rodrigo change file: symfony/skeleton/apps/backend/templates/layout.php
+
+* svn log:
+  Fix Layout
+
+2011-04-07 11:31:49 r19 to r20
+-------------------
+
+- Rodrigo change file: symfony/skeleton/config/settings.yml
+
+* svn log:
+ added settings
+ 
+
+2011-04-06 18:47:17 r18 to r19
+-------------------
+
+- Rodrigo change file: symfony/skeleton/apps/backend/templates/layout.php
+
+* svn log:
+  Fix Layout
+
+2011-04-06 18:46:01 r17 to r18
+-------------------
+
+- Rodrigo change file: symfony/skeleton/apps/backend/templates/layout.php
+
+* svn log:
+  Fix Layout
+  
+
+2011-04-06 08:50:23 r16 to r17
+-------------------
+
+- Rodrigo change file: symfony/skeleton/config/settings.yml
+
+* svn log:
+ added settings
+
+2011-04-04 16:48:40 r15 to r16
+-------------------
+
+- Rodrigo change file: symfony/skeleton/config/settings.yml
+
+* svn log:
+ added settings
+
+
+2011-04-04 00:04:01 r14 to r15
+-------------------
+
+- Rodrigo change file: symfony/skeleton/config/settings.yml
+
+* svn log:
+ added settings
+ 
+2011-03-31 10:40:03 r13 to r14
+-------------------
+
+- Rodrigo change file: symfony/skeleton/apps/backend/templates/layout.php
+
+* svn log:
+  added clean cache
+ 
+2011-03-16 14:36:19 r12 to r13
+-------------------
+
+- Maui change file: symfony/skeleton/apps/backend/config/factories.yml
+- Maui added file:  symfony/skeleton/config/factories.yml
+
+* svn log:
+ paso la configuracion del mail al factories del proyecto y le configuro la cuenta de mastodonte
+
+
+2011-02-23 12:36:50 r11 to r12
+-------------------
+
+- Rodrigo change file: symfony/skeleton/config/settings.yml
+
+* svn log:
+ added settings
+
+2011-02-21 17:03:21 r10 to r11
+-------------------
+
+- Rodrigo change file: symfony/skeleton/config/settings.yml
+
+* svn log:
+ added settings
+
+2010-08-11 21:50:22 r9 to r10
+-------------------
+- Rodrigo added file: symfony/mdInstaller.php
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default/templates/error404Success.php
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default/templates/moduleSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default/templates/secureSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default/templates/disabledSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default/templates/indexSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default/templates/loginSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default/templates
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules/default
+- Rodrigo added file: symfony/skeleton/apps/frontend/modules
+- Rodrigo added file: symfony/skeleton/apps/frontend
+- Rodrigo added file: symfony/skeleton/apps/backend/config/factories.yml
+- Rodrigo added file: symfony/skeleton/apps/backend/config/settings.yml
+- Rodrigo added file: symfony/skeleton/apps/backend/config/security.yml
+- Rodrigo added file: symfony/skeleton/apps/backend/config/mdGroupRequieredToLogin.xml
+- Rodrigo added file: symfony/skeleton/apps/backend/config
+- Rodrigo added file: symfony/skeleton/apps/backend/lib/MySessionStorage.php
+- Rodrigo added file: symfony/skeleton/apps/backend/lib/myUser.class.php
+- Rodrigo added file: symfony/skeleton/apps/backend/lib
+- Rodrigo added file: symfony/skeleton/apps/backend/modules/default/templates/error404Success.php
+- Rodrigo added file: symfony/skeleton/apps/backend/modules/default/templates/moduleSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/backend/modules/default/templates/secureSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/backend/modules/default/templates/disabledSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/backend/modules/default/templates/indexSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/backend/modules/default/templates/loginSuccess.php
+- Rodrigo added file: symfony/skeleton/apps/backend/modules/default/templates
+- Rodrigo added file: symfony/skeleton/apps/backend/modules/default
+- Rodrigo added file: symfony/skeleton/apps/backend/modules
+- Rodrigo added file: symfony/skeleton/apps/backend/templates/layout.php
+- Rodrigo added file: symfony/skeleton/apps/backend/templates
+- Rodrigo added file: symfony/skeleton/apps/backend
+- Rodrigo added file: symfony/skeleton/apps
+- Rodrigo added file: symfony/skeleton/config/mdSalesConfiguration.xml
+- Rodrigo added file: symfony/skeleton/config/mdMailAddresses.xml
+- Rodrigo added file: symfony/skeleton/config/settings.yml
+- Rodrigo added file: symfony/skeleton/config/ProjectConfiguration.class.php
+- Rodrigo added file: symfony/skeleton/config
+- Rodrigo added file: symfony/skeleton/EXAMPLES/mdPlugins.xml
+- Rodrigo added file: symfony/skeleton/EXAMPLES
+- Rodrigo added file: symfony/skeleton
+
+* svn log:
+ added simple installer
+
+* Code is not inserted because is too large.
+
+
+2010-08-11 21:50:22 r8 to r9
+-------------------
+- Gaston change file: symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Cache/Driver.php
+- Gaston change file: symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Cache/Xcache.php
+- Gaston change file: symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Cache/Array.php
+- Gaston change file: symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Cache/Interface.php
+- Gaston change file: symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Cache/Memcache.php
+- Gaston change file: symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Cache/Apc.php
+- Gaston change file: symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Cache/Db.php
+
+* svn log:
+
+Se actualizaron los drivers de los manejadores de cache.
+
+La fuente esta en el siguiente vinculo: http://www.doctrine-project.org/jira/browse/DC-460
+
+Tenian problemas con el manejo de las keys, ya que se manejaba un storage que contenia
+todas las keys posibles, esta variable era usada por algunas funciones como la deleteByPrefix y otras
+y hacia que en cada save y delete de una variable se tenga que escribir en ese storage lo que ademas
+introduce una fuente de error, pues puede quedar inconsistente en algunos casos.
+
+Con esta nueva version en lugar de manejar ese storage se utilizan funciones nativas de cada driver de
+forma de obtener a demanda todas las keys seteadas en la memoria.
+
+* Code is not inserted because is too large.
+
+2010-08-11 21:50:22 r7 to r8
+-------------------
+- Maui change file: symfony/lib/widget/sfWidgetFormInputCheckbox.class.php
+
+* svn log:
+
+saco print_r que dejo ro
+
+--- symfony/lib/widget/sfWidgetFormInputCheckbox.class.php	(revision 7)
++++ symfony/lib/widget/sfWidgetFormInputCheckbox.class.php	(revision 8)
+@@ -68,10 +68,6 @@
+   public function render($name, $value = null, $attributes = array(), $errors = array())
+   {
+     
+-    print_r($value);
+-    print_r(' | ');
+-    print_r($this->getOption('value_attribute_value'));
+-    
+     if (null === $value || $value === false)
+     {
+       $value = $this->getOption('value_attribute_value');
+
+
+2010-08-11 18:24:19 r6 to r7
+-------------------
+- Rodrigo change file: symfony/lib/widget/sfWidgetFormInputCheckbox.class.php
+
+* svn log:
+
+change check box
+
+===================================================================
+--- symfony/lib/widget/sfWidgetFormInputCheckbox.class.php	(revision 6)
++++ symfony/lib/widget/sfWidgetFormInputCheckbox.class.php	(revision 7)
+@@ -33,7 +33,7 @@
+   public function __construct($options = array(), $attributes = array())
+   {
+     $this->addOption('value_attribute_value');
+-
++    $this->addOption('value');
+     parent::__construct($options, $attributes);
+   }
+ 
+@@ -67,6 +67,16 @@
+    */
+   public function render($name, $value = null, $attributes = array(), $errors = array())
+   {
++    
++    print_r($value);
++    print_r(' | ');
++    print_r($this->getOption('value_attribute_value'));
++    
++    if (null === $value || $value === false)
++    {
++      $value = $this->getOption('value_attribute_value');
++    }
++    
+     if (null !== $value && $value !== false)
+     {
+       $attributes['checked'] = 'checked';
+
+
+2010-07-21 21:14:20 r5 to r6
+-------------------
+- Rodrigo change file: symfony/lib/form/addon/sfFormObject.class.php
+
+* svn log:
+Fix the error: Error saving i18n fields in subforms
+More info in:
+http://trac.symfony-project.org/ticket/7626
+
+--- symfony/lib/form/addon/sfFormObject.class.php	(revision 5)
++++ symfony/lib/form/addon/sfFormObject.class.php	(revision 6)
+@@ -241,8 +241,8 @@
+     {
+       if ($form instanceof sfFormObject)
+       {
++        $form->getObject()->save($con);
+         $form->saveEmbeddedForms($con);
+-        $form->getObject()->save($con);
+       }
+       else
+       {
+
+
+2010-07-15 15:42:30 r4 to r5
+-------------------
+- Gaston change file: symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Table.php
+
+--- symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Table.php	(revision 4)
++++ symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Table.php	(revision 5)
+@@ -1622,13 +1622,10 @@
+      * @param int $hydrationMode        Doctrine_Core::HYDRATE_ARRAY or Doctrine_Core::HYDRATE_RECORD
+      * @return Doctrine_Collection|array
+      */
+-    public function findAll($hydrationMode = null, $timeToLife = 10, $cache = false)
++    public function findAll($hydrationMode = null)
+     {
+         $q = $this->createQuery('dctrn_find');
+ 
+-        if($cache && sfConfig::get('sf_driver_cache')){
+-            $q->useResultCache(true, $timeToLife, 'key_' . $this->getTableName());
+-        }
+         return $q->execute(array(), $hydrationMode);
+     }
+
+
+
+2010-06-16 14:47:00 r3 to r4
+-------------------
+- Gaston change file: symfony/lib/i18n/extract/sfI18nApplicationExtract.class.php
+
+--- symfony/lib/i18n/extract/sfI18nApplicationExtract.class.php	(revision 3)
++++ symfony/lib/i18n/extract/sfI18nApplicationExtract.class.php	(revision 4)
+@@ -45,11 +45,25 @@
+       $extractObject->extract();
+     }
+ 
++    // extracts i18n-strings from arbitrary paths psecified in Symfony-project's app.yml 
++    $includeMorePaths = sfConfig::get('app_i18n-extract-additional_enabled'); 
++    
++    if (isset($includeMorePaths) && ($includeMorePaths == true)) 
++    { 
++        $paths = sfConfig::get('app_i18n-extract-additional_paths'); 
++
++        foreach ($paths as $path) 
++        { 
++            $this->extractFromPhpFiles($path); 
++        }
++    }
++
+     // Add global templates
+     $this->extractFromPhpFiles(sfConfig::get('sf_app_template_dir'));
+ 
+-    // Add global librairies
++    // Add global libraries
+     $this->extractFromPhpFiles(sfConfig::get('sf_app_lib_dir'));
++
+   }
+
+2010-06-14 18:05:47 r2 to r3 
+-------------------
+
+- Gaston change file: lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Table.php
+
+--- symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Table.php	(revision 2)
++++ symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Table.php	(revision 3)
+@@ -1622,10 +1622,14 @@
+      * @param int $hydrationMode        Doctrine_Core::HYDRATE_ARRAY or Doctrine_Core::HYDRATE_RECORD
+      * @return Doctrine_Collection|array
+      */
+-    public function findAll($hydrationMode = null)
++    public function findAll($hydrationMode = null, $timeToLife = 10, $cache = false)
+     {
+-        return $this->createQuery('dctrn_find')
+-            ->execute(array(), $hydrationMode);
++        $q = $this->createQuery('dctrn_find');
++
++        if($cache && sfConfig::get('sf_driver_cache')){
++            $q->useResultCache(true, $timeToLife, 'key_' . $this->getTableName());
++        }
++        return $q->execute(array(), $hydrationMode);
+     }
+ 
+     /**

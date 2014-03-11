@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="es" datatype="plaintext" original="messages" date="2010-09-08T16:35:09Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>mdMediaManager_text_basicUpload</source>
+        <target>Si tienes problemas con el componente flash para subir archivos usa el {a}componente basico{/a}</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>mdMediaManager_text_file</source>
+        <target>Archivo</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>mdMediaManager_text_size</source>
+        <target>Tamaño</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>mdMediaManager_text_album</source>
+        <target>Album</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>mdMediaManager_text_status</source>
+        <target>Estado</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>mdMediaManager_text_addMore</source>
+        <target>Seleccionar mas</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>mdMediaManager_text_startUpload</source>
+        <target>Subir</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>mdMediaManager_text_titleUpload</source>
+        <target>Subir archivo</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>mdMediaManager_text_descriptionUpload</source>
+        <target>Usa el formulario para subir los archivos.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>mdMediaManager_text_validExtensions</source>
+        <target>Extensiones validas:</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>mdMediaManager_text_maxUpload</source>
+        <target>Tamano maximo</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>mdMediaManager_text_remove</source>
+        <target>borrar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>mdMediaManager_text_addMoreText</source>
+        <target>Tienes {archivos} archivos en espera para subir.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>mdMediaManager_text_upload</source>
+        <target>Subir</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>mdMediaManager_text_cancel</source>
+        <target>Cancelar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>mdMediaManager_text_uploading</source>
+        <target>Subiendo</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>mdMediaManager_text_selectFile</source>
+        <target>Elegir archivo</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>mdMediaManager_text_nameFile</source>
+        <target>Nombre</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>mdMediaManager_text_album</source>
+        <target>Album</target>
+        <note>es</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

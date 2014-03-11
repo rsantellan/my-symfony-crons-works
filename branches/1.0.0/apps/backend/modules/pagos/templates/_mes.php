@@ -1,0 +1,1 @@
+<?php echo mdHelp::month($pagos->getMes()); ?>

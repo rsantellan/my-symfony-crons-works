@@ -1,0 +1,5 @@
+.nok, .ok, .alert { position: fixed; position: expression("absolute"); font-size: 160%; width: 100%; padding: 0 2em; z-index: 99999; top: 0; overflow: visible; }
+.nok { background: #F00; border-bottom: 1px solid #F00; color: #FCC; }
+.ok { background: #74ca00; border-bottom: 1px solid #74ca00; color: #fff; }
+.alert { background: #fcffa1; border-bottom: 1px solid #fcffa1; color: #000000;  }
+.alert p { margin: 1em 0; }

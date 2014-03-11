@@ -1,0 +1,7 @@
+mdContact:
+  url: /contact.html
+  param: { module: mdContact, action: index }
+
+mdContactOptions:
+  url: /contacts.html
+  param: { module: mdContact, action: options }
