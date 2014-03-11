@@ -33,6 +33,7 @@
         <tr>
           <th>Fecha</th>
           <th>Monto</th>
+          <th>Pdf</th>
         </tr>
       </thead>
       <tbody>
@@ -43,6 +44,7 @@
         <tr class="<?php echo ($counter % 2 == 0)? 'odd' : '';?>">
           <td><?php echo format_date($cobro->getFecha(), 'D'); ?></td>
           <td>$<?php echo $cobro->getFormatedMonto();?></td>
+          <td><a href="<?php echo url_for("@generarPdfCobro?id=".$cobro->getId());?>">Ver</a></td>
         </tr>
         <?php
           $counter ++;
