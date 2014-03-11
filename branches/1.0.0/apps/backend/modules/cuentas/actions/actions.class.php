@@ -79,6 +79,7 @@ class cuentasActions extends sfActions
     if ($this->form->isValid())
     {
       $cobro = $this->form->save();
+      usuario::sendCobroEmail($cobro);
       $accountId = $cobro->getCuentaId();
       $monto = $cobro->getCuenta()->getFormatedDiferencia();
       $message = 'Cobro ingresado con exito.';
@@ -114,14 +115,22 @@ class cuentasActions extends sfActions
     die(0);
   }
   
+  public function executePrintPdfCobro(sfWebRequest $request)
+  {
+    $this->forward404Unless($cobro = (Doctrine::getTable('cobro')->find($request->getParameter('id'))), sprintf('El cobro con id (%s) no existe.', $request->getParameter('id')));
+    cuenta::exportCobroToPdf($cobro);
+  }
+  
   public function executeTestPrintCobro(sfWebRequest $request)
   {
+    throw new Exception("No deberia de estar aca");
     $cobro = Doctrine::getTable('cobro')->find(3);
     $cuenta = $cobro->getCuenta();
     $usuario = $cuenta->getCuentausuario()->getFirst()->getUsuario();
     //$usuario = $usuarioCuenta->getUsuario();
     //var_dump(get_class($usuario));
     //var_dump('aaaca');die;
+    usuario::sendCobroEmail($cobro);
     cuenta::exportCobroToPdf($cobro, $cuenta);
   }
   
