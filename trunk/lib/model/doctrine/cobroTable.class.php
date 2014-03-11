@@ -24,4 +24,13 @@ class cobroTable extends Doctrine_Table
               ->orderBy('c.fecha '.$order);
       return $q->execute();
     }
+    
+    public function retrieveLastFromAccount($accountId)
+    {
+      $q = $this->createQuery('c')
+              ->addWhere('c.cuenta_id = ?', $accountId)
+              ->orderBy('c.fecha desc')
+              ->limit(1);
+      return $q->fetchOne();
+    }
 }

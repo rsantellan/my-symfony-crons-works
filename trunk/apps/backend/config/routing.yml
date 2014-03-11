@@ -96,8 +96,12 @@ checkBankReference:
   url:   /usuario/chequear-referencia.html
   param: { module: usuarios, action: checkBankReference }
   
+generarPdfCobro:
+  url:   /factura/cobro/:id.html
+  param: { module: cuentas, action: printPdfCobro }
+  
 generarPdfCuenta:
-  url:   /factura/cancelar/:id.html
+  url:   /factura/imprimirpdf/:id.html
   param: { module: cuentas, action: printPdfAccount }
   
 # default rules
