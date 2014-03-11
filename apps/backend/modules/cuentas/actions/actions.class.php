@@ -104,7 +104,6 @@ class cuentasActions extends sfActions
 //	$dom_pdf->getPDF()->stream("jardin-" . date('d-m-Y') . ".pdf");
 //	die(0);
     $this->setLayout('clean');
-    //$this->setLayout(ProjectConfiguration::getActive()->getTemplateDir('mdMediaContentAdmin', 'clean.php').'/clean');
   }
 
   public function executePrintPdfAccount(sfWebRequest $request)
@@ -113,93 +112,17 @@ class cuentasActions extends sfActions
     $this->forward404Unless($this->cuenta = (Doctrine::getTable('cuenta')->find($request->getParameter('id'))), sprintf('La cuenta con id (%s) no existe.', $request->getParameter('id')));
     cuenta::exportToPdf($this->cuenta);
     die(0);
-//    
-//    $this->facturas = Doctrine::getTable('facturaFinal')->retrieveAllUnpaidFromAccountId($this->cuenta->getId(), 'asc');
-//    $alumnos = "";
-//    $apellido = "";
-//    foreach($this->cuenta->getCuentausuario() as $cuentaUsuario)
-//    {
-//      $alumnos .= $cuentaUsuario->getUsuario()->getNombre() . ",";
-//      $apellido = $cuentaUsuario->getUsuario()->getApellido();
-//    }
-//    $alumnos =  rtrim($alumnos, ',');
-//    
-//    $padres = "";
-//    foreach($this->cuenta->getCuentapadre() as $cuentaPadre)
-//    {
-//      $padres .= $cuentaPadre->getProgenitor()->getNombre() . " ".$apellido. ",";
-//    }
-//    $padres = rtrim($padres, ',');
-//    
-//    $pdf = new PDF_Invoice( 'P', 'mm', 'A4' );
-//    $cantidadFacturas = count($this->facturas);
-//    $cantidadFacturasDetalles = 0;
-//    $facturasDetailList = array();
-//    
-//    foreach($this->facturas as $factura)
-//    {
-//      foreach($factura->getFacturaFinalDetalle() as $facturaDetalle)
-//      {
-//        $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalle;
-//        $cantidadFacturasDetalles++;
-//      }
-//      if($factura->getPagadodeltotal() > 0)
-//      {
-//        $facturaDetalleAux = new facturaFinalDetalle();
-//        $facturaDetalleAux->setId(-1);
-//        $facturaDetalleAux->setDescription('Pago sobre el total');
-//        $facturaDetalleAux->setAmount($factura->getFormatedPagadoDelTotal());
-//        $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalleAux;
-//        $cantidadFacturasDetalles++;
-//      }
-//    }
-//    $maxPerPage = 30;
-//    $cantidadPaginas = $cantidadFacturasDetalles / $maxPerPage;
-//    $cantidadFacturasDetalles = 0;
-//    $pagina = 1;
-//    while($cantidadPaginas >= 0 && $cantidadFacturasDetalles < count($facturasDetailList))
-//    {
-//      $pdf->AddPage();
-//      $pdf->addPageNumber($pagina);
-//      $pdf->addSociete( "", "");
-//      $pdf->temporaire( "Bunny's Kinder" );
-//      $pdf->addDate( date('d/m/Y'));
-//      $pdf->addClient($this->cuenta->getReferenciabancaria());
-//      $pdf->addAlumnos($alumnos);
-//      $pdf->addPadres($padres);
-//      $cols=array( 'Item'  => 30,
-//                  html_entity_decode("Descripci&oacute;n")    => 130,
-//                   "Precio"  => 30
-//                  );
-//      $pdf->addCols( $cols);
-//      $cols=array( 'Item'  => 'C',
-//                  html_entity_decode("Descripci&oacute;n")    => "C",
-//                   "Precio"  => "C"
-//                   );
-//      $pdf->addLineFormat($cols);
-//      $y    = 70;
-//      $size = 0;
-//      $counterItems = 1;
-//      while($cantidadFacturasDetalles <= $maxPerPage * $pagina && $cantidadFacturasDetalles < count($facturasDetailList))
-//      {
-//        $facturaDetalle = $facturasDetailList[$cantidadFacturasDetalles];
-//        $line = array(
-//                'Item' => $counterItems,
-//                html_entity_decode("Descripci&oacute;n")    => $facturaDetalle->getDescription(),
-//               "Precio"  => '$'.$facturaDetalle->getFormatedAmount()
-//        );
-//        $size = $pdf->addLine( $y, $line );
-//        $y   += $size + 2;
-//        $counterItems++;
-//        $cantidadFacturasDetalles++;
-//      }
-//      $pagina++;
-//      $cantidadPaginas--;
-//    }
-//    $pdf->addCadreEurosFrancs('$ '.$this->cuenta->getFormatedDiferencia());
-//    $outputName = sprintf('Cuenta-%s-%s.pdf',$this->cuenta->getReferenciabancaria(), date('m-Y'));
-//    $pdf->Output($outputName, 'I');
-//    die(0);
-  }  
+  }
+  
+  public function executeTestPrintCobro(sfWebRequest $request)
+  {
+    $cobro = Doctrine::getTable('cobro')->find(3);
+    $cuenta = $cobro->getCuenta();
+    $usuario = $cuenta->getCuentausuario()->getFirst()->getUsuario();
+    //$usuario = $usuarioCuenta->getUsuario();
+    //var_dump(get_class($usuario));
+    //var_dump('aaaca');die;
+    cuenta::exportCobroToPdf($cobro, $cuenta);
+  }
   
 }

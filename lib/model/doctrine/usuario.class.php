@@ -230,6 +230,32 @@ class usuario extends Baseusuario {
       }
     }
 
+    public static function sendCobroEmail($cobro)
+    {
+      $cuenta = $cobro->getCuenta();
+      $usuario = $cuenta->getCuentausuario()->getFirst()->getUsuario();
+      $title = sprintf('Talon de cobro (%s/%s)', date('n'), date('Y'));//__('Mail_Talon de Pago');
+      $mdMailXMLHandler = new mdMailXMLHandler();
+      sfContext::getInstance()->getConfiguration()->loadHelpers(array('I18N', 'Partial'));
+      $facturaPdf = cuenta::exportCobroToPdf($cobro, $cuenta, 'a');
+      $body = get_partial('usuarios/newCobroMailing', array('usuario' => $usuario, 'cuenta' => $cuenta));
+      $email = $usuario->getProgenitoresMails();
+
+      /*
+        recipients	Destinatarios	Requerido Puede ser un string de emails separados por coma o un array de emails.
+        sender		Emisor		Requerido (array) con 'name' y 'email'
+        subject		Asunto		Requerido (string)
+        body 		Cuerpo 		REQUERIDO (string)
+        replyTo		Setea el replyTo(string) email . Default
+        attachments	Archivos adjuntos(array) de archivos
+        usePhpMail	Especifica si usa php mail para este envio (bool)
+       */
+      if ($email != '')
+      {
+        mdMailHandler::sendMail(array('recipients' => $email, 'sender' => array('name' => $mdMailXMLHandler->getFrom(), 'email' => $mdMailXMLHandler->getEmail()), 'subject' => $title, 'body' => $body, 'attachments' => array($facturaPdf)));
+      }
+    }
+    
     public function __toString() {
         return $this->getNombre() . ' ' . $this->getApellido();
     }

@@ -26,6 +26,80 @@ class cuenta extends Basecuenta
     return number_format($this->getDiferencia(), 0, ',', '.');
   }
 
+  public static function exportCobroToPdf($cobro, $cuenta = NULL, $location = NULL)
+  {
+    if($cuenta === NULL){
+      $cuenta = $cobro->getCuenta();
+    }
+    $alumnos = "";
+    $apellido = "";
+    foreach($cuenta->getCuentausuario() as $cuentaUsuario)
+    {
+      $alumnos .= $cuentaUsuario->getUsuario()->getNombre() . ",";
+      $apellido = $cuentaUsuario->getUsuario()->getApellido();
+    }
+    $alumnos =  rtrim($alumnos, ',');
+    
+    $padres = "";
+    foreach($cuenta->getCuentapadre() as $cuentaPadre)
+    {
+      $padres .= $cuentaPadre->getProgenitor()->getNombre() . " ". ",";
+    }
+    $padres = rtrim($padres, ',');
+    $pdf = new PDF_Invoice( 'P', 'mm', 'A4' );
+    
+    $pdf->AddPage();
+    $pdf->addSociete( "", "");
+    $pdf->temporaire( "Bunny's Kinder" );
+    $pdf->addDate( date('d/m/Y'));
+    $pdf->addClient($cuenta->getReferenciabancaria());
+    $pdf->addAlumnos($alumnos);
+    $pdf->addPadres($padres);
+    $cols=array( 'Item'  => 30,
+                html_entity_decode("Descripci&oacute;n")    => 130,
+                 "Precio"  => 30
+                );
+    $pdf->addCols( $cols);
+    $cols=array( 'Item'  => 'C',
+                html_entity_decode("Descripci&oacute;n")    => "C",
+                 "Precio"  => "C"
+                 );
+    $pdf->addLineFormat($cols);
+    $y    = 70;
+    $size = 0;
+    $counterItems = 1;
+    $line = array(
+            'Item' => $counterItems,
+            html_entity_decode("Descripci&oacute;n")    => sprintf('Pago en la fecha: %s', $cobro->getFecha()),
+           "Precio"  => '$'.$cobro->getFormatedMonto()
+    );
+    $size = $pdf->addLine( $y, $line );
+    $y   += $size + 2;
+    
+    $pdf->addCadreEurosFrancs('$ '.$cobro->getFormatedMonto());
+    $outputOption = 'I';
+    if($location !== null)
+    {
+      if(!is_dir($location))
+      {
+        $location = sys_get_temp_dir();
+      }
+      $outputOption = 'F';
+      $location .= DIRECTORY_SEPARATOR;
+    }
+    else 
+    {
+      $location = '';
+    }
+    $outputName = sprintf('Cuenta-%s-%s.pdf',$cuenta->getReferenciabancaria(), date('m-Y'));
+    $pdf->Output($location.$outputName, $outputOption);
+    if($outputOption == 'F')
+    {
+      return $location.$outputName;
+    }
+    die(0);
+  }
+  
   // sys_get_temp_dir()
   public static function exportToPdf($cuenta, $location = NULL)
   {
