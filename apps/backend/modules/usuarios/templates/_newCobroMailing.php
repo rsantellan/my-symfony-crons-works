@@ -27,10 +27,21 @@
 									<td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
 										<?php 
                     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                    $message_account = 'La cuenta esta saldada';
+                    if($cuenta->getDiferencia() > 0){
+                      $message_account = sprintf('Usted debe $%s para dejar la cuenta saldada', $cuenta->getDiferencia());
+                    }
+                    else{
+                      if($cuenta->getDiferencia() < 0)
+                      {
+                        $message_account = sprintf('Usted tiene el siguiente saldo a favor $%s', $cuenta->getDiferencia());
+                      }
+                    }
                     ?>
-                    Se a ingresado correctamente el pago en el mes de <strong><?php echo $meses[date('n')-1];?></strong>
+                    Se ha ingresado correctamente el pago en el mes de <strong><?php echo $meses[date('n')-1];?></strong>
 					Del siguiente número de referencia: <strong><?php echo $cuenta->getReferenciabancaria();?></strong>
-					El monto se encuentra en el archivo adjunto en el mail.
+                    <strong><?php echo $message_account;?></strong>
+                    El monto se encuentra en el archivo adjunto en el mail.
 					Por cualquier consulta no dude en comunicarse con nosotros ,
 					<strong>Bunny's Kinder</strong>
 									</td>
