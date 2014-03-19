@@ -105,8 +105,6 @@ class facturaHandler {
 	  $detalleActividad->save();
 	  $total += $detalleActividad->getAmount();
 	}
-
-	
 	
 	$facturaUsuario->setTotal($total);
 	$facturaUsuario->save();
