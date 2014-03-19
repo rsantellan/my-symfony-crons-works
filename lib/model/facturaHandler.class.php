@@ -65,17 +65,8 @@ class facturaHandler {
 	$detalleMensualidad->setAmount(costos::getCosto($usuario->getHorario()));
 	$detalleMensualidad->save();
 	$total += $detalleMensualidad->getAmount();
-	foreach($usuario->getActividades() as $actividad)
-	{
-	  $detalleActividad = new facturaUsuarioDetalle();
-	  $detalleActividad->setFacturaId($facturaUsuario->getId());
-	  $detalleActividad->setDescription($actividad->getNombre());
-	  $detalleActividad->setAmount($actividad->getCosto());
-	  $detalleActividad->save();
-	  $total += $detalleActividad->getAmount();
-	}
-
-	$descuentoHermano = $usuario->calculateBrothersDiscount();
+    
+    $descuentoHermano = $usuario->calculateBrothersDiscount();
 	if($descuentoHermano > 0)
 	{
 	  $detalleDescuentoHermano = new facturaUsuarioDetalle();
@@ -94,7 +85,8 @@ class facturaHandler {
 	  $detalleDescuentoHermano->save();
 	  $total += $detalleDescuentoHermano->getAmount();
 	}
-	if($usuario->getDescuento() !== null && (int) $usuario->getDescuento() > 0)
+    
+    if($usuario->getDescuento() !== null && (int) $usuario->getDescuento() > 0)
 	{
 	  $detalleDescuentoUsuario = new facturaUsuarioDetalle();
 	  $detalleDescuentoUsuario->setFacturaId($facturaUsuario->getId());
@@ -103,6 +95,17 @@ class facturaHandler {
 	  $detalleDescuentoUsuario->save();
 	  $total += $detalleDescuentoUsuario->getAmount();
 	}
+    
+	foreach($usuario->getActividades() as $actividad)
+	{
+	  $detalleActividad = new facturaUsuarioDetalle();
+	  $detalleActividad->setFacturaId($facturaUsuario->getId());
+	  $detalleActividad->setDescription($actividad->getNombre());
+	  $detalleActividad->setAmount($actividad->getCosto());
+	  $detalleActividad->save();
+	  $total += $detalleActividad->getAmount();
+	}
+	
 	$facturaUsuario->setTotal($total);
 	$facturaUsuario->save();
 	if($refreshAccount)
