@@ -91,7 +91,7 @@ class cuenta extends Basecuenta
     {
       $location = '';
     }
-    $outputName = sprintf('Cuenta-%s-%s.pdf',$cuenta->getReferenciabancaria(), date('m-Y'));
+    $outputName = sprintf('Pago-cuenta-%s-%s.pdf',$cuenta->getReferenciabancaria(), date('m-Y'));
     $pdf->Output($location.$outputName, $outputOption);
     if($outputOption == 'F')
     {
@@ -179,6 +179,7 @@ class cuenta extends Basecuenta
       $y    = 70;
       $size = 0;
       $counterItems = 1;
+      $paymentQuantity = 0;
       while($cantidadFacturasDetalles <= $maxPerPage * $pagina && $cantidadFacturasDetalles < count($facturasDetailList))
       {
         $facturaDetalle = $facturasDetailList[$cantidadFacturasDetalles];
@@ -187,6 +188,7 @@ class cuenta extends Basecuenta
                 html_entity_decode("Descripci&oacute;n")    => $facturaDetalle->getDescription(),
                "Precio"  => '$'.$facturaDetalle->getFormatedAmount()
         );
+        $paymentQuantity = $paymentQuantity + $facturaDetalle->getAmount();
         $size = $pdf->addLine( $y, $line );
         $y   += $size + 2;
         $counterItems++;
@@ -195,6 +197,18 @@ class cuenta extends Basecuenta
       $pagina++;
       $cantidadPaginas--;
     }
+    if($cuenta->getDiferencia() - $paymentQuantity < 0)
+    {
+      $line = array(
+              'Item' => $counterItems,
+              html_entity_decode("Descripci&oacute;n")    => html_entity_decode('Saldo a favor'),
+             "Precio"  => '- $'.($cuenta->getDiferencia() - $paymentQuantity)
+      );
+      $size = $pdf->addLine( $y, $line );
+      $y   += $size + 2;
+    }
+    
+        
     $pdf->addCadreEurosFrancs('$ '.$cuenta->getFormatedDiferencia());
     $outputOption = 'I';
     if($location !== null)
