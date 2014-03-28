@@ -415,7 +415,7 @@ class accountsHandler {
           {
             $dataPositive[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
             $dataPositive[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
-            if($cuentaUsuario->getUsuario()->getEgresado()){
+            if(!$cuentaUsuario->getUsuario()->getEgresado()){
               $isActive = true;
             }
           }
@@ -439,7 +439,7 @@ class accountsHandler {
             {
               $dataZero[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
               $dataZero[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
-              if($cuentaUsuario->getUsuario()->getEgresado()){
+              if(!$cuentaUsuario->getUsuario()->getEgresado()){
                 $isActive = true;
               }
             }
@@ -461,7 +461,7 @@ class accountsHandler {
             {
               $dataNegative[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
               $dataNegative[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
-              if($cuentaUsuario->getUsuario()->getEgresado()){
+              if(!$cuentaUsuario->getUsuario()->getEgresado()){
                 $isActive = true;
               }
             }
