@@ -401,8 +401,10 @@ class accountsHandler {
       $dataZero = array();
       $dataPositive = array();
       $dataNegative = array();
+      $dataActive = array();
       foreach($cuentasUsuarios as $cuenta)
       {
+        $isActive = false;
         if($cuenta->getDiferencia() > 0)
         {
           if(!isset($dataPositive[$cuenta->getId()]))
@@ -413,6 +415,9 @@ class accountsHandler {
           {
             $dataPositive[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
             $dataPositive[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
+            if($cuentaUsuario->getUsuario()->getEgresado()){
+              $isActive = true;
+            }
           }
           foreach($cuenta->getCuentapadre() as $cuentapadre)
           {
@@ -431,6 +436,9 @@ class accountsHandler {
             {
               $dataZero[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
               $dataZero[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
+              if($cuentaUsuario->getUsuario()->getEgresado()){
+                $isActive = true;
+              }
             }
             foreach($cuenta->getCuentapadre() as $cuentapadre)
             {
@@ -447,6 +455,9 @@ class accountsHandler {
             {
               $dataNegative[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
               $dataNegative[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
+              if($cuentaUsuario->getUsuario()->getEgresado()){
+                $isActive = true;
+              }
             }
             foreach($cuenta->getCuentapadre() as $cuentapadre)
             {
@@ -454,6 +465,7 @@ class accountsHandler {
             }
           }
         }
+        var_dump($isActive);
         
       }
       return array('positive' => $dataPositive, 'negative' => $dataNegative, 'zero' => $dataZero);
