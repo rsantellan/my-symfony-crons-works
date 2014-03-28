@@ -13,3 +13,7 @@
   <?php  include_partial('cuentas/listTable', array('cuentas' => $cuentasZero, 'trclass' => 'cuentas-row-yellow'));?>
 </div>
 <div class="clear"></div>
+<h2>Todas las cuentas activas</h2><a href="javascript:void(0)" onclick="$('#table_account_zero').toggle()">Ver</a>
+<div id="table_account_zero" class="hidden">
+  <?php  include_partial('cuentas/listTable', array('cuentas' => $cuentasActive, 'trclass' => 'cuentas-row-orange'));?>
+</div>
