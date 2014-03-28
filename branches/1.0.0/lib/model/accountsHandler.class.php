@@ -423,6 +423,9 @@ class accountsHandler {
           {
             $dataPositive[$cuenta->getId()]['parents'][] = $cuentapadre->getProgenitor();
           }
+          if($isActive){
+              $dataPositive[$cuenta->getId()] = $dataZero[$cuenta->getId()];
+          }
         }
         else
         {
@@ -444,6 +447,9 @@ class accountsHandler {
             {
               $dataZero[$cuenta->getId()]['parents'][] = $cuentapadre->getProgenitor();
             }
+            if($isActive){
+              $dataActive[$cuenta->getId()] = $dataZero[$cuenta->getId()];
+            }
           }
           else
           {
@@ -463,12 +469,14 @@ class accountsHandler {
             {
               $dataNegative[$cuenta->getId()]['parents'][] = $cuentapadre->getProgenitor();
             }
+            if($isActive){
+              $dataActive[$cuenta->getId()] = $dataNegative[$cuenta->getId()];
+            }
+              
           }
         }
-        var_dump($isActive);
-        
       }
-      return array('positive' => $dataPositive, 'negative' => $dataNegative, 'zero' => $dataZero);
+      return array('positive' => $dataPositive, 'negative' => $dataNegative, 'zero' => $dataZero, 'active' => $dataActive);
     }
 }
 

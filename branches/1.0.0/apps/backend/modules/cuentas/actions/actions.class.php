@@ -21,6 +21,8 @@ class cuentasActions extends sfActions
     $this->cuentasPositive = $cuentas['positive'];
     $this->cuentasNegative = $cuentas['negative'];
     $this->cuentasZero = $cuentas['zero'];
+    $this->cuentasActive = $cuentas['active'];
+    var_dump(count($cuentas['active']));
   }
   
   public function executeShow(sfWebRequest $request)
