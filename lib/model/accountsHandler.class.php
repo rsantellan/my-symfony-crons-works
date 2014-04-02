@@ -424,7 +424,7 @@ class accountsHandler {
             $dataPositive[$cuenta->getId()]['parents'][] = $cuentapadre->getProgenitor();
           }
           if($isActive){
-              $dataPositive[$cuenta->getId()] = $dataZero[$cuenta->getId()];
+              $dataActive[$cuenta->getId()] = $dataPositive[$cuenta->getId()];
           }
         }
         else
@@ -476,6 +476,7 @@ class accountsHandler {
           }
         }
       }
+      
       return array('positive' => $dataPositive, 'negative' => $dataNegative, 'zero' => $dataZero, 'active' => $dataActive);
     }
 }

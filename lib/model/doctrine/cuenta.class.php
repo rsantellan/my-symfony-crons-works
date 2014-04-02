@@ -201,8 +201,8 @@ class cuenta extends Basecuenta
     {
       $line = array(
               'Item' => $counterItems,
-              html_entity_decode("Descripci&oacute;n")    => html_entity_decode('Saldo a favor'),
-             "Precio"  => '- $'.($cuenta->getDiferencia() - $paymentQuantity)
+              html_entity_decode("Descripci&oacute;n")    => html_entity_decode('Monto pagado'),
+             "Precio"  => '$'.($cuenta->getDiferencia() - $paymentQuantity)
       );
       $size = $pdf->addLine( $y, $line );
       $y   += $size + 2;
