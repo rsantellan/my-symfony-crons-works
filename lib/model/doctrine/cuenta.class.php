@@ -125,23 +125,36 @@ class cuenta extends Basecuenta
     $cantidadFacturas = count($facturas);
     $cantidadFacturasDetalles = 0;
     $facturasDetailList = array();
-    
+    $quantity = count($facturas);
+    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     foreach($facturas as $factura)
     {
       foreach($factura->getFacturaFinalDetalle() as $facturaDetalle)
       {
+        if($quantity > 1)
+        {
+          $description = sprintf("%s (%s %s)", $facturaDetalle->getDescription(), $meses[$factura->getMonth()-1], $factura->getYear());
+          $facturaDetalle->setDescription($description);
+        }
         $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalle;
         $cantidadFacturasDetalles++;
       }
+      /*
       if($factura->getPagadodeltotal() > 0)
       {
+        $pagoDescription = 'Pago sobre el total';
+        if($quantity > 1)
+        {
+          $pagoDescription = sprintf("%s (%s %s)", $pagoDescription, $meses[$factura->getMonth()-1], $factura->getYear());
+        }
         $facturaDetalleAux = new facturaFinalDetalle();
         $facturaDetalleAux->setId(-1);
-        $facturaDetalleAux->setDescription('Pago sobre el total');
+        $facturaDetalleAux->setDescription($pagoDescription);
         $facturaDetalleAux->setAmount($factura->getFormatedPagadoDelTotal());
         $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalleAux;
         $cantidadFacturasDetalles++;
       }
+      */
     }
     $maxPerPage = 30;
     $cantidadPaginas = $cantidadFacturasDetalles / $maxPerPage;
