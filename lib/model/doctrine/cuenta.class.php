@@ -53,15 +53,15 @@ class cuenta extends Basecuenta
     $pdf->temporaire( "Bunny's Kinder" );
     $pdf->addDate( date('d/m/Y'));
     $pdf->addClient($cuenta->getReferenciabancaria());
-    $pdf->addAlumnos($alumnos);
-    $pdf->addPadres($padres);
+    $pdf->addAlumnos(utf8_decode($alumnos));
+    $pdf->addPadres(utf8_decode($padres));
     $cols=array( 'Item'  => 30,
-                html_entity_decode("Descripci&oacute;n")    => 130,
+                utf8_decode(html_entity_decode("Descripci&oacute;n"))    => 130,
                  "Precio"  => 30
                 );
     $pdf->addCols( $cols);
     $cols=array( 'Item'  => 'C',
-                html_entity_decode("Descripci&oacute;n")    => "C",
+                utf8_decode(html_entity_decode("Descripci&oacute;n"))    => "C",
                  "Precio"  => "C"
                  );
     $pdf->addLineFormat($cols);
@@ -70,7 +70,7 @@ class cuenta extends Basecuenta
     $counterItems = 1;
     $line = array(
             'Item' => $counterItems,
-            html_entity_decode("Descripci&oacute;n")    => sprintf('Pago en la fecha: %s', $cobro->getFecha()),
+            utf8_decode(html_entity_decode("Descripci&oacute;n"))    => sprintf('Pago en la fecha: %s', $cobro->getFecha()),
            "Precio"  => '$'.$cobro->getFormatedMonto()
     );
     $size = $pdf->addLine( $y, $line );
@@ -136,25 +136,15 @@ class cuenta extends Basecuenta
           $description = sprintf("%s (%s %s)", $facturaDetalle->getDescription(), $meses[$factura->getMonth()-1], $factura->getYear());
           $facturaDetalle->setDescription($description);
         }
+        //var_dump($facturaDetalle->getDescription());
         $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalle;
         $cantidadFacturasDetalles++;
       }
-      /*
-      if($factura->getPagadodeltotal() > 0)
+      if($quantity > 1)
       {
-        $pagoDescription = 'Pago sobre el total';
-        if($quantity > 1)
-        {
-          $pagoDescription = sprintf("%s (%s %s)", $pagoDescription, $meses[$factura->getMonth()-1], $factura->getYear());
-        }
-        $facturaDetalleAux = new facturaFinalDetalle();
-        $facturaDetalleAux->setId(-1);
-        $facturaDetalleAux->setDescription($pagoDescription);
-        $facturaDetalleAux->setAmount($factura->getFormatedPagadoDelTotal());
-        $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalleAux;
+        $facturasDetailList[$cantidadFacturasDetalles] = new facturaFinalDetalle();
         $cantidadFacturasDetalles++;
       }
-      */
     }
     $maxPerPage = 30;
     $cantidadPaginas = $cantidadFacturasDetalles / $maxPerPage;
@@ -177,15 +167,15 @@ class cuenta extends Basecuenta
       $pdf->temporaire( "Bunny's Kinder" );
       $pdf->addDate( date('d/m/Y'));
       $pdf->addClient($cuenta->getReferenciabancaria());
-      $pdf->addAlumnos($alumnos);
-      $pdf->addPadres($padres);
+      $pdf->addAlumnos(utf8_decode($alumnos));
+      $pdf->addPadres(utf8_decode($padres));
       $cols=array( 'Item'  => 30,
-                  html_entity_decode("Descripci&oacute;n")    => 130,
+                  utf8_decode(html_entity_decode("Descripci&oacute;n"))    => 130,
                    "Precio"  => 30
                   );
       $pdf->addCols( $cols);
       $cols=array( 'Item'  => 'C',
-                  html_entity_decode("Descripci&oacute;n")    => "C",
+                  utf8_decode(html_entity_decode("Descripci&oacute;n"))    => "C",
                    "Precio"  => "C"
                    );
       $pdf->addLineFormat($cols);
@@ -196,15 +186,37 @@ class cuenta extends Basecuenta
       while($cantidadFacturasDetalles <= $maxPerPage * $pagina && $cantidadFacturasDetalles < count($facturasDetailList))
       {
         $facturaDetalle = $facturasDetailList[$cantidadFacturasDetalles];
-        $line = array(
+        if($facturaDetalle->getAmount() > 0 || $facturaDetalle->getAmount() < 0)
+        {
+            $precioShow = '$0';
+            if($facturaDetalle->getAmount() > 0)
+            {
+                $precioShow = '$'.$facturaDetalle->getFormatedAmount();
+            }
+            else
+            {
+                $precioShow = '- $'.number_format( -1 * (int)($facturaDetalle->getAmount()), 0, ',', '.');
+            }
+            $line = array(
                 'Item' => $counterItems,
-                html_entity_decode("Descripci&oacute;n")    => $facturaDetalle->getDescription(),
-               "Precio"  => '$'.$facturaDetalle->getFormatedAmount()
-        );
-        $paymentQuantity = $paymentQuantity + $facturaDetalle->getAmount();
+                utf8_decode(html_entity_decode("Descripci&oacute;n"))    => utf8_decode($facturaDetalle->getDescription()),
+               "Precio"  => $precioShow
+            );
+            $paymentQuantity = $paymentQuantity + $facturaDetalle->getAmount();
+            $counterItems++;
+        }
+        else
+        {
+            $line = array(
+                'Item' => '',
+                utf8_decode(html_entity_decode("Descripci&oacute;n"))    => '',
+               "Precio"  => ''
+            );
+        }
+        
         $size = $pdf->addLine( $y, $line );
         $y   += $size + 2;
-        $counterItems++;
+
         $cantidadFacturasDetalles++;
       }
       $pagina++;
@@ -212,11 +224,16 @@ class cuenta extends Basecuenta
     }
     if($cuenta->getDiferencia() - $paymentQuantity < 0)
     {
+      $cobro = Doctrine::getTable('cobro')->retrieveLastFromAccount($cuenta->getId());
+      $precion = number_format( -1 * (int)($cuenta->getDiferencia() - $paymentQuantity), 0, ',', '.');
+      $fechaAux = explode('-', $cobro->getFecha() );
+      $texto = utf8_decode(html_entity_decode(sprintf('Monto pagado (%s-%s-%s)', $fechaAux[2], $fechaAux[1] ,$fechaAux[0])));
       $line = array(
               'Item' => $counterItems,
-              html_entity_decode("Descripci&oacute;n")    => html_entity_decode('Monto pagado'),
-             "Precio"  => '$'.($cuenta->getDiferencia() - $paymentQuantity)
+              utf8_decode(html_entity_decode("Descripci&oacute;n"))    => $texto,
+             "Precio"  => '- $'.$precion
       );
+      
       $size = $pdf->addLine( $y, $line );
       $y   += $size + 2;
     }
@@ -237,6 +254,7 @@ class cuenta extends Basecuenta
     {
       $location = '';
     }
+//die('here');
     $outputName = sprintf('Cuenta-%s-%s.pdf',$cuenta->getReferenciabancaria(), date('m-Y'));
     $pdf->Output($location.$outputName, $outputOption);
     if($outputOption == 'F')
