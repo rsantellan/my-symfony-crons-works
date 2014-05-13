@@ -144,8 +144,19 @@ EOF;
       4 - Agrego todos los padres.
 
     ****/
- 
+    $sqlEgresados = "SELECT progenitor.id, progenitor.md_user_id FROM progenitor LEFT JOIN usuario_progenitor ON usuario_progenitor.progenitor_id = progenitor.id LEFT JOIN usuario ON usuario_progenitor.usuario_id = usuario.id WHERE usuario.egresado = 0";
+    $listaEgresados = $q->fetchAssoc($sqlEgresados);
+    $grupoUsado = "PADRES";
+    $idGrupoUsado = $groupsList[$grupoUsado];
+    $usedList = array();
+    foreach($listaEgresados as $egresado)
+    {
+          if(!isset($usedList[$egresado["md_user_id"]]))
+          {
+             $newsletterUserId = $newsletterList[$egresado["md_user_id"]];
+             $q->execute($sqlInsert, array($idGrupoUsado, $newsletterUserId));
+             $usedList[$egresado["md_user_id"]] = 1;
+          }
+    } 
   }
-
-
 }
