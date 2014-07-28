@@ -54,7 +54,7 @@
                     Les recordamos que el pago de la cuota correspondiente al mes de <strong><?php echo $meses[date('n')-1];?></strong>
 					deberá realizarse dentro de los diez primeros días
 					de dicho mes en las buzoneras del Banco Santander , con su número de
-					referencia: <strong><?php echo $cuenta->getReferenciabancaria();?></strong>
+					referencia: <strong><?php echo $cuenta->getReferenciabancaria();?></strong> para el banco Santander número de cuenta <strong>5000524605</strong> a nombre de <strong>Cecilia e Ines del Campo</strong>.
 					El monto se encuentra en el archivo adjunto en el mail.
 					Por cualquier consulta no dude en comunicarse con nosotros ,
 					<strong>Bunny's Kinder</strong>
