@@ -31,7 +31,7 @@ class progenitorForm extends BaseprogenitorForm
       $new_email = $progenitor->getMail();
       if($new_email != '' && ($this->isNew() || $old_email != $new_email))
       {
-	$progenitor->enviarActivacion();
+		//$progenitor->enviarActivacion();
       }
     }
     

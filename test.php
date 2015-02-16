@@ -1,4 +1,7 @@
 <?php
+var_dump('aca');
+//phpinfo();
+/*
 $date = new DateTime();
 $date->modify('-1 year');
 $nowMonth = date('n');
@@ -23,3 +26,4 @@ while(!$termino)
       $termino = true;
   }
 }
+*/

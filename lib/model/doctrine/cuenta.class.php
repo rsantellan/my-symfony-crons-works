@@ -103,6 +103,7 @@ class cuenta extends Basecuenta
   // sys_get_temp_dir()
   public static function exportToPdf($cuenta, $location = NULL)
   {
+//    error_reporting(E_ALL);
     //$cuenta = Doctrine::getTable('cuenta')->find($accountId);
     $facturas = Doctrine::getTable('facturaFinal')->retrieveAllUnpaidFromAccountId($cuenta->getId(), 'asc');
     $alumnos = "";
@@ -127,6 +128,7 @@ class cuenta extends Basecuenta
     $facturasDetailList = array();
     $quantity = count($facturas);
     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+  //  var_dump($quantity);
     foreach($facturas as $factura)
     {
       foreach($factura->getFacturaFinalDetalle() as $facturaDetalle)
@@ -155,8 +157,13 @@ class cuenta extends Basecuenta
     }
     $cantidadFacturasDetalles = 0;
     $pagina = 1;
-    while($cantidadPaginas >= 0 && $cantidadFacturasDetalles < count($facturasDetailList))
+    $paymentQuantity = 0;
+    //var_dump(count($facturasDetailList));
+      //var_dump($cantidadPaginas >= 0);
+      //var_dump($cantidadFacturasDetalles <= count($facturasDetailList));
+    while($cantidadPaginas >= 0 && $cantidadFacturasDetalles <= count($facturasDetailList))
     {
+      //var_dump('here 2121');
       $pdf->AddPage();
       if($showPages)
       {
@@ -182,7 +189,7 @@ class cuenta extends Basecuenta
       $y    = 70;
       $size = 0;
       $counterItems = 1;
-      $paymentQuantity = 0;
+//      $paymentQuantity = 0;
       while($cantidadFacturasDetalles <= $maxPerPage * $pagina && $cantidadFacturasDetalles < count($facturasDetailList))
       {
         $facturaDetalle = $facturasDetailList[$cantidadFacturasDetalles];

@@ -41,6 +41,7 @@ class cuentaTable extends Doctrine_Table
               ->innerJoin('q.cuentausuario cu')
               ->innerJoin('cu.usuario u')
               ->where('q.diferencia > 0')
+			  ->orderby('q.referenciabancaria desc')
               ->execute();
     }
     

@@ -48,6 +48,24 @@ class mdNewsletterHandler
         return $q->fetchAssoc($sql);
     }
     
+    public static function retrieveAllEgresadosForBox()
+    {
+        //$sql = "SELECT mnlu.id, mnlu.md_user_id, mu.email, p.mail, p.nombre FROM md_news_letter_user mnlu left join md_user mu on mu.id = mnlu.md_user_id  left join progenitor p on mu.id = p.md_user_id WHERE mu.id in (select md_user_id from md_news_letter_user) ORDER BY p.mail ASC";
+        $sql = "select 
+    usuario.horario as u_horario, usuario.clase as u_clase, usuario.id as u_id, usuario.nombre as u_nombre, usuario.apellido as u_apellido, progenitor.nombre as p_nombre, md_news_letter_user.id as mn_id, md_news_letter_user.md_user_id as mn_user_id, md_user.email as mn_email
+              from
+                  usuario
+              left join usuario_progenitor on usuario.id = usuario_progenitor.usuario_id
+              left join progenitor on progenitor.id = usuario_progenitor.progenitor_id
+              left join md_user ON md_user.id = progenitor.md_user_id
+              left join md_news_letter_user ON md_news_letter_user.md_user_id = md_user.id
+              where usuario.egresado = 1
+              order by usuario.horario, usuario.clase";
+        
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+        return $q->fetchAssoc($sql);
+    }
+    
     public static function retrieveUsers($page = null, $limit = null)
     {
         return Doctrine::getTable("mdNewsLetterUser")->retrieveAllUsersOfNewsLetter($page, $limit);
