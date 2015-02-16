@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file source-language="EN" target-language="es" datatype="plaintext" original="messages" date="2013-09-23T14:27:04Z" product-name="messages">
+  <file source-language="EN" target-language="es" datatype="plaintext" original="messages" date="2014-08-05T22:51:47Z" product-name="messages">
     <header/>
     <body>
       <trans-unit id="1">
@@ -277,7 +277,7 @@
       </trans-unit>
       <trans-unit id="54">
         <source>Inscripciones_Texto</source>
-        <target>Complete los siguientes datos y luego el personal de Bunny's Kinder se pondrá en contacto son usted.</target>
+        <target>Complete los siguientes datos y luego el personal de Bunny's Kinder se pondrá en contacto con usted.</target>
         <note>es</note>
       </trans-unit>
       <trans-unit id="55">

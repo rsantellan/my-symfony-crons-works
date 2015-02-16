@@ -14,6 +14,11 @@
 /config/databases.yml
 /apps/frontend/i18n
 /apps/backend/i18n
+/apps/backend/config/mdFileAuthUsers.xml
+/apps/backend/config/mdGroupRequieredToLogin.xml
+/apps/backend/config/factories.yml
+/apps/frontend/config/
+/config/factories.yml
 
 # SCM files
 .arch-params

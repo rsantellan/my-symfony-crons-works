@@ -51,6 +51,19 @@
                   <?php
                   endif;
                   ?>
+                  <h2><a href="javascript:void(0)" onclick="$('#conjunto_mails_egresados').toggle()">Egresados</a></h2>
+                <div id="conjunto_mails_egresados" class="hidden">
+                  <?php foreach($egresados as $user): ?>
+                  <?php if(!empty($user["mn_email"])): ?>
+                    <input type="checkbox" name="user" value="<?php echo $user["mn_id"]; ?>" onclick="mdNeewsLetterBackend.getInstance().addUsersForSending();" /> 
+                  <?php endif; ?>
+                  Alumno:<?php echo $user["u_nombre"]. " ".$user["u_apellido"];?><br/>
+                  Padre: <?php echo $user['p_nombre'];?>
+                  <strong><?php echo (empty($user["mn_email"]))? "No tiene mail ingresado" : $user["mn_email"];?></strong><br/>
+                  <?php //print_r($users->toArray()); ?>
+                  <hr/>
+                  <?php endforeach; ?>
+                </div>
               </div>
             </div>     
           

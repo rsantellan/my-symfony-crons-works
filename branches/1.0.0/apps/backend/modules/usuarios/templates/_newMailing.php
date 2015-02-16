@@ -26,35 +26,13 @@
 								<tr>
 									<td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
 										<?php 
-                    //$cantidadUsuarios = $cuenta->getCuentausuario()->count();
-                    /*
-                    $nombres = '';
-                    $texto = 'A continuación se adjunta el archivo con la deuda de %s:';
-                    $cantidadUsuarios = 0;
-                    foreach($cuenta->getCuentausuario() as $cuentaUsuario)
-                    {
-                      if($cuentaUsuario->getUsuario()->getEgresado() == 0)
-                      {
-                        $nombres .= " ".$cuentaUsuario->getUsuario()->getNombre() . ",";
-                        $cantidadUsuarios ++;
-                      }
-                    }
-                    if($cantidadUsuarios > 1)
-                    {
-                      $texto = sprintf($texto, 'los alumnos');
-                    }
-                    else
-                    {
-                      $texto = sprintf($texto, 'el alumno');
-                    }
-                    */
-                    //echo $texto.rtrim($nombres, ','). ".";
                     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
                     ?>
-                    Les recordamos que el pago de la cuota correspondiente al mes de <strong><?php echo $meses[date('n')-1];?></strong>
+                    Les recordamos que el pago de la cuota correspondiente al mes de <strong><?php echo $meses[date('n')-1];?></strong>,
 					deberá realizarse dentro de los diez primeros días
-					de dicho mes en las buzoneras del Banco Santander , con su número de
-					referencia: <strong><?php echo $cuenta->getReferenciabancaria();?></strong> para el banco Santander número de cuenta <strong>5000524605</strong> a nombre de <strong>Cecilia e Ines del Campo</strong>.
+					de dicho mes, en las buzoneras del Banco Santander con su número de
+					referencia: <strong><?php echo $cuenta->getReferenciabancaria();?></strong>.
+                    <br/>Para el banco Santander número de cuenta <strong>5000524605</strong> a nombre de <strong>Cecilia e Ines del Campo</strong>.
 					El monto se encuentra en el archivo adjunto en el mail.
 					Por cualquier consulta no dude en comunicarse con nosotros ,
 					<strong>Bunny's Kinder</strong>

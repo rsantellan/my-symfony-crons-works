@@ -461,7 +461,6 @@ class accountsHandler {
             {
               $dataNegative[$cuenta->getId()]['usuarios'][] = $cuentaUsuario->getUsuario();
               $dataNegative[$cuenta->getId()]['apellido'] = $cuentaUsuario->getUsuario()->getApellido();
-              var_dump($cuentaUsuario->getUsuario()->getEgresado());
               if(!$cuentaUsuario->getUsuario()->getEgresado()){
                 $isActive = true;
               }

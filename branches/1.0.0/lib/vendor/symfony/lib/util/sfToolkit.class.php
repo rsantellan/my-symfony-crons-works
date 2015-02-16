@@ -360,17 +360,6 @@ class sfToolkit
   public static function pregtr($search, $replacePairs)
   {
     return preg_replace(array_keys($replacePairs), array_values($replacePairs), $search);
-    foreach($replacePairs as $pattern => $replacement)
-        $search = preg_replace_callback(
-                    $pattern, 
-                    function ($matches) use ($replacement){
-                        if(array_key_exists(1, $matches)){ $replacement = str_replace("\\1", $matches[1], $replacement);}
-                        if(array_key_exists(2, $matches)){ $replacement = str_replace("\\2", $matches[2], $replacement);}
-                        return $replacement;
-                    }, 
-                    $search
-                );
-    return $search;
   }
 
   /**
