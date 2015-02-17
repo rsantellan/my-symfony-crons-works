@@ -191,8 +191,12 @@ mastodontePlugin.UI.BackendBasic.prototype = {
     afterOpen: null,
     afterClose: null,
     afterAdd: null,
+    beforeRemoveNew: null,
 
     removeNew: function(){
+        if(typeof(self.beforeRemoveNew) == 'function'){
+            self.beforeRemoveNew(json);//soy algo
+        }
         $('#new-box-header').remove();
         $('#new-box-body').remove();
         this.hasNew = false;
@@ -203,7 +207,7 @@ mastodontePlugin.UI.BackendBasic.prototype = {
         } else {
             $(this.containerId).accordion(mastodontePlugin.UI.BackendBasic.getInstance().retrieveAccordionOptions());
         }
-
+        
     },
 
     removeActiveBox: function(){
