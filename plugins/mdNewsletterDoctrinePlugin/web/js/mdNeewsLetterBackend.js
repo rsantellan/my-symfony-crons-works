@@ -207,7 +207,8 @@ mdNeewsLetterBackend.prototype = {
       {
         alert('Tiene que seleccionar a alguien para enviarlo');
         return false;
-      }  
+      }
+      // aca tengo que hacer algo  
       mdShowLoading();
       $.ajax({
           url: $('#sending_form').attr('action'),
