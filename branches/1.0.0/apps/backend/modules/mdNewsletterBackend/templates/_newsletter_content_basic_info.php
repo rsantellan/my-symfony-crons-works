@@ -10,6 +10,7 @@
     <h2><?php echo __("newsletter_mensaje"); ?></h2>
     <div style="padding: 2px; margin: 2px;" class="<?php if ($form['body']->hasError()): ?>error_msg<?php endif; ?>">
       <?php echo $form['body']->render(array()); ?>
+      <?php echo $form['body']->getValue();?>
     </div>
     <div>
       <?php if ($form['body']->hasError()): echo '<div>' . __("newsletter_mensaje") . ': ' . $form['body']->getError() . '</div>';  endif; ?>

@@ -47,7 +47,7 @@ class usuarioTable extends Doctrine_Table
         return $this
                     ->createQuery('q')
                     ->addWhere('q.egresado = 0')
-                    ->addWhere('q.anio_ingreso < ?', date('Y'))
+                    ->addWhere('q.anio_ingreso <= ?', date('Y'))
                     ->execute();
     }
     
@@ -83,7 +83,13 @@ class usuarioTable extends Doctrine_Table
     public function addCorrienteFilter(Doctrine_Query $q)
     {
         $q->addWhere($q->getRootAlias() . '.egresado = ?', false);
-        $q->addWhere($q->getRootAlias() . '.anio_ingreso < ?', date('Y'));
+        $q->addWhere($q->getRootAlias() . '.anio_ingreso <= ?', date('Y'));
+        return $q;        
+    }
+    
+    public function addFuturosFilter(Doctrine_Query $q)
+    {
+        $q->addWhere($q->getRootAlias() . '.anio_ingreso > ?', date('Y'));
         return $q;        
     }
     
