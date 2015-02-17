@@ -44,7 +44,11 @@ class usuarioTable extends Doctrine_Table
     
     public function retrieveAllActiveStudents()
     {
-        return $this->createQuery('q')->addWhere('q.egresado = 0')->execute();
+        return $this
+                    ->createQuery('q')
+                    ->addWhere('q.egresado = 0')
+                    ->addWhere('q.anio_ingreso < ?', date('Y'))
+                    ->execute();
     }
     
     public function getMailsPadres()
@@ -73,6 +77,13 @@ class usuarioTable extends Doctrine_Table
     public function addDefaultsFilter(Doctrine_Query $q)
     {
         $q->addWhere($q->getRootAlias() . '.egresado = ?', false);
+        return $q;        
+    }
+    
+    public function addCorrienteFilter(Doctrine_Query $q)
+    {
+        $q->addWhere($q->getRootAlias() . '.egresado = ?', false);
+        $q->addWhere($q->getRootAlias() . '.anio_ingreso < ?', date('Y'));
         return $q;        
     }
     

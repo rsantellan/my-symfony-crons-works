@@ -14,6 +14,15 @@ class facturaHandler {
 
   public static function generateUserBill($usuario, $month, $year)
   {
+    if($usuario->getAnioIngreso() < date('Y'))
+    {
+	if (sfConfig::get('sf_logging_enabled'))
+	{
+	  sfContext::getInstance()->getLogger()->info('User is not active. Ther will be no generated bill');
+	}
+	// Should do nothing. The user is not active.
+	return;
+    }  
     $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($usuario->getId(), $month, $year);
 	$refreshAccount = false;
 	$account = null;
