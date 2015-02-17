@@ -211,6 +211,7 @@ use_javascript('tinymce/tinymce.min.js', 'last');
   });
   
   function updateTextArea(){
+        return false;
         try {
             if (tinyMCE.activeEditor != null) {
               tinyMCE.execCommand("mceRemoveControl", true, 'translation_new_1');

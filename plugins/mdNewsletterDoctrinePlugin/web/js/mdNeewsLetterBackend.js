@@ -389,7 +389,7 @@ mdNeewsLetterBackend.prototype = {
     }
 
 }
-
+/*
 mastodontePlugin.UI.BackendBasic.getInstance().afterAdd = function(json){
   console.info('starting tiny');
   startTinyMce();  
@@ -403,6 +403,7 @@ mastodontePlugin.UI.BackendBasic.getInstance().beforeRemoveNew = function(json){
 mastodontePlugin.UI.BackendBasic.getInstance().afterClose = function(json){
     removeTinyMce();
 }
+*/
 mastodontePlugin.UI.BackendBasic.getInstance().afterOpen = function(json){
   $("a.visualizar").fancybox({
     autoDimensions: false,
@@ -410,8 +411,8 @@ mastodontePlugin.UI.BackendBasic.getInstance().afterOpen = function(json){
     scrolling: true,
     height: 500
   });
-  console.info('starting tiny');
-  startTinyMce();
+  //console.info('starting tiny');
+  //startTinyMce();
   
 }
 
@@ -422,6 +423,7 @@ $(document).ready(function() {
 
 function startTinyMce()
 {
+return;
     removeTinyMce();
     
     tinymce.init({
@@ -431,6 +433,7 @@ function startTinyMce()
 
 function removeTinyMce()
 {
+return;
     if($('.mce-tinymce').length == 0)
     {
         return;
