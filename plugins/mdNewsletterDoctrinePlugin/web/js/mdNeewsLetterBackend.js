@@ -203,6 +203,11 @@ mdNeewsLetterBackend.prototype = {
     
     saveNewsLetterSending: function()
     {
+      if($('input[name=send]:checked', '#sending_form').val() == '-1')
+      {
+        alert('Tiene que seleccionar a alguien para enviarlo');
+        return false;
+      }  
       mdShowLoading();
       $.ajax({
           url: $('#sending_form').attr('action'),
@@ -396,3 +401,14 @@ mastodontePlugin.UI.BackendBasic.getInstance().afterOpen = function(json){
 $(document).ready(function() {
   $("a#import_link").fancybox();
 });
+
+
+function checkBeforeSend()
+{
+    if($('input[name=send]:checked', '#sending_form').val() == '-1')
+    {
+        alert('Tiene que seleccionar a alguien para enviarlo');
+        return false;
+    }
+    return true;
+}

@@ -41,11 +41,11 @@ class mdNewsletterHandler
               left join progenitor on progenitor.id = usuario_progenitor.progenitor_id
               left join md_user ON md_user.id = progenitor.md_user_id
               left join md_news_letter_user ON md_news_letter_user.md_user_id = md_user.id
-              where usuario.egresado = 0
+              where usuario.egresado = 0 and usuario.anio_ingreso <= ?
               order by usuario.horario, usuario.clase";
         
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-        return $q->fetchAssoc($sql);
+        return $q->fetchAssoc($sql, array(date('Y')));
     }
     
     public static function retrieveAllEgresadosForBox()
