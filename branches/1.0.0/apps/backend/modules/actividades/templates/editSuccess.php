@@ -12,7 +12,7 @@
   <div id="sf_admin_header">
     <?php include_partial('actividades/form_header', array('actividades' => $actividades, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
-
+  <div style='color: blue'>Al guardar una actividad se actualizaran las cuentas relacionadas para el mismo mes. El proceso puede tardar un poco, tenga paciencia.</div>
   <div id="sf_admin_content">
     <?php include_partial('actividades/form', array('actividades' => $actividades, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
   </div>
