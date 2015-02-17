@@ -390,6 +390,19 @@ mdNeewsLetterBackend.prototype = {
 
 }
 
+mastodontePlugin.UI.BackendBasic.getInstance().afterAdd = function(json){
+  console.info('starting tiny');
+  startTinyMce();  
+}
+
+
+mastodontePlugin.UI.BackendBasic.getInstance().beforeRemoveNew = function(json){
+    removeTinyMce();
+}
+
+mastodontePlugin.UI.BackendBasic.getInstance().afterClose = function(json){
+    removeTinyMce();
+}
 mastodontePlugin.UI.BackendBasic.getInstance().afterOpen = function(json){
   $("a.visualizar").fancybox({
     autoDimensions: false,
@@ -397,6 +410,9 @@ mastodontePlugin.UI.BackendBasic.getInstance().afterOpen = function(json){
     scrolling: true,
     height: 500
   });
+  console.info('starting tiny');
+  startTinyMce();
+  
 }
 
 $(document).ready(function() {
@@ -404,6 +420,36 @@ $(document).ready(function() {
 });
 
 
+function startTinyMce()
+{
+    removeTinyMce();
+    
+    tinymce.init({
+        selector:'textarea'
+    });
+}
+
+function removeTinyMce()
+{
+    if($('.mce-tinymce').length == 0)
+    {
+        return;
+    }
+    try
+    {
+        console.info('destroying tiny');
+        removeTinyMce();
+    }catch(e)
+    {
+        console.info('no tiny to destroy');
+    }
+}
+
+function forceTinyMceIframeResize() { 
+  $('.mceEditor .mceIframeContainer iframe').each(function(i) { 
+    $(this).height($(this).height()+1); 
+  }); 
+}
 function checkBeforeSend()
 {
     if($('input[name=send]:checked', '#sending_form').val() == '-1')
