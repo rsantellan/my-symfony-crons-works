@@ -24,8 +24,8 @@ class mdNewsletterContentForm extends PluginmdNewsletterContentForm
       theme_advanced_toolbar_align : "left",
       theme_advanced_statusbar_location : "bottom",
       theme_advanced_resizing : true,';
-    //$this->widgetSchema['body'] = new sfWidgetFormTextareaTinyMCE(array('height' => '400', 'config' => $dataConfig), array('rows' => 15));
-    $this->widgetSchema['body'] = new myWidgetFormTextareaNewTiny(array(), array('rows' => 15, 'cols' => 60));
+    $this->widgetSchema['body'] = new sfWidgetFormTextareaTinyMCE(array('height' => '400', 'config' => $dataConfig), array('rows' => 15));
+    //$this->widgetSchema['body'] = new myWidgetFormTextareaNewTiny(array(), array('rows' => 15, 'cols' => 60));
     $this->validatorSchema['body'] = new sfValidatorString(array('required' => false));
   }
   

@@ -5,4 +5,6 @@ indexSuccess:
   has_layout:     true
   layout:         layoutPure
 
-  stylesheets:    [main.css, ../csDoctrineActAsSortablePlugin/css/sortable.css]
+  metas:
+    title:        "Bunnys Kinder Administrador"
+

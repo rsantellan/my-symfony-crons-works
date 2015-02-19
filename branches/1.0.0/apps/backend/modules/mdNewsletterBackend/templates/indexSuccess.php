@@ -12,8 +12,8 @@ use_plugin_stylesheet('mdNewsletterDoctrinePlugin', 'table_style.css');
 <?php
 use_plugin_stylesheet('mastodontePlugin', '../js/fancybox/jquery.fancybox-1.3.1.css');
 use_plugin_javascript('mastodontePlugin', 'fancybox/jquery.fancybox-1.3.1.pack.js', 'last');
-//use_javascript('tiny_mce/tiny_mce.js', 'last');
-use_javascript('tinymce/tinymce.min.js', 'last');
+use_javascript('tiny_mce/tiny_mce.js', 'last');
+//use_javascript('tinymce/tinymce.min.js', 'last');
 ?>
 
 <?php use_plugin_stylesheet('mastodontePlugin', '../js/jquery-ui-1.8.4/css/smoothness/jquery-ui-1.8.4.custom.css') ?>

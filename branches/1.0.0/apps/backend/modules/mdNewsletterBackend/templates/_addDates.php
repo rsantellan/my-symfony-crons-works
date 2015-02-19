@@ -3,6 +3,15 @@
   <?php echo $form->renderHiddenFields();?>
 
   <div>
+    <div class="template">
+      Seleccione el template para utilizar en el newsletter
+      <br /><br />
+      <select name='template'>
+        <option value='original'>Original</option>
+        <option value='blue'>Azul</option>
+      </select>
+    </div>
+    <div class='clear'></div>
     Seleccione los usuarios a los que desea enviar el newsletter
     <br /><br />
     <input type="radio" name="send" value="-1" onclick="mastodontePlugin.UI.BackendFloating.getInstance().remove('create_group_right_box');" checked />Ninguno
