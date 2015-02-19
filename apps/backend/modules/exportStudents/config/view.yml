@@ -1,0 +1,8 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+indexSuccess:
+  has_layout:     true
+  layout:         layoutPure
+
+  stylesheets:    [main.css, ../csDoctrineActAsSortablePlugin/css/sortable.css]
