@@ -10,6 +10,9 @@
  */
 class exportStudentsActions extends sfActions
 {
+  
+  private $counter = 0;
+  
  /**
   * Executes index action
   *
@@ -24,7 +27,6 @@ class exportStudentsActions extends sfActions
     {
         $parameters = $request->getParameter($this->form->getName());
         $this->form->bind($parameters);
-        //var_dump($parameters);
         $data = $this->generateData($parameters);
         $this->headers = $data['headers'];
         $this->data = $data['data'];
@@ -64,15 +66,12 @@ class exportStudentsActions extends sfActions
       foreach($alumnos as $alumno)
       {
           $fullData = array_merge($alumno, $this->parentData($alumno['id']));
-          if(!$useAllHeaders)
+          $aux = array();
+          foreach($headers as $key => $value)
           {
-              $aux = array();
-              foreach($headers as $key => $value)
-              {
-                  $aux[$key] = $fullData[$key];
-              }
-              $fullData = $aux;
+              $aux[] = $fullData[$key];
           }
+          $fullData = $aux;
           $returnData[$alumno['id']] = $fullData;
       }
       if($parameters['exportar'] == "1")
@@ -143,25 +142,63 @@ class exportStudentsActions extends sfActions
   
   private function parentData($alumnoId)
   {
-      $sql = 'select nombre as padre, direccion, telefono, celular, mail from progenitor left join usuario_progenitor on progenitor_id = id where usuario_id = ?';
+      $sql = 'select id, nombre as padre, direccion, telefono, celular, mail from progenitor left join usuario_progenitor on progenitor_id = id where usuario_id = ?';
       $q = Doctrine_Manager::getInstance()->getCurrentConnection();
       $parents = $q->fetchAssoc($sql, array($alumnoId));
-      $returnData = array();
+      $returnData = array(
+        'padre' => '',
+        'direccion' => '',
+        'telefono' => '',
+        'celular' => '',
+        'mail' => '',
+      );
+      $this->counter = (int)  $this->counter + (int) count($parents);
       foreach($parents as $parent)
       {
           foreach($parent as $key => $value)
           {
               if(isset($returnData[$key]))
               {
-                  $returnData[$key] = $returnData[$key] . ', ' . $value;
+                if($returnData[$key] != '')
+                {
+                    $returnData[$key] = $returnData[$key] . ', ' . $value;
+                }
+                else
+                {
+                    $returnData[$key] = $value;
+                }  
               }
-              else
-              {
-                  $returnData[$key] = $value;
-              }    
+                  
           }
           
       }
       return $returnData;
   }
+  
+  private function retrieveFullParentData($clase = '', $horario = '')
+  {
+    $sql = 'select u.id, p.nombre as padre, p.direccion, p.telefono, p.celular, p.mail from progenitor p left join usuario_progenitor up on up.progenitor_id = p.id left join usuario u on u.id = up.usuario_id where u.egresado = 0';
+    $parameters = array();
+    if($clase != '')
+    {
+        $sql .= ' and u.clase = ?';
+        $parameters[] = $clase;
+    }
+    if($horario != '')
+    {
+        $sql .= ' and u.horario = ?';
+        $parameters[] = $horario;
+    }
+    $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+    $rows = $q->fetchAssoc($sqlBasico, $parameters);
+    $data = array();
+    foreach($rows as $row)
+    {
+      $studentId = $row['id'];
+      unset($row['id']);
+      //$data[$studentId
+    }
+  }
 }
+// select u.id, p.nombre as padre, p.direccion, p.telefono, p.celular, p.mail from progenitor p left join usuario_progenitor up on up.progenitor_id = p.id where up.usuario_id in (select id from usuario where egresado = 0) left join usuario u on u.id = up.usuario_id where u.egresado = 0
+// select p.* from usuario u left join usuario_progenitor up on up.usuario_id = u.id left join progenitor p on up.progenitor_id = p.id where egresado = 0
