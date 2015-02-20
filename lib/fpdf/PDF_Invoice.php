@@ -130,7 +130,15 @@ function sizeOfText( $texte, $largeur )
             $texte = substr( $texte, $pos+1 );
         }
         $length = floor( $this->GetStringWidth( $ligne ) );
-        $res = 1 + floor( $length / $largeur) ;
+        if($largeur == 0)
+        {
+            $res = 1;
+        }
+        else
+        {
+            $res = 1 + floor( $length / $largeur) ;
+        }
+        
         $nb_lines += $res;
     }
     return $nb_lines;
