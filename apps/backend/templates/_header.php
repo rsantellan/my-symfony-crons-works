@@ -30,6 +30,9 @@
                 <a href="<?php echo url_for('@exportarDatosAlumnos'); ?>">Exportar Corrientes</a>
               </li>
               <li>
+                <a href="<?php echo url_for('@usuario_futuros'); ?>">Futuros</a>
+              </li>             
+              <li>
                 <a href="<?php echo url_for('@egresado'); ?>">Egresados</a>
               </li>             
             </ul>        
