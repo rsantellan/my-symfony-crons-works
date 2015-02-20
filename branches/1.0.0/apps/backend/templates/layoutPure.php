@@ -215,16 +215,11 @@ ul.checkbox_list {
 
             <ul class="sf-menu">
             <li class="<?php echo (has_slot('alertas') ? 'current' : ''); ?>"><a href="<?php echo url_for('@alertas'); ?>">Alertas</a></li>        
-            <li class="<?php echo (has_slot('textos') ? 'current' : ''); ?>"><a href="<?php echo url_for('@mdTranslator'); ?>">Textos</a></li>
             <li class="<?php echo (has_slot('progenitores') ? 'current' : ''); ?>"><a href="<?php echo url_for('@usuario'); ?>">Alumnos Corrientes</a></li>
-            <li class="<?php echo (has_slot('progenitores') ? 'current' : ''); ?>"><a href="<?php echo url_for('@egresado'); ?>">Alumnos Egresados</a></li>
-            <li class="<?php echo (has_slot('progenitores') ? 'current' : ''); ?>"><a href="<?php echo url_for('@progenitor'); ?>">Padres</a></li>
-            <li class="<?php echo (has_slot('actividades') ? 'current' : ''); ?>"><a href="<?php echo url_for('@actividades'); ?>">Actividades</a></li>
             <li class="<?php echo (has_slot('newsletter') ? 'current' : ''); ?>"><a href="<?php echo url_for('@manage_newsletter') ?>">Newsletter</a></li>        
             <li class="<?php echo (has_slot('pagos') ? 'current' : ''); ?>">
               <a href="<?php echo url_for('@cuentas'); ?>">Cuentas</a>
             </li>
-            <li><a href="<?php echo url_for('@md_galeria')?>" class="<?php if(has_slot('md_galeria')){ echo 'current'; } else { echo ''; } ?>">Galeria de imágenes</a></li>
             <li class="<?php echo (has_slot('settings') ? 'current' : ''); ?>">
               <a href="<?php echo url_for('@logout'); ?>">Salir</a>
             </li>
