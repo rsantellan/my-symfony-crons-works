@@ -22,7 +22,7 @@ class exportarUsuariosForm extends sfForm
         );
         
         $camposPadres = array(
-            'nombre' => 'nombre',
+            'padre' => 'nombre',
             'direccion' => 'Dirección',
             'telefono' => 'Teléfono',
             'celular' => 'Celular',

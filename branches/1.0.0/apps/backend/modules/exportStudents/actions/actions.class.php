@@ -60,6 +60,10 @@ class exportStudentsActions extends sfActions
                   $auxHeaders[$headerPadre] = $headers[$headerPadre];
               }
           }
+          if(isset($auxHeaders['padre']) && !isset($auxHeaders['apellido']))
+          {
+            $auxHeaders['apellido'] = $headers['apellido'];
+          }
           $headers = $auxHeaders;
       }
       
@@ -114,7 +118,7 @@ class exportStudentsActions extends sfActions
         'horario' => 'Horario',
         'futuro_colegio' => 'Futuro Colegio',
         'clase' => 'clase',
-        'padre' => 'padre',
+        'padre' => 'Padres',
         'direccion' => 'Dirección',
         'telefono' => 'Teléfono',
         'celular' => 'Celular',
@@ -124,7 +128,7 @@ class exportStudentsActions extends sfActions
   
   private function alumnosData($clase = '', $horario = '')
   {
-      $sqlBasico = 'select id, nombre, apellido, fecha_nacimiento, anio_ingreso, sociedad, referencia_bancaria, emergencia_medica ,horario ,futuro_colegio ,clase from usuario where egresado = 0';
+      $sqlBasico = 'select id, nombre, apellido, DATE_FORMAT(fecha_nacimiento,"%d/%m/%Y") as fecha_nacimiento, anio_ingreso, sociedad, referencia_bancaria, emergencia_medica ,horario ,futuro_colegio ,clase from usuario where egresado = 0';
       $parameters = array();
       if($clase != '')
       {
@@ -136,6 +140,7 @@ class exportStudentsActions extends sfActions
           $sqlBasico .= ' and horario = ?';
           $parameters[] = $horario;
       }
+      $sqlBasico .= ' order by fecha_nacimiento asc';
       $q = Doctrine_Manager::getInstance()->getCurrentConnection();
       return $q->fetchAssoc($sqlBasico, $parameters);
   }
