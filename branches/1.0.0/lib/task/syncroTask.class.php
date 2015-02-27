@@ -46,7 +46,7 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     
-    if (!Md_TaskManager::isTaskLocked(__class__)) 
+    if (true) 
     {
       Md_TaskManager::lockTask(__class__); 
       sfContext::createInstance($this->configuration);
@@ -55,11 +55,13 @@ EOF;
       $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
       $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-    
+      var_dump('aca');
       $usuarios = Doctrine::getTable('usuario')->findAll();
       foreach($usuarios as $usuario){
         try{
+          $usuario->save();
           $usuario->updateNewsletter();
+          
         }catch(Exception $e){
           echo $e->getMessage();
         }
