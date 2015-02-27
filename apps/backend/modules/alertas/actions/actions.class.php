@@ -10,33 +10,11 @@
 class alertasActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request){
-      
     $this->facturas = array();//Doctrine::getTable('factura')->retrieveAllActive();
     //usuario::getAllUsersWithoutParents(true);
     //Doctrine::getTable('cuenta')->retrieveAllActive();
     //Doctrine::getTable('cuenta')->retrieveAllWithDebts();
     $this->cuentas = accountsHandler::retrieveAllDebtsAccountsWithUsers();
-    /*
-    var_dump(count($data));
-    $totales = 0;
-    foreach($data as $account)
-    {
-      $totales += count($account['usuarios']);
-    }
-    var_dump($totales);
-    */
-    /*
-    $this->mescurrent = $request->getParameter('mes', '-1');
-    
-    if($this->mescurrent == '-1')
-    {
-      $this->mescurrent = date('n');
-    }
-
-    $this->forward404Unless($this->mescurrent > 0 && $this->mescurrent <= 12);
-    
-    $this->usuarios = usuario::deudores($this->mescurrent, date('Y'));
-    */
   }
   
   public function executePay(sfWebRequest $request){
