@@ -137,7 +137,7 @@ class mdMailHandler {
       ->setSubject($subject)
       ->setSender($from['email'], $from['name'])
       ->setFrom($from['email'], $from['name'])
-      ->setBcc(array('rsantellan@gmail.com'))
+      //->setBcc(array('rsantellan@gmail.com'))
       ->setTo($to)
       ->setContentType("text/html")
       ->setBody($body);
