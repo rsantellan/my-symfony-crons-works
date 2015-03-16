@@ -1,0 +1,31 @@
+# Project files
+/cache
+/data
+/log
+/nbproject
+/EXAMPLES
+/web/*_dev.php
+/web/uploads/*
+/web/media/*
+/web/font/*
+/web/css/*
+/web/images/*
+/config/app.yml
+/config/databases.yml
+/apps/frontend/i18n
+/apps/backend/i18n
+/apps/backend/config/mdFileAuthUsers.xml
+/apps/backend/config/mdGroupRequieredToLogin.xml
+/apps/backend/config/factories.yml
+/apps/frontend/config/
+/config/factories.yml
+
+# SCM files
+.arch-params
+.bzr
+_darcs
+.git
+.hg
+.monotone
+.svn
+CVS

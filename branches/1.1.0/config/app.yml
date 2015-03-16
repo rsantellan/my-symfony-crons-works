@@ -1,0 +1,4 @@
+all:
+  mdImageMagick:
+    path: '/usr/local/bin/'
+

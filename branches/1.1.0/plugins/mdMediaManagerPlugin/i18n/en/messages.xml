@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="en" datatype="plaintext" original="messages" date="2010-09-08T16:35:36Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>mdMediaManager_text_basicUpload</source>
+        <target>If you're having trouble uploading you can always use the {a}basic uploader{/a}.</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>mdMediaManager_text_file</source>
+        <target>File</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>mdMediaManager_text_size</source>
+        <target>Size</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>mdMediaManager_text_album</source>
+        <target>Album</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>mdMediaManager_text_status</source>
+        <target>Status</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>mdMediaManager_text_addMore</source>
+        <target>Add more?</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>mdMediaManager_text_startUpload</source>
+        <target>Upload</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>mdMediaManager_text_titleUpload</source>
+        <target>Upload</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>mdMediaManager_text_descriptionUpload</source>
+        <target>Use the form to upload files.</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>mdMediaManager_text_validExtensions</source>
+        <target>Valid extensions:</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>mdMediaManager_text_maxUpload</source>
+        <target>Max upload:</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>mdMediaManager_text_remove</source>
+        <target>remove</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>mdMediaManager_text_addMoreText</source>
+        <target>You have {archivos} files waiting to upload.</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>mdMediaManager_text_upload</source>
+        <target>Upload</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>mdMediaManager_text_cancel</source>
+        <target>Cancel</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>mdMediaManager_text_uploading</source>
+        <target>Uploading</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>mdMediaManager_text_selectFile</source>
+        <target>Choose file</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>mdMediaManager_text_nameFile</source>
+        <target>Name</target>
+        <note>en</note>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>mdMediaManager_text_album</source>
+        <target>Album</target>
+        <note>en</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

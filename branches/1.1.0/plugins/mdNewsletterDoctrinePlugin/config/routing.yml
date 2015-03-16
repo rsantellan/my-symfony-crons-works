@@ -1,0 +1,16 @@
+manage_newsletter:
+ url: /manageNewsLetter.html
+ param: { module: mdNewsletterBackend, action: index }
+
+export_newsletter_user:
+ url: /export_newsLetter_user/:id
+ param: { module: mdNewsletterBackend, action: exportUsersOfSended }
+ 
+export_newsletter:
+ url: /export_newsLetter.html
+ param: { module: mdNewsletterBackend, action: exportUsers }
+
+subscription_newsletter:
+  url: /subscription_newsletter
+  param: { module: newsletterFrontend, action: create }
+ 

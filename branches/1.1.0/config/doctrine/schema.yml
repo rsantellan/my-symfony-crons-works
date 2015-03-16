@@ -1,0 +1,668 @@
+#Nombre, Dirección, Teléfono, Celular, Email, clave
+progenitor:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(64)
+    direccion:
+      type: string(128)
+    telefono:
+      type: string(128)
+    celular:
+      type: string(64)
+    mail:
+      type: string(64)
+    clave:
+      type: string(64)
+    md_user_id:
+      type: integer(4)
+  indexes:
+    mail_index:
+      fields: [mail]
+      type: unique      
+  relations:
+    mdUser:
+      class: mdUser
+      local: md_user_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    hijos:
+      class: usuario
+      refClass: usuario_progenitor
+      local: progenitor_id
+      foreign: usuario_id
+
+usuario:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+#    codigo:
+#      type: string(8)
+#      notnull: true
+#      unique: true      
+    nombre:
+      type: string(64)
+      notnull: true
+    apellido:
+      type: string(64)
+      notnull: true
+    fecha_nacimiento:
+      type: timestamp
+      notnull: false
+    anio_ingreso:
+      type: integer
+#    direccion:
+#      type: string(128)
+#    telefono:
+#      type: string(128)
+    sociedad:
+      type: string(64)
+    referencia_bancaria:
+      type: string(64)
+      notnull: true
+    emergencia_medica:
+      type: string(64)
+#    nombre_padres:
+#      type: string(64)
+#    celular_padres:
+#      type: string(64)
+#    mail_padres:
+#      type: string(64)
+    horario:
+      type: enum
+      values: [matutino, vespertino, doble_horario] 
+      #mantener esta lista sincronizada con los campos de la tabla costos
+#    transporte:
+#      type: string(64)
+#    musica:
+#      type: boolean
+#    natacion:
+#      type: boolean
+    futuro_colegio:
+      type: string(64)
+    descuento:
+      type: integer
+    clase:
+      type: enum
+      values: [verde, amarillo, rojo]
+      notnull: false
+    egresado:
+      type: boolean
+      default: false
+    billetera_id:
+      type: integer(4)
+#    md_user_id:
+#      type: integer(4)
+  relations:
+    actividades:
+      class: actividades
+      refClass: usuario_actividades #This will allow you to reference iaPresentation rows from an iaProduct object
+      local: usuario_id             #Local value refers to the current object, in this case iaProduct
+      foreign: actividad_id         #Foreign value refers to the object you wish to link to from iaProduct, in this case iaPresentation
+    billetera:
+      class: billetera
+      local: billetera_id
+      foreign: id
+      foreignType: one
+      type: one
+    progenitores:
+      class: progenitor
+      refClass: usuario_progenitor
+      local: usuario_id
+      foreign: progenitor_id
+
+usuario_progenitor:
+  columns:
+    usuario_id:
+      type: integer(4)
+      primary: true
+    progenitor_id:
+      type: integer(4)
+      primary: true
+  relations:
+    usuario:
+      class: usuario
+      local: usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    progenitor:
+      class: progenitor
+      local: progenitor_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+actividades:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(64)
+      notnull: true
+    costo:
+      type: float(10,2)
+      notnull: true
+    horario:
+      type: enum
+      values: [mañana, tarde, mañana y tarde]
+    md_news_letter_group_id:
+      type: integer(4)      
+  relations:
+    usuarios:
+      class: usuario
+      refClass: usuario_actividades #This will allow you to reference iaPresentation rows from an iaProduct object
+      local: actividad_id           #Local value refers to the current object, in this case iaProduct
+      foreign: usuario_id           #Foreign value refers to the object you wish to link to from iaProduct, in this case iaPresentation
+    mdNewsLetterGroup:
+      class: mdNewsLetterGroup
+      local: md_news_letter_group_id
+      foreign: id
+      type: one
+      
+usuario_actividades:
+  columns:
+    usuario_id:
+      type: integer(4)
+      primary: true
+    actividad_id:
+      type: integer(4)
+      primary: true
+  relations:
+    usuario:
+      class: usuario
+      local: usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    actividad:
+      class: actividades
+      local: actividad_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+hermanos:
+  columns:
+    usuario_from:
+      type: integer(4)
+      primary: true
+    usuario_to:
+      type: integer(4)
+      primary: true
+  relations:
+    userFrom:
+      class: usuario
+      local: usuario_from
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    userTo:
+      class: usuario
+      local: usuario_to
+      foreign: id
+      type: one
+      onDelete: CASCADE  
+      
+pagos:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    usuario_id:
+      type: integer(4)
+      notnull: true
+    price:
+      type: integer
+      notnull: true
+    mes:
+      type: enum
+      values: [1,2,3,4,5,6,7,8,9,10,11,12]
+    fecha:
+      type: timestamp
+      notnull: true
+    out_of_date:
+      type: boolean
+      notnull: true
+      default: 0
+  relations:
+    usuario:
+      class: usuario
+      local: usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+exoneracion:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    usuario_id:
+      type: integer(4)
+      notnull: true
+    mes:
+      type: enum
+      values: [1,2,3,4,5,6,7,8,9,10,11,12]  
+    fecha:
+      type: timestamp
+      notnull: true
+  relations:
+    usuario:
+      class: usuario
+      local: usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+descuentos:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    cantidad_de_hermanos:
+      type: integer
+      notnull: true
+      unique: true
+    porcentaje:
+      type: integer
+      notnull: true
+      
+costos:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    matricula:
+      type: float(10,2)
+      notnull: true
+    matutino:
+      type: float(10,2)
+      notnull: true
+    vespertino:
+      type: float(10,2)
+      notnull: true
+    doble_horario:
+      type: float(10,2)
+      notnull: true
+      
+billetera:
+  columns:
+    id:
+      type: integer(4)
+      primary: true    
+    credito:
+      type: integer
+    deuda:
+      type: integer
+    impuesto:
+      type: integer
+
+emails:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+    type:
+      type: string(32)
+      notnull: true
+    from_name:
+      type: string(64)
+      notnull: true
+    from_mail:
+      type: string(64)
+      notnull: true
+  indexes:
+    type_index:
+      fields: [type]
+      type: unique
+      
+#colegio:
+#  columns:
+#    id:
+#      type: integer(4)
+#      primary: true
+#    nombre:
+#      type: string(128)
+#      notnull: true
+      
+#sociedad:
+#  columns:
+#    id:
+#      type: integer(4)
+#      primary: true
+#    nombre:
+#      type: string(128)
+#      notnull: true
+      
+#emergencia:
+#  columns:
+#    id:
+#      type: integer(4)
+#      primary: true
+#    nombre:
+#      type: string(128)
+#      notnull: true
+
+mdGaleria:
+  actAs:
+    mdMediaBehavior: ~ 
+    Sortable: ~
+    I18n:
+      fields: [titulo, descripcion]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    titulo:
+      type: string(128)
+      notnull: false
+    descripcion:
+      type: string(500)
+      notnull: true
+    curso_verde:
+      type: boolean
+      default: false
+    curso_rojo:
+      type: boolean
+      default: false
+    curso_amarillo:
+      type: boolean
+      default: false
+
+#####
+##
+## Nuevos cobros
+##
+######      
+cuenta:
+  actAs: { Timestampable: ~ }
+  tableName: cuenta
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    referenciabancaria:
+      type: string(64)
+      notnull: true    
+    debe:
+      type: float(14,2)
+      default: 0
+    pago:
+      type: float(14,2)
+      default: 0
+    diferencia:
+      type: float(14,2)
+      default: 0
+      
+    
+cuentapadre:
+  tableName: cuentapadre
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    cuenta_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    progenitor_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+  relations:      
+    cuenta:
+      local: cuenta_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    progenitor:
+      local: progenitor_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+cuentausuario:
+  tableName: cuentausuario
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    cuenta_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+    usuario_id:
+      type: integer(4)
+      notnull: true
+      primary: true
+  relations:      
+    cuenta:
+      local: cuenta_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    usuario:
+      local: usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+facturaUsuario:
+  actAs: { Timestampable: ~ }
+  tableName: facturaUsuario
+  columns:
+    id:
+      type: integer(20)
+      primary: true
+      autoincrement: true
+    usuario_id:
+      type: integer(4)
+      notnull: true
+    total:
+      type: float(12,2)
+      default: 0
+      notnull: true
+    month:
+      type: integer(4)
+      notnull: true
+    year:
+      type: integer(4)
+      notnull: true
+    enviado:
+      type: integer(1)
+      default: '0'
+      notnull: true  
+    pago:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    cancelado:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    fechavencimiento:
+      type: date(25)
+      notnull: true      
+  indexes:
+    monthly_yearly_user_index:
+      fields: [month, year, usuario_id]
+      type: unique      
+  relations:      
+    usuario:
+      class: usuario
+      local: usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+facturaUsuarioDetalle:
+  actAs: { Timestampable: ~ }
+  tableName: facturaUsuarioDetalle
+  columns:
+    id:
+      type: integer(20)
+      primary: true
+      autoincrement: true
+    factura_id:
+      type: integer(20)
+      notnull: true
+    description:
+      type: string(255)
+    amount:
+      type: float(12,2)
+      default: 0
+      notnull: true    
+  relations:      
+    facturaUsuario:
+      class: facturaUsuario
+      local: factura_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+facturaFinal:
+  actAs: { Timestampable: ~ }
+  tableName: facturaFinal
+  columns:
+    id:
+      type: integer(20)
+      primary: true
+      autoincrement: true
+    total:
+      type: float(12,2)
+      default: 0
+      notnull: true
+    month:
+      type: integer(4)
+      notnull: true
+    year:
+      type: integer(4)
+      notnull: true
+    pago:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    cancelado:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    enviado:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    cuenta_id:
+      type: integer(4)
+      notnull: true
+    fechavencimiento:
+      type: date(25)
+      notnull: true
+    pagadodeltotal:
+      type: float(12,2)
+      default: 0
+      notnull: true      
+  indexes:
+    monthly_yearly_user_index:
+      fields: [month, year, cuenta_id]
+      type: unique      
+  relations:      
+    cuenta:
+      class: cuenta
+      local: cuenta_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+facturaFinalDetalle:
+  actAs: { Timestampable: ~ }
+  tableName: facturaFinalDetalle
+  columns:
+    id:
+      type: integer(20)
+      primary: true
+      autoincrement: true
+    factura_id:
+      type: integer(20)
+      notnull: true
+    description:
+      type: string(255)
+    amount:
+      type: float(12,2)
+      default: 0
+      notnull: true    
+  relations:      
+    facturaFinal:
+      class: facturaFinal
+      local: factura_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+
+facturausuariofinal:
+  tableName: facturausuariofinal
+  options:
+    symfony:
+      form:   false
+      filter: false  
+  columns:
+    factura_usuario_id:
+      type: integer(20)
+      notnull: true
+      primary: true
+    factura_final_id:
+      type: integer(20)
+      notnull: true
+      primary: true
+  relations:      
+    facturaUsuario:
+      local: factura_usuario_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+    facturaFinal:
+      local: factura_final_id
+      foreign: id
+      type: one
+      onDelete: CASCADE
+      
+cobro:
+  actAs: { Timestampable: ~ }
+  tableName: cobro
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    cuenta_id:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    monto:
+      type: float(12,2)
+      default: 0
+      notnull: true
+  relations:
+    cuenta:
+      class: cuenta
+      local: cuenta_id
+      foreign: id
+      type: one
+      onDelete: CASCADE

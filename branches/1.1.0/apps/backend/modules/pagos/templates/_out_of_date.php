@@ -1,0 +1,1 @@
+<?php echo ($pagos->getOutOfDate() ? 'SI' : 'NO'); ?>

@@ -1,0 +1,23 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/07-Databases
+
+all:
+#  doctrine:
+#    class: sfDoctrineDatabase
+#    param:
+#      dsn:      mysql:host=localhost;dbname=jardin
+#      username: root
+#      password: 12345
+#      attributes:
+#        use_native_enum: true
+        
+#all:
+  doctrine:
+    class: sfDoctrineDatabase
+    param:
+      dsn:      mysql:host=localhost;dbname=wwwbunny_masto
+      username: root
+      password: root
+      attributes:
+        use_native_enum: true
+       

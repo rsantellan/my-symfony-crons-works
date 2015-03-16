@@ -1,0 +1,85 @@
+COMO UTILIZAR LAS RELACIONES ENTRE CONTENIDOS.
+
+1- Paso 1 crear el archivo de configuracion en el app.
+
+Un ejemplo de esto seria:
+
+all:
+  .plugins:
+    plugins_content_relations:
+        0:
+          className: mdUserProfile
+          typeName: null
+          profileId: null
+          profileName: null
+          relations:
+            0:
+              className: mdDynamicContent
+              typeName: dinamico
+              profileId: 1
+              profileName: dinamico
+
+Este relaciona a un usurio varios contenidos dinamicos.
+
+Un ejemplo mas complejo seria:
+all:
+  .plugins:
+    plugins_content_relations:
+      0:
+        className: mdDynamicContent
+        typeName: proyecto
+        profileId: 7
+        profileName: proyecto
+        relations:
+          0:
+            className: mdDynamicContent
+            typeName: imagen
+            profileId: 2
+            profileName: imagen
+          1:
+            className: mdDynamicContent
+            typeName: video
+            profileId: 3
+            profileName: video
+          2:
+            className: mdDynamicContent
+            typeName: texto
+            profileId: 4
+            profileName: texto
+          3:
+            className: mdDynamicContent
+            typeName: flash
+            profileId: 5
+            profileName: flash
+          4:
+            className: mdDynamicContent
+            typeName: enlace
+            profileId: 6
+            profileName: enlace
+
+Que relaciona distintos tipos de contenidos dinamicos.
+
+2 - Se incluye el componente en el template correspondiente del objeto.
+
+<?php if( sfConfig::get('sf_plugins_user_relation_content_manage', false)): ?>
+<?php include_component('mdRelationContent','relationContent', array(
+                        '_MD_Content_Id' => $mdUserProfile->getObject()->retrieveMdContent()->getId(), 
+                        '_MD_Object_Id' => $mdUserProfile->getObject()->getId(), 
+                        '_MD_Object_Class_Name' => $mdUserProfile->getObject()->getObjectClass(),
+                        '_MD_Dynamic_Content_Type' => $mdUserProfile->getObject()->getObjectClass()
+                        )); 
+?>
+<br/>
+<?php endif; ?>
+
+En caso de que no se quiera diferenciar el objeto se usa en _MD_Dynamic_Content_Type la clase del objeto.
+
+3 - Se incorpora el javascript correspondiente en la pagina.
+
+<?php
+    if( sfConfig::get('sf_plugins_user_relation_content_manage', false)){
+        use_plugin_stylesheet('mdUserDoctrinePlugin', 'flexigrid/flexigrid.css');
+        use_plugin_javascript('mdUserDoctrinePlugin', 'flexigrid.js', 'last');
+        use_plugin_javascript('mdUserDoctrinePlugin', 'mdRelationContent.js', 'last');
+    }
+?>

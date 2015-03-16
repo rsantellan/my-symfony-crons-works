@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<body>
+    <groups>
+        <group id="1">
+            <name>Admin</name>
+            <requiered>1</requiered>
+        </group>
+    </groups>
+</body>

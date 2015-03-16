@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           mdGaleria
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          md_galeria
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        hide: [id,position]
+        sort: [position]
+        object_actions:
+          promote:
+            action: promote
+          demote:
+            action: demote
+          _edit: ~
+          _del: ~
+        display: [_imagen, =titulo]
+      filter:
+      form:    ~
+      edit:    ~
+      new:     ~

@@ -1,0 +1,11 @@
+mdImageSrc:
+ url: /images/:i.*
+ param: { module: mdWebImage, action: index }
+
+mdVideoSrc:
+ url: /videos/:i.*
+ param: { module: mdWebVideo, action: index }
+
+mdVideoAvatarSrc:
+   url: /videoAvatar/:i.*
+   param: { module: mdWebVideo, action: videoAvatar }

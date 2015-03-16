@@ -1,0 +1,15 @@
+Cambios aplicados
+
+- Se agrego el atributo "showTags" para mostrar o no los tags en el input cuando se seleccionan items del menu desplegable
+
+- Se comento "add_selected_item(n_data, "00"+(lis+1));" en el case 9: case 188:  // tab or comma
+
+- Se corrijio el bug que dejaba en el input as-values-id el ultimo tab seleccionado por mas que se borre.
+LINEA -337,338
+var patt = new RegExp(",?" + data[opts.selectedValuesProp] + ",");
+values_input.val((values_input.val().replace(patt, ",") == "," ? "" : values_input.val().replace(patt, ",")));
+
+- Se corrijio que saque de la lista el primero que ya se mostro
+LINEA -276,277
+var patt = new RegExp(",?"+data[num][opts.selectedValuesProp]+",");
+if(str.search(query) != -1 && values_input.val().search(patt) == -1){

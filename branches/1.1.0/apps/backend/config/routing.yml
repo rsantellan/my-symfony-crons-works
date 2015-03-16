@@ -1,0 +1,198 @@
+usuario_futuros:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                usuario
+    module:               futuros
+    prefix_path:          /futuros
+    column:               id
+    with_wildcard_routes: true
+
+cuenta:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                cuenta
+    module:               cuenta
+    prefix_path:          /cuenta
+    column:               id
+    with_wildcard_routes: true
+
+md_galeria:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                mdGaleria
+    module:               galeria
+    prefix_path:          /galeria
+    column:               id
+    with_wildcard_routes: true
+
+progenitor:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                progenitor
+    module:               progenitores
+    prefix_path:          /progenitores
+    column:               id
+    with_wildcard_routes: true
+
+emails:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                emails
+    module:               emails
+    prefix_path:          /emails
+    column:               id
+    with_wildcard_routes: true
+
+pagos:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                pagos
+    module:               pagos
+    prefix_path:          /pagos
+    column:               id
+    with_wildcard_routes: true
+
+descuentos:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                descuentos
+    module:               descuentos
+    prefix_path:          /descuentos
+    column:               id
+    with_wildcard_routes: true
+
+costos:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                costos
+    module:               costos
+    prefix_path:          /costos
+    column:               id
+    with_wildcard_routes: true
+
+actividades:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                actividades
+    module:               actividades
+    prefix_path:          /actividades
+    column:               id
+    with_wildcard_routes: true
+
+usuario:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                usuario
+    module:               usuarios
+    prefix_path:          /usuarios
+    column:               id
+    with_wildcard_routes: true
+    
+egresado:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                usuario
+    module:               egresados
+    prefix_path:          /egresados
+    column:               id
+    with_wildcard_routes: true    
+
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+#
+exportarDatosAlumnos:
+  url:   /exportacion-datos-alumnos.html
+  param: { module: exportStudents, action: index }
+
+checkBankReference:
+  url:   /usuario/chequear-referencia.html
+  param: { module: usuarios, action: checkBankReference }
+  
+generarPdfCobro:
+  url:   /factura/cobro/:id.html
+  param: { module: cuentas, action: printPdfCobro }
+  
+generarPdfCuenta:
+  url:   /factura/imprimirpdf/:id.html
+  param: { module: cuentas, action: printPdfAccount }
+  
+# default rules
+cancelarfactura:
+  url:   /factura/cancelar/:id.html
+  param: { module: cuentas, action: cancelarFactura }
+
+salvarcuenta:
+  url:   /cuentas/salvar.html
+  param: { module: cuentas, action: doCobroForm }
+
+mailcuenta:
+  url:   /cuentas/mail/:id.html
+  param: { module: cuentas, action: mail }
+  
+pagarcuenta:
+  url:   /cuentas/pagar/:id.html
+  param: { module: cuentas, action: cobroForm }
+  
+detallecuenta:
+  url:   /cuentas/detalle/:id.html
+  param: { module: cuentas, action: show }
+  
+cuentas:
+  url:   /cuentas.html
+  param: { module: cuentas, action: index }
+
+alertas:
+  url:   /alertas/:mes
+  param: { module: alertas, action: index, mes: -1 }
+
+exportar:
+  url:   /exportar
+  param: { module: usuarios, action: exportar }
+
+exportarExcel:
+  url:   /exportarExcel
+  param: { module: usuarios, action: exportarExcel }
+  
+enviar:
+  url:   /enviar
+  param: { module: usuarios, action: enviar }
+  
+print:
+  url:   /usuarios/print
+  param: { module: usuarios, action: print }
+  
+printSave:
+  url:   /usuarios/print-save
+  param: { module: usuarios, action: printSave }  
+  
+print_pagos:
+  url:   /pagos/print
+  param: { module: pagos, action: print }  
+  
+pagar:
+  url: /do-pay
+  param: { module: alertas, action: pay }
+  
+exonerar:
+  url: /do-exonerar/:id/:mes
+  param: { module: alertas, action: exonerar }  
+
+# NO borrar esta ruta, es para el task progenitores
+# y debe ser exactamente igual a la del frontend
+activation:
+  url:	/activacion/:code
+  param: { module: bkAuth, action: activation }  
+  
+homepage:
+  url:   /
+  param: { module: alertas, action: index }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

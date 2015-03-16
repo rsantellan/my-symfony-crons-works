@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="es" datatype="plaintext" original="messages" date="2010-09-07T15:05:50Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>mdMediaDoctrine_text_uploadFile</source>
+        <target>Elegir archivos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>mdMediaDoctrine_text_subirContenido</source>
+        <target>Subir archivos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>mdMediaDoctrine_text_ordenar</source>
+        <target>Ordenar</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>mdMediaDoctrine_text_Arrastre las imagenes para ordenar los contenidos</source>
+        <target>Arrastre las imagenes para ordenar los contenidos</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>mdMediaDoctrine_text_subirEmbebido</source>
+        <target>Subir embebido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>mdMediaDoctrine_text_Agrega un Video</source>
+        <target>Agregar un embebido</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>mdMediaDoctrine_text_Agrega un Video texto</source>
+        <target>Agregar un video o archivo de Youtube, Vimeo, Issue</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>mdMediaDoctrine_text_Url del Video:</source>
+        <target>Url: </target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>mdMediaDoctrine_text_Comentario o pie:</source>
+        <target>Comentario o pie: </target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>mdMediaDoctrine_text_Sitio de video no soportado.</source>
+        <target>El sitio que ingreo actualmente no se encuentra soportado.</target>
+        <note>es</note>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>mdMediaDoctrine_text_Publicar</source>
+        <target>Agregar</target>
+        <note>es</note>
+      </trans-unit>       
+    </body>
+  </file>
+</xliff>
