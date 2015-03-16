@@ -271,17 +271,27 @@ class usuario extends Baseusuario {
         return $emails;
     }
 
-    public function updateNewsletter() {
+    public function updateNewsletter($debug = false) {
         $padres_mails = $this->getProgenitoresMails();
 
         if (count($padres_mails) == 0)
             return $this;
-
+        if($debug)
+        {
+            var_dump(sprintf('starting for user: %s [nombre: %s, apellido: %s, referencia: %s] [clase: %s, horario: %s]', $this->getId(), $this->getNombre(), $this->getApellido(), $this->getReferenciaBancaria(),  $this->getClase(), $this->getHorario()));
+        }
+        
         foreach ($this->getProgenitores() as $padre) {
             if ($padre->getMail() == '')
                 continue;
-
+                
+            if($debug){
+                var_dump(sprintf('---------- parent: %s [Nombre: %s][mail : %s ]', $padre->getMdUserId(), $padre->getNombre(), $padre->getMail()));
+            }
             if ($padre->getMdUserId() == NULL) {
+                if($debug){
+                    var_dump(sprintf('creating parent for user %s ', $this->getId()));
+                }
                 try {
                     // Creo un mdUser
                     $mdUser = new mdUser();
@@ -301,105 +311,95 @@ class usuario extends Baseusuario {
             $mdUser->refresh();
 
             if ($mdUser->getMdNewsLetterUser()->count() > 0) {
+                
+                
                 $mdNewsletterUser = $mdUser->getMdNewsLetterUser()->getFirst();
 
                 $grupos = $mdNewsletterUser->getMdNewsLetterGroupUser();
 
                 //lo elimino de todos los grupos
                 foreach ($grupos as $grupoRelation) {
+                    if($debug){
+                        var_dump(sprintf('removing %s from group : %s', $mdUser->getId(), $grupoRelation->getMdNewsletterGroupId()));
+                    }
                     $grupoRelation->delete();
                 }
+                
+                $this->doSaveOnNewsletter($mdUser, $mdNewsletterUser, $this, $debug);
+                foreach ($this->getHermanos() as $hermano_rel) {
+                    $bro = $hermano_rel->getUserTo();
+                    if($debug){
+                        var_dump(sprintf('starting for brother: %s [nombre: %s, apellido: %s, referencia: %s] [clase: %s, horario: %s]', $bro->getId(), $bro->getNombre(), $bro->getApellido(), $bro->getReferenciaBancaria(),  $bro->getClase(), $bro->getHorario()));
+                    }
+                    $this->doSaveOnNewsletter($mdUser, $mdNewsletterUser, $bro, $debug);
+                }
+            }
+        }
+    }
+    
+    private function doSaveOnNewsletter($mdUser, $mdNewsletterUser, $student, $debug)
+    {
+        if ($student->getEgresado()) {
+            if($debug){
+                var_dump(sprintf('----------  ----------  User %s [es egresado]', $student->getId(), $this->getEgresado()));
+            }
+            $grupo = Doctrine::getTable('mdNewsLetterGroup')->findOneByName('EGRESADOS');
+            if ($grupo) {
+                
+                if($debug){
+                    var_dump(sprintf('----------  ---------- Parent %s [A Egresados]', $mdUser->getId()));
+                }
+                $userGroup = new mdNewsLetterGroupUser();
+                $userGroup->setMdNewsletterUserId($mdNewsletterUser->getId());
+                $userGroup->setMdNewsletterGroupId($grupo->getId());
+                $userGroup->save();
+            }
 
-                if ($this->getEgresado()) {
+        } else {
+            // si no es un alumno egresado - preguntar si es asi ????? -
+            
+            // Agrego el usuario al grupo PADRES
+            $grupo = Doctrine::getTable('mdNewsLetterGroup')->findOneByName('PADRES');
+            if ($grupo) {
+                if($debug){
+                    var_dump(sprintf('----------  ---------- Parent %s [A Padres]', $mdUser->getId()));
+                }
+                $userGroup = new mdNewsLetterGroupUser();
+                $userGroup->setMdNewsletterUserId($mdNewsletterUser->getId());
+                $userGroup->setMdNewsletterGroupId($grupo->getId());
+                $userGroup->save();
+            }
+            
+            // Agrego el usuario a la clase a la que pertenece
+            if ($student->getClase() != "" && $student->getHorario() != "") {
+                $grupo = Doctrine::getTable('mdNewsLetterGroup')->findOneByName($student->getClase() . ' (' . $student->getHorario() . ')');
+                if ($grupo) {
+                    if($debug){
+                        var_dump(sprintf('----------  ---------- Parent %s [grupo : %s]', $mdUser->getId(), $student->getClase() . ' (' . $student->getHorario() . ')'));
+                    }
+                    $userGroup = new mdNewsLetterGroupUser();
+                    $userGroup->setMdNewsletterUserId($mdNewsletterUser->getId());
+                    $userGroup->setMdNewsletterGroupId($grupo->getId());
+                    $userGroup->save();
+                }
+            }
 
-                    $grupo = Doctrine::getTable('mdNewsLetterGroup')->findOneByName('EGRESADOS');
+            // Agrego el mdUser a los grupos correspondientes: Actividades Seleccionadas, Padres, clase
+            $actividades = $student->getActividades();
+            foreach ($actividades as $actividad) {
+                if ($actividad->getMdNewsLetterGroupId() != NULL) {
+                    $grupo = $actividad->getMdNewsLetterGroup();
+
                     if ($grupo) {
+                        if($debug){
+                            var_dump(sprintf('----------  ----------  Parent %s [Actividad: %s]', $mdUser->getId(), $actividad->getNombre()));
+                        }
                         $userGroup = new mdNewsLetterGroupUser();
                         $userGroup->setMdNewsletterUserId($mdNewsletterUser->getId());
                         $userGroup->setMdNewsletterGroupId($grupo->getId());
                         $userGroup->save();
-                    }
-
-                } else {
-                    // si no es un alumno egresado - preguntar si es asi ????? -
-                    
-                    // Agrego el usuario al grupo PADRES
-                    $grupo = Doctrine::getTable('mdNewsLetterGroup')->findOneByName('PADRES');
-                    if ($grupo) {
-                        $userGroup = new mdNewsLetterGroupUser();
-                        $userGroup->setMdNewsletterUserId($mdNewsletterUser->getId());
-                        $userGroup->setMdNewsletterGroupId($grupo->getId());
-                        $userGroup->save();
-                    }
-                    
-                    // Agrego el usuario a la clase a la que pertenece
-                    if ($this->getClase() != "" && $this->getHorario() != "") {
-                        $grupo = Doctrine::getTable('mdNewsLetterGroup')->findOneByName($this->getClase() . ' (' . $this->getHorario() . ')');
-                        if ($grupo) {
-                            $userGroup = new mdNewsLetterGroupUser();
-                            $userGroup->setMdNewsletterUserId($mdNewsletterUser->getId());
-                            $userGroup->setMdNewsletterGroupId($grupo->getId());
-                            $userGroup->save();
-                        }
-                    }
-
-                    // Agrego el mdUser a los grupos correspondientes: Actividades Seleccionadas, Padres, clase
-                    $actividades = $this->getActividades();
-                    foreach ($actividades as $actividad) {
-                        if ($actividad->getMdNewsLetterGroupId() != NULL) {
-                            $grupo = $actividad->getMdNewsLetterGroup();
-
-                            if ($grupo) {
-                                $userGroup = new mdNewsLetterGroupUser();
-                                $userGroup->setMdNewsletterUserId($mdNewsletterUser->getId());
-                                $userGroup->setMdNewsletterGroupId($grupo->getId());
-                                $userGroup->save();
-                            }
-                        }
                     }
                 }
-                
-                // Agrego actividades y clases de los hermanos
-                $hermanos = $this->getHermanos();
-                foreach ($hermanos as $hermano_rel) {
-                    $hermano = $hermano_rel->getUserTo();
-
-                    // Agrego el usuario a la clase a la que pertenece
-                    if ($hermano->getClase() != "" && $hermano->getHorario() != "") {
-                        $grupo = Doctrine::getTable('mdNewsLetterGroup')->findOneByName($hermano->getClase() . ' (' . $hermano->getHorario() . ')');
-                        if ($grupo) {
-                            $userGroup = new mdNewsLetterGroupUser();
-                            $userGroup->setMdNewsletterUserId($mdNewsletterUser->getId());
-                            $userGroup->setMdNewsletterGroupId($grupo->getId());
-                            // Ya puede estar ingresado en ese grupo por eso el try catch
-                            try{
-                                $userGroup->save();
-                            }catch(Exception $e){
-
-                            }
-                        }
-                    }
-
-                    // Agrego el mdUser a los grupos correspondientes: Actividades Seleccionadas, Padres, clase
-                    $actividades = $hermano->getActividades();
-                    foreach ($actividades as $actividad) {
-                        if ($actividad->getMdNewsLetterGroupId() != NULL) {
-                            $grupo = $actividad->getMdNewsLetterGroup();
-
-                            if ($grupo) {
-                                $userGroup = new mdNewsLetterGroupUser();
-                                $userGroup->setMdNewsletterUserId($mdNewsletterUser->getId());
-                                $userGroup->setMdNewsletterGroupId($grupo->getId());
-                                // Ya puede estar ingresado en ese grupo por eso el try catch
-                                try{
-                                    $userGroup->save();
-                                }catch(Exception $e){
-
-                                }
-                            }
-                        }
-                    }
-                }                
             }
         }
     }

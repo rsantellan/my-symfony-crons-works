@@ -3,9 +3,19 @@
   <?php echo $form->renderHiddenFields();?>
 
   <div>
+    <div class="template">
+      Seleccione el template para utilizar en el newsletter
+      <br /><br />
+      <select name='template'>
+        <option value='original'>Original</option>
+        <option value='blue'>Azul</option>
+      </select>
+    </div>
+    <div class='clear'></div>
     Seleccione los usuarios a los que desea enviar el newsletter
     <br /><br />
-    <input type="radio" name="send" value="0" onclick="mastodontePlugin.UI.BackendFloating.getInstance().remove('create_group_right_box');" checked /><?php echo __("newsletter_seleccionar todos");?>
+    <input type="radio" name="send" value="-1" onclick="mastodontePlugin.UI.BackendFloating.getInstance().remove('create_group_right_box');" checked />Ninguno
+    <input type="radio" name="send" value="0" onclick="mastodontePlugin.UI.BackendFloating.getInstance().remove('create_group_right_box');" /><?php echo __("newsletter_seleccionar todos");?>
     <input type="radio" name="send" value="1" onclick="mdNeewsLetterBackend.getInstance().refreshUsersSelectEmails();" /><?php echo __("newsletter_seleccionar algunos");?>
 
     <?php if( sfConfig::get( 'sf_plugins_newsletter_group_enable', false ) ): ?>
@@ -27,3 +37,4 @@
   <input type="submit" value="<?php echo __("newsletter_guardar");?>"/>
 
 </form>
+

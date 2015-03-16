@@ -1,3 +1,12 @@
+usuario_futuros:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                usuario
+    module:               futuros
+    prefix_path:          /futuros
+    column:               id
+    with_wildcard_routes: true
+
 cuenta:
   class: sfDoctrineRouteCollection
   options:
@@ -92,6 +101,10 @@ egresado:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
 #
+exportarDatosAlumnos:
+  url:   /exportacion-datos-alumnos.html
+  param: { module: exportStudents, action: index }
+
 checkBankReference:
   url:   /usuario/chequear-referencia.html
   param: { module: usuarios, action: checkBankReference }

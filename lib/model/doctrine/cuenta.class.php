@@ -103,6 +103,7 @@ class cuenta extends Basecuenta
   // sys_get_temp_dir()
   public static function exportToPdf($cuenta, $location = NULL)
   {
+//    error_reporting(E_ALL);
     //$cuenta = Doctrine::getTable('cuenta')->find($accountId);
     $facturas = Doctrine::getTable('facturaFinal')->retrieveAllUnpaidFromAccountId($cuenta->getId(), 'asc');
     $alumnos = "";
@@ -127,24 +128,46 @@ class cuenta extends Basecuenta
     $facturasDetailList = array();
     $quantity = count($facturas);
     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+  //  var_dump($quantity);
+    $montoAdeudado = 0;
+    $lineDeuda = null;
     foreach($facturas as $factura)
     {
-      foreach($factura->getFacturaFinalDetalle() as $facturaDetalle)
+      if($factura->getYear() == date('Y') && $factura->getMonth() == date('m'))
       {
-        if($quantity > 1)
-        {
-          $description = sprintf("%s (%s %s)", $facturaDetalle->getDescription(), $meses[$factura->getMonth()-1], $factura->getYear());
-          $facturaDetalle->setDescription($description);
-        }
-        //var_dump($facturaDetalle->getDescription());
-        $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalle;
-        $cantidadFacturasDetalles++;
+          foreach($factura->getFacturaFinalDetalle() as $facturaDetalle)
+          {
+            if($quantity > 1)
+            {
+              $description = sprintf("%s (%s %s)", $facturaDetalle->getDescription(), $meses[$factura->getMonth()-1], $factura->getYear());
+              $facturaDetalle->setDescription($description);
+            }
+            //var_dump($facturaDetalle->getDescription());
+            $facturasDetailList[$cantidadFacturasDetalles] = $facturaDetalle;
+            $cantidadFacturasDetalles++;
+          }
+          if($quantity > 1)
+          {
+            $facturasDetailList[$cantidadFacturasDetalles] = new facturaFinalDetalle();
+            $cantidadFacturasDetalles++;
+          }
+          if($montoAdeudado > 0)
+          {
+            $precion = number_format( 1 * (int)($montoAdeudado), 0, ',', '.');
+            $texto = utf8_decode(html_entity_decode(sprintf('Monto adeudado al %s', date('m-Y'))));
+            $lineDeuda = array(
+                  'Item' => 1,
+                  utf8_decode(html_entity_decode("Descripción"))    => $texto,
+                 "Precio"  => '$'.$precion
+          );    
+          }
+          
       }
-      if($quantity > 1)
+      else
       {
-        $facturasDetailList[$cantidadFacturasDetalles] = new facturaFinalDetalle();
-        $cantidadFacturasDetalles++;
+          $montoAdeudado = $montoAdeudado + ($factura->getTotal() - $factura->getPagadodeltotal());
       }
+      
     }
     $maxPerPage = 30;
     $cantidadPaginas = $cantidadFacturasDetalles / $maxPerPage;
@@ -155,8 +178,13 @@ class cuenta extends Basecuenta
     }
     $cantidadFacturasDetalles = 0;
     $pagina = 1;
-    while($cantidadPaginas >= 0 && $cantidadFacturasDetalles < count($facturasDetailList))
+    $paymentQuantity = 0;
+    //var_dump(count($facturasDetailList));
+      //var_dump($cantidadPaginas >= 0);
+      //var_dump($cantidadFacturasDetalles <= count($facturasDetailList));
+    while($cantidadPaginas >= 0 && $cantidadFacturasDetalles <= count($facturasDetailList))
     {
+      //var_dump('here 2121');
       $pdf->AddPage();
       if($showPages)
       {
@@ -170,19 +198,29 @@ class cuenta extends Basecuenta
       $pdf->addAlumnos(utf8_decode($alumnos));
       $pdf->addPadres(utf8_decode($padres));
       $cols=array( 'Item'  => 30,
-                  utf8_decode(html_entity_decode("Descripci&oacute;n"))    => 130,
+                  utf8_decode(html_entity_decode("Descripción"))    => 130,
                    "Precio"  => 30
                   );
       $pdf->addCols( $cols);
       $cols=array( 'Item'  => 'C',
-                  utf8_decode(html_entity_decode("Descripci&oacute;n"))    => "C",
+                  utf8_decode(html_entity_decode("Descripción"))    => "C",
                    "Precio"  => "C"
                    );
       $pdf->addLineFormat($cols);
       $y    = 70;
       $size = 0;
       $counterItems = 1;
-      $paymentQuantity = 0;
+//      $paymentQuantity = 0;
+      if($lineDeuda !== null)
+      {
+        $size = $pdf->addLine( $y, $lineDeuda );
+        $y   += $size + 2; 
+        $counterItems++;   
+      }
+      
+
+      //$cantidadFacturasDetalles++;
+      
       while($cantidadFacturasDetalles <= $maxPerPage * $pagina && $cantidadFacturasDetalles < count($facturasDetailList))
       {
         $facturaDetalle = $facturasDetailList[$cantidadFacturasDetalles];
@@ -199,7 +237,7 @@ class cuenta extends Basecuenta
             }
             $line = array(
                 'Item' => $counterItems,
-                utf8_decode(html_entity_decode("Descripci&oacute;n"))    => utf8_decode($facturaDetalle->getDescription()),
+                utf8_decode(html_entity_decode("Descripción"))    => utf8_decode($facturaDetalle->getDescription()),
                "Precio"  => $precioShow
             );
             $paymentQuantity = $paymentQuantity + $facturaDetalle->getAmount();
@@ -209,7 +247,7 @@ class cuenta extends Basecuenta
         {
             $line = array(
                 'Item' => '',
-                utf8_decode(html_entity_decode("Descripci&oacute;n"))    => '',
+                utf8_decode(html_entity_decode("Descripción"))    => '',
                "Precio"  => ''
             );
         }
@@ -230,7 +268,7 @@ class cuenta extends Basecuenta
       $texto = utf8_decode(html_entity_decode(sprintf('Monto pagado (%s-%s-%s)', $fechaAux[2], $fechaAux[1] ,$fechaAux[0])));
       $line = array(
               'Item' => $counterItems,
-              utf8_decode(html_entity_decode("Descripci&oacute;n"))    => $texto,
+              utf8_decode(html_entity_decode("Descripción"))    => $texto,
              "Precio"  => '- $'.$precion
       );
       

@@ -31,6 +31,7 @@
       <a href="javascript:void(0)" onclick="mdNeewsLetterBackend.getInstance().removeSendedContent('<?php echo url_for("mdNewsletterBackend/removeContentSended");?>', <?php echo $contentSended->getId()?>, this)"><img src="/mdNewsletterDoctrinePlugin/images/cross-circle.png" title="<?php echo __("newsletter_Cancelar envio");?>" /></a>
     <?php endif;?>
     <a href="<?php echo url_for("mdNewsletterBackend/showContentSended?id=".$contentSended->getId());?>" class="visualizar iframe"><img src="/mdNewsletterDoctrinePlugin/images/magnifier.png" title="<?php echo __("newsletter_Visualizar");?>" /></a>
-    <a href="<?php echo url_for("@export_newsletter_user?id=".$contentSended->getId());?>"><img src="/mdNewsletterDoctrinePlugin/images/arrow-270.png" title="<?php echo __("newsletter_Bajar lista de usuarios");?>" /></a>
+    <!-- <a href="<?php //echo url_for("@export_newsletter_user?id=".$contentSended->getId());?>"><img src="/mdNewsletterDoctrinePlugin/images/arrow-270.png" title="<?php echo __("newsletter_Bajar lista de usuarios");?>" /></a> -->
+    <a target='_blank' href="<?php echo url_for("mdNewsletterBackend/showUsersSended?id=".$contentSended->getId());?>"><img src="/mdNewsletterDoctrinePlugin/images/arrow-270.png" title="<?php echo __("newsletter_Bajar lista de usuarios");?>" /></a>
   </td>
 </tr>

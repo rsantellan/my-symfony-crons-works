@@ -14,6 +14,15 @@ class facturaHandler {
 
   public static function generateUserBill($usuario, $month, $year)
   {
+    if($usuario->getAnioIngreso() > date('Y'))
+    {
+	if (sfConfig::get('sf_logging_enabled'))
+	{
+	  sfContext::getInstance()->getLogger()->info('User is not active. Ther will be no generated bill');
+	}
+	// Should do nothing. The user is not active.
+	return;
+    }  
     $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($usuario->getId(), $month, $year);
 	$refreshAccount = false;
 	$account = null;
@@ -175,38 +184,40 @@ class facturaHandler {
 	$brothersActive = $account->getCuentausuario()->count();
 	foreach($account->getCuentausuario() as $cuentaUsuario)
 	{
-	  $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($cuentaUsuario->getUsuarioId(), $month, $year);
-	  if($facturaUsuario)
+	  if($cuentaUsuario->getUsuario()->getAnioIngreso() <= date('Y'))
 	  {
-		foreach($facturaUsuario->getFacturaUsuarioDetalle() as $facturaUsuarioDetalle)
-		{
-		  $detalle = new facturaFinalDetalle();
-		  $detalle->setFacturaId($facturaFinal->getId());
-		  $detalleDescription = "";
-		  if($brothersActive > 1)
-		  {
-			$detalleDescription = sprintf('[%s] %s', $cuentaUsuario->getUsuario()->getNombre() , $facturaUsuarioDetalle->getDescription());
-		  }
-		  else
-		  {
-			$detalleDescription = $facturaUsuarioDetalle->getDescription();
-		  }
-		  $detalle->setDescription($detalleDescription);
-		  $detalle->setAmount($facturaUsuarioDetalle->getAmount());
-		  $detalle->save();
-		  $total += $detalle->getAmount();
-		}
+	      $facturaUsuario = Doctrine::getTable('facturaUsuario')->retrieveByUserMonthAndYear($cuentaUsuario->getUsuarioId(), $month, $year);
+	      if($facturaUsuario)
+	      {
+		    foreach($facturaUsuario->getFacturaUsuarioDetalle() as $facturaUsuarioDetalle)
+		    {
+		      $detalle = new facturaFinalDetalle();
+		      $detalle->setFacturaId($facturaFinal->getId());
+		      $detalleDescription = "";
+		      if($brothersActive > 1)
+		      {
+			    $detalleDescription = sprintf('[%s] %s', $cuentaUsuario->getUsuario()->getNombre() , $facturaUsuarioDetalle->getDescription());
+		      }
+		      else
+		      {
+			    $detalleDescription = $facturaUsuarioDetalle->getDescription();
+		      }
+		      $detalle->setDescription($detalleDescription);
+		      $detalle->setAmount($facturaUsuarioDetalle->getAmount());
+		      $detalle->save();
+		      $total += $detalle->getAmount();
+		    }
 
-		$facturaFinalUsuario = new facturausuariofinal();
-		$facturaFinalUsuario->setFacturaFinalId($facturaFinal->getId());
-		$facturaFinalUsuario->setFacturaUsuarioId($facturaUsuario->getId());
-		$facturaFinalUsuario->save();
+		    $facturaFinalUsuario = new facturausuariofinal();
+		    $facturaFinalUsuario->setFacturaFinalId($facturaFinal->getId());
+		    $facturaFinalUsuario->setFacturaUsuarioId($facturaUsuario->getId());
+		    $facturaFinalUsuario->save();
+	      }
+	      else
+	      {
+		    // No tiene factura para ese mes?? raro...
+	      }	      
 	  }
-	  else
-	  {
-		// No tiene factura para ese mes?? raro...
-	  }
-
 	}
 	$facturaFinal->setTotal($total);
 	$facturaFinal->save();
@@ -289,93 +300,8 @@ class facturaHandler {
       return true;
     }
     return false;
-    //$factura->getCuenta()->setDebe($factura->getCuenta()->getDebe() - $factura->getTotal());
   }
-  /*
-   * 
-public function retrieveByUserMonthAndYear($userId, $month, $year)
-    {
-        $query = $this->createQuery('f')
-                ->addWhere('f.usuario_id = ?', $userId)
-                ->addWhere('f.month = ?', $month)
-                ->addWhere('f.year = ?', $year);
-        return $query->fetchOne();
-    }
-    
-    public function retrieveAllActive($withUser = true)
-    {
-        $query = $this->createQuery('f')
-                    ->addWhere('f.pago = 0')
-                    ->addWhere('f.cancelado = 0')
-                    ->innerJoin("f.usuario u")
-                    ->orderBy('f.cuenta_id asc, f.updated_at desc');
-        return $query->execute();
-    }
-const IMPUESTORETRASO = 10;
-    
-    public function calculateTotal()
-    {
-        $total = $this->getCostoTurno() + $this->getCostoMatricula() + $this->getCostoMatricula();
-        $descuentos = $this->getDescuentoAlumno() + $this->getDescuentoHermano();
-        if($descuentos >= 100)
-        {
-            $total = 0;
-        }
-        else
-        {
-            $total = $total - ($total * $descuentos / 100);
-        }
-        return $total;
-    }
-
-    public static function generateUserBill($usuario, $month, $year)
-    {
-        $factura = new factura();
-        self::doPopulateUserBill($factura, $usuario, $month, $year);
-    }
-    
-    public static function updateUserBill($usuario, $month, $year)
-    {
-        $factura = Doctrine::getTable('factura')->retrieveByUserMonthAndYear($usuario->getId(), $month, $year);
-        if(!$factura)
-        {
-            $factura = new factura();
-        }
-        self::doPopulateUserBill($factura, $usuario, $month, $year);
-    }
-    
-    private static function doPopulateUserBill($factura, $usuario, $month, $year)
-    {
-        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-        $factura->setCostoTurno(costos::getCosto($usuario->getHorario()));
-        $factura->setCostoMatricula($usuario->calculateMatricula($month));
-        $factura->setCostoActividad($usuario->calculateActividades());
-        $factura->setDescuentoHermano($usuario->calculateBrothersDiscount());
-        $factura->setDescuentoAlumno($usuario->getDescuento());
-        $cuenta = $q->fetchRow(accountsHandler::SQL_USUARIO_CUENTA, array($usuario->getId()));
-        $factura->setCuentaId($cuenta["cuenta_id"]);
-        $factura->setMonth($month);
-        $factura->setYear($year);
-        $factura->setDescription($usuario->retrieveBillingDescription());
-        $factura->setUsuarioId($usuario->getId());
-        $factura->setTotal($factura->calculateTotal());
-        $fecha = date('Y-m-d', mktime(0, 0, 0, $month + 1, 1, $year));
-        $factura->setFechavencimiento($fecha);
-        $factura->setRecargoAtraso(self::IMPUESTORETRASO);
-        $factura->save();
-        unset($factura);
-    }
-    
-    function getRandomColor() 
-    { 
-       $c = "";
-       for ($i = 0; $i<6; $i++) 
-       { 
-           $c .=  dechex(rand(0,15)); 
-       } 
-       return "#".$c; 
-    }
-   */
+  
 }
 
 

@@ -22,7 +22,7 @@ generator:
         display:  [=referencia_bancaria, =apellido, nombre, fecha_nacimiento, clase]
         sort:   [apellido, asc]
         max_per_page: 30
-        table_method: addDefaultsFilter
+        table_method: addCorrienteFilter
       filter:
         display:  [referencia_bancaria, apellido, nombre, clase, horario, futuro_colegio, anio_ingreso, actividades_list]
       form:
